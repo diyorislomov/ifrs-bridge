@@ -1,0 +1,1201 @@
+{
+  "version": "2.0",
+  "last_updated": "2026-09-22",
+  "mhms_total": 32,
+  "scope_v1": {
+    "tier1_count": 11,
+    "tier2_count": 10,
+    "total_gaps_target": "55-65"
+  },
+  "tiers": {
+    "tier1": [
+      {
+        "mhms_id": "1",
+        "mhms_uz_title": "Moliyaviy hisobotning konseptual asosi",
+        "mhms_en_title": "Financial Reporting Conceptual Framework",
+        "ifrs_equivalent": "Conceptual Framework",
+        "tier": 1,
+        "nas_treatment": "Framework exists but less detailed than MHMS",
+        "mhms_treatment": "Complete framework with elements, qualitative characteristics, recognition/measurement",
+        "lex_uz_reference": "Lex.uz MHMS #1",
+        "ifrs_reference": "IFRS Conceptual Framework",
+        "users_affected_pct": 100,
+        "complexity": "LOW",
+        "key_gaps": [
+          {
+            "gap_id": "1.1",
+            "title": "TODO: gap title (qualitative characteristics disclosure)",
+            "risk": "LOW",
+            "detection_keywords": [
+              "TODO: keywords"
+            ],
+            "detection_rules": [
+              "TODO: rule 1",
+              "TODO: rule 2"
+            ],
+            "claude_prompt_template": "TODO: template",
+            "adjustment_hint": "TODO: hint",
+            "example": "TODO: example"
+          },
+          {
+            "gap_id": "1.2",
+            "title": "TODO: gap title (recognition criteria application)",
+            "risk": "MEDIUM",
+            "detection_keywords": [
+              "TODO: keywords"
+            ],
+            "detection_rules": [
+              "TODO: rule 1",
+              "TODO: rule 2"
+            ],
+            "claude_prompt_template": "TODO: template",
+            "adjustment_hint": "TODO: hint",
+            "example": "TODO: example"
+          }
+        ]
+      },
+      {
+        "mhms_id": "2",
+        "mhms_uz_title": "Buxgalteriya hisobi siyosati",
+        "mhms_en_title": "Accounting Policies",
+        "ifrs_equivalent": "IAS 8 (Accounting Policies)",
+        "tier": 1,
+        "nas_treatment": "Policy selection guidance exists but disclosure requirements are less prescriptive",
+        "mhms_treatment": "Requires explicit disclosure of judgments and estimation uncertainty",
+        "lex_uz_reference": "Lex.uz MHMS #2",
+        "ifrs_reference": "IAS 8",
+        "users_affected_pct": 100,
+        "complexity": "LOW",
+        "key_gaps": [
+          {
+            "gap_id": "2.1",
+            "title": "TODO: gap title (accounting policy disclosure completeness)",
+            "risk": "MEDIUM",
+            "detection_keywords": [
+              "TODO: keywords"
+            ],
+            "detection_rules": [
+              "TODO: rule 1",
+              "TODO: rule 2"
+            ],
+            "claude_prompt_template": "TODO: template",
+            "adjustment_hint": "TODO: hint",
+            "example": "TODO: example"
+          },
+          {
+            "gap_id": "2.2",
+            "title": "TODO: gap title (judgment and estimate disclosure)",
+            "risk": "MEDIUM",
+            "detection_keywords": [
+              "TODO: keywords"
+            ],
+            "detection_rules": [
+              "TODO: rule 1",
+              "TODO: rule 2"
+            ],
+            "claude_prompt_template": "TODO: template",
+            "adjustment_hint": "TODO: hint",
+            "example": "TODO: example"
+          }
+        ]
+      },
+      {
+        "mhms_id": "4",
+        "mhms_uz_title": "Balans sanasidan keyingi voqealar",
+        "mhms_en_title": "Events After the Reporting Period",
+        "ifrs_equivalent": "IAS 10",
+        "tier": 1,
+        "nas_treatment": "Distinguishes adjusting/non-adjusting events but disclosure depth varies in practice",
+        "mhms_treatment": "Requires explicit classification and quantified disclosure of material subsequent events",
+        "lex_uz_reference": "Lex.uz MHMS #4",
+        "ifrs_reference": "IAS 10",
+        "users_affected_pct": 90,
+        "complexity": "MEDIUM",
+        "key_gaps": [
+          {
+            "gap_id": "4.1",
+            "title": "TODO: gap title (adjusting vs non-adjusting classification)",
+            "risk": "MEDIUM",
+            "detection_keywords": [
+              "TODO: keywords"
+            ],
+            "detection_rules": [
+              "TODO: rule 1",
+              "TODO: rule 2"
+            ],
+            "claude_prompt_template": "TODO: template",
+            "adjustment_hint": "TODO: hint",
+            "example": "TODO: example"
+          },
+          {
+            "gap_id": "4.2",
+            "title": "TODO: gap title (going concern reassessment disclosure)",
+            "risk": "HIGH",
+            "detection_keywords": [
+              "TODO: keywords"
+            ],
+            "detection_rules": [
+              "TODO: rule 1",
+              "TODO: rule 2"
+            ],
+            "claude_prompt_template": "TODO: template",
+            "adjustment_hint": "TODO: hint",
+            "example": "TODO: example"
+          },
+          {
+            "gap_id": "4.3",
+            "title": "TODO: gap title (dividend declared after period-end treatment)",
+            "risk": "LOW",
+            "detection_keywords": [
+              "TODO: keywords"
+            ],
+            "detection_rules": [
+              "TODO: rule 1",
+              "TODO: rule 2"
+            ],
+            "claude_prompt_template": "TODO: template",
+            "adjustment_hint": "TODO: hint",
+            "example": "TODO: example"
+          }
+        ]
+      },
+      {
+        "mhms_id": "10",
+        "mhms_uz_title": "Pul mablag'lari harakati to'g'risidagi hisobot",
+        "mhms_en_title": "Statement of Cash Flows",
+        "ifrs_equivalent": "IAS 7",
+        "tier": 1,
+        "nas_treatment": "Statement format often combines direct/indirect elements inconsistently",
+        "mhms_treatment": "Requires strict operating/investing/financing classification with reconciliation",
+        "lex_uz_reference": "Lex.uz MHMS #10",
+        "ifrs_reference": "IAS 7",
+        "users_affected_pct": 100,
+        "complexity": "MEDIUM",
+        "key_gaps": [
+          {
+            "gap_id": "10.1",
+            "title": "TODO: gap title (operating vs investing vs financing misclassification)",
+            "risk": "MEDIUM",
+            "detection_keywords": [
+              "TODO: keywords"
+            ],
+            "detection_rules": [
+              "TODO: rule 1",
+              "TODO: rule 2"
+            ],
+            "claude_prompt_template": "TODO: template",
+            "adjustment_hint": "TODO: hint",
+            "example": "TODO: example"
+          },
+          {
+            "gap_id": "10.2",
+            "title": "TODO: gap title (interest and dividend classification inconsistency)",
+            "risk": "MEDIUM",
+            "detection_keywords": [
+              "TODO: keywords"
+            ],
+            "detection_rules": [
+              "TODO: rule 1",
+              "TODO: rule 2"
+            ],
+            "claude_prompt_template": "TODO: template",
+            "adjustment_hint": "TODO: hint",
+            "example": "TODO: example"
+          },
+          {
+            "gap_id": "10.3",
+            "title": "TODO: gap title (non-cash transaction disclosure omission)",
+            "risk": "LOW",
+            "detection_keywords": [
+              "TODO: keywords"
+            ],
+            "detection_rules": [
+              "TODO: rule 1",
+              "TODO: rule 2"
+            ],
+            "claude_prompt_template": "TODO: template",
+            "adjustment_hint": "TODO: hint",
+            "example": "TODO: example"
+          }
+        ]
+      },
+      {
+        "mhms_id": "20",
+        "mhms_uz_title": "Tovar-moddiy zaxiralar",
+        "mhms_en_title": "Inventories",
+        "ifrs_equivalent": "IAS 2",
+        "tier": 1,
+        "nas_treatment": "Cost formulas permitted but NRV testing and write-down disclosure less rigorous",
+        "mhms_treatment": "Requires lower-of-cost-or-NRV measurement with mandatory write-down disclosure",
+        "lex_uz_reference": "Lex.uz MHMS #20",
+        "ifrs_reference": "IAS 2",
+        "users_affected_pct": 85,
+        "complexity": "MEDIUM",
+        "key_gaps": [
+          {
+            "gap_id": "20.1",
+            "title": "TODO: gap title (net realizable value testing not performed)",
+            "risk": "HIGH",
+            "detection_keywords": [
+              "TODO: keywords"
+            ],
+            "detection_rules": [
+              "TODO: rule 1",
+              "TODO: rule 2"
+            ],
+            "claude_prompt_template": "TODO: template",
+            "adjustment_hint": "TODO: hint",
+            "example": "TODO: example"
+          },
+          {
+            "gap_id": "20.2",
+            "title": "TODO: gap title (cost formula inconsistency (FIFO/weighted-average))",
+            "risk": "MEDIUM",
+            "detection_keywords": [
+              "TODO: keywords"
+            ],
+            "detection_rules": [
+              "TODO: rule 1",
+              "TODO: rule 2"
+            ],
+            "claude_prompt_template": "TODO: template",
+            "adjustment_hint": "TODO: hint",
+            "example": "TODO: example"
+          },
+          {
+            "gap_id": "20.3",
+            "title": "TODO: gap title (overhead absorption into inventory cost)",
+            "risk": "MEDIUM",
+            "detection_keywords": [
+              "TODO: keywords"
+            ],
+            "detection_rules": [
+              "TODO: rule 1",
+              "TODO: rule 2"
+            ],
+            "claude_prompt_template": "TODO: template",
+            "adjustment_hint": "TODO: hint",
+            "example": "TODO: example"
+          }
+        ]
+      },
+      {
+        "mhms_id": "22",
+        "mhms_uz_title": "Asosiy vositalar",
+        "mhms_en_title": "Property, Plant and Equipment",
+        "ifrs_equivalent": "IAS 16",
+        "tier": 1,
+        "nas_treatment": "Historical cost model standard; revaluation and componentization rarely applied",
+        "mhms_treatment": "Permits cost or revaluation model with mandatory component depreciation",
+        "lex_uz_reference": "Lex.uz MHMS #22",
+        "ifrs_reference": "IAS 16",
+        "users_affected_pct": 95,
+        "complexity": "MEDIUM",
+        "key_gaps": [
+          {
+            "gap_id": "22.1",
+            "title": "TODO: gap title (componentization of major PP&E parts not applied)",
+            "risk": "HIGH",
+            "detection_keywords": [
+              "TODO: keywords"
+            ],
+            "detection_rules": [
+              "TODO: rule 1",
+              "TODO: rule 2"
+            ],
+            "claude_prompt_template": "TODO: template",
+            "adjustment_hint": "TODO: hint",
+            "example": "TODO: example"
+          },
+          {
+            "gap_id": "22.2",
+            "title": "TODO: gap title (residual value and useful life not reviewed annually)",
+            "risk": "MEDIUM",
+            "detection_keywords": [
+              "TODO: keywords"
+            ],
+            "detection_rules": [
+              "TODO: rule 1",
+              "TODO: rule 2"
+            ],
+            "claude_prompt_template": "TODO: template",
+            "adjustment_hint": "TODO: hint",
+            "example": "TODO: example"
+          },
+          {
+            "gap_id": "22.3",
+            "title": "TODO: gap title (revaluation model disclosure gap)",
+            "risk": "LOW",
+            "detection_keywords": [
+              "TODO: keywords"
+            ],
+            "detection_rules": [
+              "TODO: rule 1",
+              "TODO: rule 2"
+            ],
+            "claude_prompt_template": "TODO: template",
+            "adjustment_hint": "TODO: hint",
+            "example": "TODO: example"
+          }
+        ]
+      },
+      {
+        "mhms_id": "25",
+        "mhms_uz_title": "Nomoddiy aktivlar",
+        "mhms_en_title": "Intangible Assets",
+        "ifrs_equivalent": "IAS 38",
+        "tier": 1,
+        "nas_treatment": "Recognition criteria narrower; internally generated intangibles often expensed",
+        "mhms_treatment": "Requires distinct recognition test for internally generated vs acquired intangibles",
+        "lex_uz_reference": "Lex.uz MHMS #25",
+        "ifrs_reference": "IAS 38",
+        "users_affected_pct": 60,
+        "complexity": "MEDIUM",
+        "key_gaps": [
+          {
+            "gap_id": "25.1",
+            "title": "TODO: gap title (development costs expensed instead of capitalized)",
+            "risk": "HIGH",
+            "detection_keywords": [
+              "TODO: keywords"
+            ],
+            "detection_rules": [
+              "TODO: rule 1",
+              "TODO: rule 2"
+            ],
+            "claude_prompt_template": "TODO: template",
+            "adjustment_hint": "TODO: hint",
+            "example": "TODO: example"
+          },
+          {
+            "gap_id": "25.2",
+            "title": "TODO: gap title (indefinite vs finite useful life assessment missing)",
+            "risk": "MEDIUM",
+            "detection_keywords": [
+              "TODO: keywords"
+            ],
+            "detection_rules": [
+              "TODO: rule 1",
+              "TODO: rule 2"
+            ],
+            "claude_prompt_template": "TODO: template",
+            "adjustment_hint": "TODO: hint",
+            "example": "TODO: example"
+          },
+          {
+            "gap_id": "25.3",
+            "title": "TODO: gap title (goodwill vs intangible asset distinction)",
+            "risk": "MEDIUM",
+            "detection_keywords": [
+              "TODO: keywords"
+            ],
+            "detection_rules": [
+              "TODO: rule 1",
+              "TODO: rule 2"
+            ],
+            "claude_prompt_template": "TODO: template",
+            "adjustment_hint": "TODO: hint",
+            "example": "TODO: example"
+          }
+        ]
+      },
+      {
+        "mhms_id": "30",
+        "mhms_uz_title": "Moliyaviy instrumentlar",
+        "mhms_en_title": "Financial Instruments",
+        "ifrs_equivalent": "IFRS 9",
+        "tier": 1,
+        "nas_treatment": "Instruments recorded at cost with specific provisioning; no ECL model",
+        "mhms_treatment": "Requires classification (amortized cost/FVOCI/FVTPL) and expected credit loss model",
+        "lex_uz_reference": "Lex.uz MHMS #30",
+        "ifrs_reference": "IFRS 9",
+        "users_affected_pct": 90,
+        "complexity": "HIGH",
+        "key_gaps": [
+          {
+            "gap_id": "30.1",
+            "title": "TODO: gap title (expected credit loss model not applied)",
+            "risk": "HIGH",
+            "detection_keywords": [
+              "TODO: keywords"
+            ],
+            "detection_rules": [
+              "TODO: rule 1",
+              "TODO: rule 2"
+            ],
+            "claude_prompt_template": "TODO: template",
+            "adjustment_hint": "TODO: hint",
+            "example": "TODO: example"
+          },
+          {
+            "gap_id": "30.2",
+            "title": "TODO: gap title (financial asset classification by business model missing)",
+            "risk": "HIGH",
+            "detection_keywords": [
+              "TODO: keywords"
+            ],
+            "detection_rules": [
+              "TODO: rule 1",
+              "TODO: rule 2"
+            ],
+            "claude_prompt_template": "TODO: template",
+            "adjustment_hint": "TODO: hint",
+            "example": "TODO: example"
+          },
+          {
+            "gap_id": "30.3",
+            "title": "TODO: gap title (fair value measurement and hierarchy disclosure gap)",
+            "risk": "MEDIUM",
+            "detection_keywords": [
+              "TODO: keywords"
+            ],
+            "detection_rules": [
+              "TODO: rule 1",
+              "TODO: rule 2"
+            ],
+            "claude_prompt_template": "TODO: template",
+            "adjustment_hint": "TODO: hint",
+            "example": "TODO: example"
+          },
+          {
+            "gap_id": "30.4",
+            "title": "TODO: gap title (embedded derivative identification not performed)",
+            "risk": "MEDIUM",
+            "detection_keywords": [
+              "TODO: keywords"
+            ],
+            "detection_rules": [
+              "TODO: rule 1",
+              "TODO: rule 2"
+            ],
+            "claude_prompt_template": "TODO: template",
+            "adjustment_hint": "TODO: hint",
+            "example": "TODO: example"
+          }
+        ]
+      },
+      {
+        "mhms_id": "40",
+        "mhms_uz_title": "Ijara",
+        "mhms_en_title": "Leases",
+        "ifrs_equivalent": "IFRS 16",
+        "tier": 1,
+        "nas_treatment": "Operating leases expensed on straight-line basis, not capitalized",
+        "mhms_treatment": "Requires right-of-use asset and lease liability recognition for most leases",
+        "lex_uz_reference": "Lex.uz MHMS #40",
+        "ifrs_reference": "IFRS 16",
+        "users_affected_pct": 70,
+        "complexity": "HIGH",
+        "key_gaps": [
+          {
+            "gap_id": "40.1",
+            "title": "TODO: gap title (operating leases not capitalized as right-of-use asset)",
+            "risk": "HIGH",
+            "detection_keywords": [
+              "TODO: keywords"
+            ],
+            "detection_rules": [
+              "TODO: rule 1",
+              "TODO: rule 2"
+            ],
+            "claude_prompt_template": "TODO: template",
+            "adjustment_hint": "TODO: hint",
+            "example": "TODO: example"
+          },
+          {
+            "gap_id": "40.2",
+            "title": "TODO: gap title (lease liability discounting not performed)",
+            "risk": "HIGH",
+            "detection_keywords": [
+              "TODO: keywords"
+            ],
+            "detection_rules": [
+              "TODO: rule 1",
+              "TODO: rule 2"
+            ],
+            "claude_prompt_template": "TODO: template",
+            "adjustment_hint": "TODO: hint",
+            "example": "TODO: example"
+          },
+          {
+            "gap_id": "40.3",
+            "title": "TODO: gap title (short-term/low-value lease exemption not documented)",
+            "risk": "LOW",
+            "detection_keywords": [
+              "TODO: keywords"
+            ],
+            "detection_rules": [
+              "TODO: rule 1",
+              "TODO: rule 2"
+            ],
+            "claude_prompt_template": "TODO: template",
+            "adjustment_hint": "TODO: hint",
+            "example": "TODO: example"
+          },
+          {
+            "gap_id": "40.4",
+            "title": "TODO: gap title (variable lease payment disclosure gap)",
+            "risk": "MEDIUM",
+            "detection_keywords": [
+              "TODO: keywords"
+            ],
+            "detection_rules": [
+              "TODO: rule 1",
+              "TODO: rule 2"
+            ],
+            "claude_prompt_template": "TODO: template",
+            "adjustment_hint": "TODO: hint",
+            "example": "TODO: example"
+          }
+        ]
+      },
+      {
+        "mhms_id": "50",
+        "mhms_uz_title": "Daromadlar",
+        "mhms_en_title": "Revenue",
+        "ifrs_equivalent": "IFRS 15",
+        "tier": 1,
+        "nas_treatment": "Revenue recognized on shipment/invoicing; no multi-element analysis",
+        "mhms_treatment": "Requires 5-step model with performance obligation identification and allocation",
+        "lex_uz_reference": "Lex.uz MHMS #50",
+        "ifrs_reference": "IFRS 15",
+        "users_affected_pct": 100,
+        "complexity": "HIGH",
+        "key_gaps": [
+          {
+            "gap_id": "50.1",
+            "title": "TODO: gap title (performance obligations not separately identified)",
+            "risk": "HIGH",
+            "detection_keywords": [
+              "TODO: keywords"
+            ],
+            "detection_rules": [
+              "TODO: rule 1",
+              "TODO: rule 2"
+            ],
+            "claude_prompt_template": "TODO: template",
+            "adjustment_hint": "TODO: hint",
+            "example": "TODO: example"
+          },
+          {
+            "gap_id": "50.2",
+            "title": "TODO: gap title (variable consideration not estimated/constrained)",
+            "risk": "HIGH",
+            "detection_keywords": [
+              "TODO: keywords"
+            ],
+            "detection_rules": [
+              "TODO: rule 1",
+              "TODO: rule 2"
+            ],
+            "claude_prompt_template": "TODO: template",
+            "adjustment_hint": "TODO: hint",
+            "example": "TODO: example"
+          },
+          {
+            "gap_id": "50.3",
+            "title": "TODO: gap title (point-in-time vs over-time recognition not assessed)",
+            "risk": "MEDIUM",
+            "detection_keywords": [
+              "TODO: keywords"
+            ],
+            "detection_rules": [
+              "TODO: rule 1",
+              "TODO: rule 2"
+            ],
+            "claude_prompt_template": "TODO: template",
+            "adjustment_hint": "TODO: hint",
+            "example": "TODO: example"
+          },
+          {
+            "gap_id": "50.4",
+            "title": "TODO: gap title (contract cost capitalization gap)",
+            "risk": "MEDIUM",
+            "detection_keywords": [
+              "TODO: keywords"
+            ],
+            "detection_rules": [
+              "TODO: rule 1",
+              "TODO: rule 2"
+            ],
+            "claude_prompt_template": "TODO: template",
+            "adjustment_hint": "TODO: hint",
+            "example": "TODO: example"
+          }
+        ]
+      },
+      {
+        "mhms_id": "60",
+        "mhms_uz_title": "Xorijiy valyuta kurslari o'zgarishining ta'siri",
+        "mhms_en_title": "The Effects of Changes in Foreign Exchange Rates",
+        "ifrs_equivalent": "IAS 21",
+        "tier": 1,
+        "nas_treatment": "Transactions translated at official CBU rate; functional currency concept not applied",
+        "mhms_treatment": "Requires functional currency determination and consistent translation methodology",
+        "lex_uz_reference": "Lex.uz MHMS #60",
+        "ifrs_reference": "IAS 21",
+        "users_affected_pct": 55,
+        "complexity": "MEDIUM",
+        "key_gaps": [
+          {
+            "gap_id": "60.1",
+            "title": "TODO: gap title (functional currency not formally determined)",
+            "risk": "MEDIUM",
+            "detection_keywords": [
+              "TODO: keywords"
+            ],
+            "detection_rules": [
+              "TODO: rule 1",
+              "TODO: rule 2"
+            ],
+            "claude_prompt_template": "TODO: template",
+            "adjustment_hint": "TODO: hint",
+            "example": "TODO: example"
+          },
+          {
+            "gap_id": "60.2",
+            "title": "TODO: gap title (monetary vs non-monetary item translation error)",
+            "risk": "MEDIUM",
+            "detection_keywords": [
+              "TODO: keywords"
+            ],
+            "detection_rules": [
+              "TODO: rule 1",
+              "TODO: rule 2"
+            ],
+            "claude_prompt_template": "TODO: template",
+            "adjustment_hint": "TODO: hint",
+            "example": "TODO: example"
+          },
+          {
+            "gap_id": "60.3",
+            "title": "TODO: gap title (FX gain/loss presentation and disclosure gap)",
+            "risk": "LOW",
+            "detection_keywords": [
+              "TODO: keywords"
+            ],
+            "detection_rules": [
+              "TODO: rule 1",
+              "TODO: rule 2"
+            ],
+            "claude_prompt_template": "TODO: template",
+            "adjustment_hint": "TODO: hint",
+            "example": "TODO: example"
+          }
+        ]
+      }
+    ],
+    "tier2": [
+      {
+        "mhms_id": "12",
+        "mhms_uz_title": "Konsolidatsiyalashgan moliyaviy hisobot",
+        "mhms_en_title": "Consolidated Financial Statements",
+        "ifrs_equivalent": "IFRS 10",
+        "tier": 2,
+        "nas_treatment": "Consolidation based on ownership percentage thresholds",
+        "mhms_treatment": "Requires control-based consolidation assessment (power, exposure, ability to affect returns)",
+        "lex_uz_reference": "Lex.uz MHMS #12",
+        "ifrs_reference": "IFRS 10",
+        "users_affected_pct": 30,
+        "complexity": "HIGH",
+        "key_gaps": [
+          {
+            "gap_id": "12.1",
+            "title": "TODO: gap title (control assessment not performed (ownership-based only))",
+            "risk": "HIGH",
+            "detection_keywords": [
+              "TODO: keywords"
+            ],
+            "detection_rules": [
+              "TODO: rule 1",
+              "TODO: rule 2"
+            ],
+            "claude_prompt_template": "TODO: template",
+            "adjustment_hint": "TODO: hint",
+            "example": "TODO: example"
+          },
+          {
+            "gap_id": "12.2",
+            "title": "TODO: gap title (non-controlling interest measurement gap)",
+            "risk": "MEDIUM",
+            "detection_keywords": [
+              "TODO: keywords"
+            ],
+            "detection_rules": [
+              "TODO: rule 1",
+              "TODO: rule 2"
+            ],
+            "claude_prompt_template": "TODO: template",
+            "adjustment_hint": "TODO: hint",
+            "example": "TODO: example"
+          },
+          {
+            "gap_id": "12.3",
+            "title": "TODO: gap title (intercompany elimination incompleteness)",
+            "risk": "MEDIUM",
+            "detection_keywords": [
+              "TODO: keywords"
+            ],
+            "detection_rules": [
+              "TODO: rule 1",
+              "TODO: rule 2"
+            ],
+            "claude_prompt_template": "TODO: template",
+            "adjustment_hint": "TODO: hint",
+            "example": "TODO: example"
+          }
+        ]
+      },
+      {
+        "mhms_id": "35",
+        "mhms_uz_title": "Zahiralar, shartli majburiyatlar va shartli aktivlar",
+        "mhms_en_title": "Provisions, Contingent Liabilities and Contingent Assets",
+        "ifrs_equivalent": "IAS 37",
+        "tier": 2,
+        "nas_treatment": "Provisions recognized mainly per statutory/tax rules",
+        "mhms_treatment": "Requires present-obligation, probable-outflow, and reliable-estimate recognition test",
+        "lex_uz_reference": "Lex.uz MHMS #35",
+        "ifrs_reference": "IAS 37",
+        "users_affected_pct": 65,
+        "complexity": "MEDIUM",
+        "key_gaps": [
+          {
+            "gap_id": "35.1",
+            "title": "TODO: gap title (recognition criteria (probable/reliable estimate) not tested)",
+            "risk": "MEDIUM",
+            "detection_keywords": [
+              "TODO: keywords"
+            ],
+            "detection_rules": [
+              "TODO: rule 1",
+              "TODO: rule 2"
+            ],
+            "claude_prompt_template": "TODO: template",
+            "adjustment_hint": "TODO: hint",
+            "example": "TODO: example"
+          },
+          {
+            "gap_id": "35.2",
+            "title": "TODO: gap title (contingent liability disclosure omission)",
+            "risk": "MEDIUM",
+            "detection_keywords": [
+              "TODO: keywords"
+            ],
+            "detection_rules": [
+              "TODO: rule 1",
+              "TODO: rule 2"
+            ],
+            "claude_prompt_template": "TODO: template",
+            "adjustment_hint": "TODO: hint",
+            "example": "TODO: example"
+          },
+          {
+            "gap_id": "35.3",
+            "title": "TODO: gap title (discounting of long-term provisions not applied)",
+            "risk": "LOW",
+            "detection_keywords": [
+              "TODO: keywords"
+            ],
+            "detection_rules": [
+              "TODO: rule 1",
+              "TODO: rule 2"
+            ],
+            "claude_prompt_template": "TODO: template",
+            "adjustment_hint": "TODO: hint",
+            "example": "TODO: example"
+          }
+        ]
+      },
+      {
+        "mhms_id": "42",
+        "mhms_uz_title": "Xodimlarga to'lanadigan to'lovlar",
+        "mhms_en_title": "Employee Benefits",
+        "ifrs_equivalent": "IAS 19",
+        "tier": 2,
+        "nas_treatment": "Short-term benefits and statutory obligations accrued; no actuarial valuation",
+        "mhms_treatment": "Requires actuarial valuation for post-employment/long-term defined benefit obligations",
+        "lex_uz_reference": "Lex.uz MHMS #42",
+        "ifrs_reference": "IAS 19",
+        "users_affected_pct": 70,
+        "complexity": "MEDIUM",
+        "key_gaps": [
+          {
+            "gap_id": "42.1",
+            "title": "TODO: gap title (unused vacation/leave accrual not recognized)",
+            "risk": "MEDIUM",
+            "detection_keywords": [
+              "TODO: keywords"
+            ],
+            "detection_rules": [
+              "TODO: rule 1",
+              "TODO: rule 2"
+            ],
+            "claude_prompt_template": "TODO: template",
+            "adjustment_hint": "TODO: hint",
+            "example": "TODO: example"
+          },
+          {
+            "gap_id": "42.2",
+            "title": "TODO: gap title (long-term benefit actuarial valuation missing)",
+            "risk": "MEDIUM",
+            "detection_keywords": [
+              "TODO: keywords"
+            ],
+            "detection_rules": [
+              "TODO: rule 1",
+              "TODO: rule 2"
+            ],
+            "claude_prompt_template": "TODO: template",
+            "adjustment_hint": "TODO: hint",
+            "example": "TODO: example"
+          }
+        ]
+      },
+      {
+        "mhms_id": "45",
+        "mhms_uz_title": "Ustav kapitali",
+        "mhms_en_title": "Share Capital",
+        "ifrs_equivalent": "IAS 32 (Equity)",
+        "tier": 2,
+        "nas_treatment": "Charter capital recorded at registered/statutory value",
+        "mhms_treatment": "Requires classification between liability and equity components for compound instruments",
+        "lex_uz_reference": "Lex.uz MHMS #45",
+        "ifrs_reference": "IAS 32",
+        "users_affected_pct": 80,
+        "complexity": "LOW",
+        "key_gaps": [
+          {
+            "gap_id": "45.1",
+            "title": "TODO: gap title (compound financial instrument split not performed)",
+            "risk": "LOW",
+            "detection_keywords": [
+              "TODO: keywords"
+            ],
+            "detection_rules": [
+              "TODO: rule 1",
+              "TODO: rule 2"
+            ],
+            "claude_prompt_template": "TODO: template",
+            "adjustment_hint": "TODO: hint",
+            "example": "TODO: example"
+          },
+          {
+            "gap_id": "45.2",
+            "title": "TODO: gap title (treasury share and equity reserve disclosure gap)",
+            "risk": "LOW",
+            "detection_keywords": [
+              "TODO: keywords"
+            ],
+            "detection_rules": [
+              "TODO: rule 1",
+              "TODO: rule 2"
+            ],
+            "claude_prompt_template": "TODO: template",
+            "adjustment_hint": "TODO: hint",
+            "example": "TODO: example"
+          }
+        ]
+      },
+      {
+        "mhms_id": "53",
+        "mhms_uz_title": "Qarz mablag'lari bo'yicha xarajatlar",
+        "mhms_en_title": "Borrowing Costs",
+        "ifrs_equivalent": "IAS 23",
+        "tier": 2,
+        "nas_treatment": "Borrowing costs generally expensed as incurred",
+        "mhms_treatment": "Requires mandatory capitalization of borrowing costs on qualifying assets",
+        "lex_uz_reference": "Lex.uz MHMS #53",
+        "ifrs_reference": "IAS 23",
+        "users_affected_pct": 50,
+        "complexity": "MEDIUM",
+        "key_gaps": [
+          {
+            "gap_id": "53.1",
+            "title": "TODO: gap title (borrowing costs not capitalized on qualifying assets)",
+            "risk": "MEDIUM",
+            "detection_keywords": [
+              "TODO: keywords"
+            ],
+            "detection_rules": [
+              "TODO: rule 1",
+              "TODO: rule 2"
+            ],
+            "claude_prompt_template": "TODO: template",
+            "adjustment_hint": "TODO: hint",
+            "example": "TODO: example"
+          },
+          {
+            "gap_id": "53.2",
+            "title": "TODO: gap title (capitalization rate calculation missing)",
+            "risk": "LOW",
+            "detection_keywords": [
+              "TODO: keywords"
+            ],
+            "detection_rules": [
+              "TODO: rule 1",
+              "TODO: rule 2"
+            ],
+            "claude_prompt_template": "TODO: template",
+            "adjustment_hint": "TODO: hint",
+            "example": "TODO: example"
+          }
+        ]
+      },
+      {
+        "mhms_id": "55",
+        "mhms_uz_title": "Foyda solig'i",
+        "mhms_en_title": "Income Tax",
+        "ifrs_equivalent": "IAS 12",
+        "tier": 2,
+        "nas_treatment": "Current tax expense recognized per tax return; limited deferred tax recognition",
+        "mhms_treatment": "Requires comprehensive deferred tax recognition via balance sheet temporary differences",
+        "lex_uz_reference": "Lex.uz MHMS #55",
+        "ifrs_reference": "IAS 12",
+        "users_affected_pct": 95,
+        "complexity": "HIGH",
+        "key_gaps": [
+          {
+            "gap_id": "55.1",
+            "title": "TODO: gap title (deferred tax asset/liability not recognized)",
+            "risk": "HIGH",
+            "detection_keywords": [
+              "TODO: keywords"
+            ],
+            "detection_rules": [
+              "TODO: rule 1",
+              "TODO: rule 2"
+            ],
+            "claude_prompt_template": "TODO: template",
+            "adjustment_hint": "TODO: hint",
+            "example": "TODO: example"
+          },
+          {
+            "gap_id": "55.2",
+            "title": "TODO: gap title (temporary difference identification incomplete)",
+            "risk": "HIGH",
+            "detection_keywords": [
+              "TODO: keywords"
+            ],
+            "detection_rules": [
+              "TODO: rule 1",
+              "TODO: rule 2"
+            ],
+            "claude_prompt_template": "TODO: template",
+            "adjustment_hint": "TODO: hint",
+            "example": "TODO: example"
+          },
+          {
+            "gap_id": "55.3",
+            "title": "TODO: gap title (tax rate and recoverability disclosure gap)",
+            "risk": "MEDIUM",
+            "detection_keywords": [
+              "TODO: keywords"
+            ],
+            "detection_rules": [
+              "TODO: rule 1",
+              "TODO: rule 2"
+            ],
+            "claude_prompt_template": "TODO: template",
+            "adjustment_hint": "TODO: hint",
+            "example": "TODO: example"
+          }
+        ]
+      },
+      {
+        "mhms_id": "62",
+        "mhms_uz_title": "Davlat subsidiyalari",
+        "mhms_en_title": "Government Grants",
+        "ifrs_equivalent": "IAS 20",
+        "tier": 2,
+        "nas_treatment": "Grants recognized as income on receipt",
+        "mhms_treatment": "Requires deferred income or asset-offset method matched to related expense/depreciation",
+        "lex_uz_reference": "Lex.uz MHMS #62",
+        "ifrs_reference": "IAS 20",
+        "users_affected_pct": 35,
+        "complexity": "MEDIUM",
+        "key_gaps": [
+          {
+            "gap_id": "62.1",
+            "title": "TODO: gap title (grant income recognized on receipt instead of matched to expense)",
+            "risk": "MEDIUM",
+            "detection_keywords": [
+              "TODO: keywords"
+            ],
+            "detection_rules": [
+              "TODO: rule 1",
+              "TODO: rule 2"
+            ],
+            "claude_prompt_template": "TODO: template",
+            "adjustment_hint": "TODO: hint",
+            "example": "TODO: example"
+          },
+          {
+            "gap_id": "62.2",
+            "title": "TODO: gap title (grant-related asset presentation gap)",
+            "risk": "LOW",
+            "detection_keywords": [
+              "TODO: keywords"
+            ],
+            "detection_rules": [
+              "TODO: rule 1",
+              "TODO: rule 2"
+            ],
+            "claude_prompt_template": "TODO: template",
+            "adjustment_hint": "TODO: hint",
+            "example": "TODO: example"
+          }
+        ]
+      },
+      {
+        "mhms_id": "66",
+        "mhms_uz_title": "Qayta tashkil etish",
+        "mhms_en_title": "Restructuring",
+        "ifrs_equivalent": "IAS 37 (Restructuring)",
+        "tier": 2,
+        "nas_treatment": "Restructuring costs expensed when paid",
+        "mhms_treatment": "Requires provision recognition when detailed formal plan exists and is announced",
+        "lex_uz_reference": "Lex.uz MHMS #66",
+        "ifrs_reference": "IAS 37",
+        "users_affected_pct": 20,
+        "complexity": "MEDIUM",
+        "key_gaps": [
+          {
+            "gap_id": "66.1",
+            "title": "TODO: gap title (restructuring provision recognition timing gap)",
+            "risk": "MEDIUM",
+            "detection_keywords": [
+              "TODO: keywords"
+            ],
+            "detection_rules": [
+              "TODO: rule 1",
+              "TODO: rule 2"
+            ],
+            "claude_prompt_template": "TODO: template",
+            "adjustment_hint": "TODO: hint",
+            "example": "TODO: example"
+          },
+          {
+            "gap_id": "66.2",
+            "title": "TODO: gap title (constructive obligation criteria not assessed)",
+            "risk": "LOW",
+            "detection_keywords": [
+              "TODO: keywords"
+            ],
+            "detection_rules": [
+              "TODO: rule 1",
+              "TODO: rule 2"
+            ],
+            "claude_prompt_template": "TODO: template",
+            "adjustment_hint": "TODO: hint",
+            "example": "TODO: example"
+          }
+        ]
+      },
+      {
+        "mhms_id": "6",
+        "mhms_uz_title": "Xalqaro standartlarga birinchi marta o'tish",
+        "mhms_en_title": "First-time Adoption",
+        "ifrs_equivalent": "IFRS 1",
+        "tier": 2,
+        "nas_treatment": "No formal transition/reconciliation framework exists",
+        "mhms_treatment": "Requires opening IFRS balance sheet and reconciliation of equity/profit to previous GAAP",
+        "lex_uz_reference": "Lex.uz MHMS #6",
+        "ifrs_reference": "IFRS 1",
+        "users_affected_pct": 40,
+        "complexity": "HIGH",
+        "key_gaps": [
+          {
+            "gap_id": "6.1",
+            "title": "TODO: gap title (opening IFRS balance sheet not prepared)",
+            "risk": "HIGH",
+            "detection_keywords": [
+              "TODO: keywords"
+            ],
+            "detection_rules": [
+              "TODO: rule 1",
+              "TODO: rule 2"
+            ],
+            "claude_prompt_template": "TODO: template",
+            "adjustment_hint": "TODO: hint",
+            "example": "TODO: example"
+          },
+          {
+            "gap_id": "6.2",
+            "title": "TODO: gap title (equity/profit reconciliation to previous GAAP missing)",
+            "risk": "HIGH",
+            "detection_keywords": [
+              "TODO: keywords"
+            ],
+            "detection_rules": [
+              "TODO: rule 1",
+              "TODO: rule 2"
+            ],
+            "claude_prompt_template": "TODO: template",
+            "adjustment_hint": "TODO: hint",
+            "example": "TODO: example"
+          },
+          {
+            "gap_id": "6.3",
+            "title": "TODO: gap title (mandatory exemption/exception elections not documented)",
+            "risk": "MEDIUM",
+            "detection_keywords": [
+              "TODO: keywords"
+            ],
+            "detection_rules": [
+              "TODO: rule 1",
+              "TODO: rule 2"
+            ],
+            "claude_prompt_template": "TODO: template",
+            "adjustment_hint": "TODO: hint",
+            "example": "TODO: example"
+          }
+        ]
+      },
+      {
+        "mhms_id": "3",
+        "mhms_uz_title": "Hisob siyosatidagi o'zgarishlar va xatolar",
+        "mhms_en_title": "Changes in Accounting Estimates and Errors",
+        "ifrs_equivalent": "IAS 8",
+        "tier": 2,
+        "nas_treatment": "Corrections generally applied prospectively in current period",
+        "mhms_treatment": "Requires retrospective restatement for policy changes and material prior-period errors",
+        "lex_uz_reference": "Lex.uz MHMS #3",
+        "ifrs_reference": "IAS 8",
+        "users_affected_pct": 55,
+        "complexity": "MEDIUM",
+        "key_gaps": [
+          {
+            "gap_id": "3.1",
+            "title": "TODO: gap title (prior-period error corrected prospectively instead of retrospectively)",
+            "risk": "MEDIUM",
+            "detection_keywords": [
+              "TODO: keywords"
+            ],
+            "detection_rules": [
+              "TODO: rule 1",
+              "TODO: rule 2"
+            ],
+            "claude_prompt_template": "TODO: template",
+            "adjustment_hint": "TODO: hint",
+            "example": "TODO: example"
+          },
+          {
+            "gap_id": "3.2",
+            "title": "TODO: gap title (change in estimate vs change in policy misclassification)",
+            "risk": "LOW",
+            "detection_keywords": [
+              "TODO: keywords"
+            ],
+            "detection_rules": [
+              "TODO: rule 1",
+              "TODO: rule 2"
+            ],
+            "claude_prompt_template": "TODO: template",
+            "adjustment_hint": "TODO: hint",
+            "example": "TODO: example"
+          }
+        ]
+      }
+    ]
+  }
+}
