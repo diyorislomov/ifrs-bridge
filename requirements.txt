@@ -1,7 +1,7 @@
 ﻿anthropic==1.7.0
 streamlit==1.28.0
 pdfplumber==0.10.3
-openpyxl==3.11.2
+openpyxl==3.1.2
 python-dotenv==1.0.0
 supabase==2.0.0
 pytest==7.4.0
