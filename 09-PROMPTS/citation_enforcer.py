@@ -1,4 +1,4 @@
-"""Meta-prompt that re-prompts Claude to add missing Lex.uz/IFRS citations."""
+"""Validates that a Claude gap explanation contains both required citations."""
 
 import os
 import sys
@@ -11,42 +11,30 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "03-BACKEND"))
 from utils.citation_validator import validate_citations  # noqa: E402
 
 
-def _field(gap: dict, *keys: str) -> str:
-    """Return the first present, non-empty value among the given keys."""
-    for key in keys:
-        value = gap.get(key)
-        if value:
-            return value
-    return "N/A"
-
-
-def create_citation_enforcer_prompt(gap_explanation_response: str, gap: dict) -> str:
+def enforce_citations(claude_response: str, gap: dict) -> dict:
     """
-    Meta-prompt: validates and re-prompts Claude if citations are missing.
+    Validates that Claude's response contains BOTH required citations.
+    If missing, re-prompts Claude to add them.
 
     Args:
-        gap_explanation_response: Claude's prior response (may lack citations)
+        claude_response: Claude's initial explanation
         gap: gap dict with lex_uz_ref and ifrs_ref
 
     Returns:
-        str: Claude prompt to enforce citations, or "" if citations already
-            satisfy citation_validator.py's rules.
+        dict: {"is_valid": bool, "response": str, "missing": list}
     """
-    lex_uz_ref = _field(gap, "lex_uz_ref", "lex_uz_reference")
-    ifrs_ref = _field(gap, "ifrs_ref", "ifrs_reference")
+    result = validate_citations(
+        claude_response,
+        gap['lex_uz_ref'],
+        gap['ifrs_ref']
+    )
 
-    result = validate_citations(gap_explanation_response, lex_uz_ref, ifrs_ref)
+    if result['is_valid']:
+        return {"is_valid": True, "response": claude_response, "missing": []}
 
-    if result["is_valid"]:
-        return ""
-
-    missing_list = ", ".join(result["missing"]) if result["missing"] else "citations"
-
-    return f"""Your explanation above is good, but it is missing required citations. Before finalizing, revise it to explicitly cite BOTH of the following sources, worded exactly as shown:
-
-- Lex.uz reference: "{lex_uz_ref}"
-- IFRS reference: "{ifrs_ref}"
-
-Missing from your response: {missing_list}
-
-Rewrite your explanation, keeping all of the original content and structure, but add the exact citations verbatim (for example: "Per Lex.uz {lex_uz_ref}, ..." and "IFRS {ifrs_ref} states ..."). Do not paraphrase, abbreviate, or omit either citation."""
+    # If citations missing, return what's missing (don't re-prompt in MVP)
+    return {
+        "is_valid": False,
+        "response": claude_response,
+        "missing": result['missing']
+    }

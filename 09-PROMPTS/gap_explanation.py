@@ -1,108 +1,73 @@
-"""Prompt template for explaining a detected NAS/MHMS -> IFRS gap in plain language."""
+"""Prompt template and Claude API call for explaining a detected NAS/MHMS gap."""
 
+import os
 
-def _field(gap: dict, *keys: str) -> str:
-    """Return the first present, non-empty value among the given keys.
+from anthropic import Anthropic
+from dotenv import load_dotenv
 
-    gaps.json stores references/treatments at the standard level using
-    "lex_uz_reference"/"ifrs_reference", while callers may pass a merged
-    dict using the shorter "lex_uz_ref"/"ifrs_ref" names. Checking both
-    keeps this template usable either way.
-    """
-    for key in keys:
-        value = gap.get(key)
-        if value:
-            return value
-    return "N/A"
-
-
-_EN_TEMPLATE = """You are an IFRS conversion specialist helping a mid-level accountant (ACCA-level, not a CFO) understand a specific accounting gap identified between Uzbekistan's National Accounting Standards (NAS/MHMS) and IFRS.
-
-GAP DETECTED: {title}
-MHMS STANDARD: MHMS #{mhms_id}
-RISK LEVEL: {risk}
-
-CURRENT NAS/MHMS TREATMENT:
-{nas_treatment}
-
-REQUIRED IFRS TREATMENT:
-{mhms_treatment}
-
-RELEVANT EXTRACT FROM THE FINANCIAL STATEMENT:
-\"\"\"
-{statement_extract}
-\"\"\"
-
-Write a plain-language explanation for the accountant that covers:
-1. WHAT the gap is - describe it in simple terms. Avoid jargon like "liabilities recognition"; say things like "you owe someone money".
-2. WHY it is a gap - explain the difference between the NAS/MHMS treatment and the IFRS treatment.
-3. THE IMPACT - describe how this affects the balance sheet, income statement, and/or cash flow statement.
-4. Cite both references exactly:
-   - Per Lex.uz {lex_uz_ref}, ...
-   - IFRS {ifrs_ref} states ...
-
-Keep your response concise: 300-400 words maximum. Write for an ACCA-level accountant, not a CFO - clear and practical, not academic.
-
-Respond in English.
-
-Your response MUST cite both the Lex.uz and IFRS references exactly. Do not paraphrase the citations."""
-
-
-_UZ_TEMPLATE = """Siz O'zbekiston Milliy hisob standartlari (NAS/MHMS) va IFRS o'rtasida aniqlangan farqni (gap) o'rta darajadagi buxgalterga (ACCA darajasida, moliya direktori emas) tushuntirayotgan IFRS konversiya bo'yicha mutaxassissiz.
-
-ANIQLANGAN FARQ: {title}
-MHMS STANDARTI: MHMS #{mhms_id}
-XAVF DARAJASI: {risk}
-
-JORIY NAS/MHMS YONDASHUVI:
-{nas_treatment}
-
-TALAB QILINADIGAN IFRS YONDASHUVI:
-{mhms_treatment}
-
-MOLIYAVIY HISOBOTDAN TEGISHLI QISM:
-\"\"\"
-{statement_extract}
-\"\"\"
-
-Buxgalter uchun sodda tilda tushuntirish yozing, quyidagilarni qamrab oling:
-1. FARQ NIMA - buni sodda so'zlar bilan tasvirlab bering. "Majburiyatlarni tan olish" kabi murakkab atamalardan qoching; "kimgadir pul qarzdorsiz" kabi sodda gaplardan foydalaning.
-2. NEGA BU FARQ HISOBLANADI - NAS/MHMS yondashuvi bilan IFRS yondashuvi o'rtasidagi farqni tushuntiring.
-3. TA'SIRI - bu balans, foyda-zarar hisoboti va/yoki pul mablag'lari harakati hisobotiga qanday ta'sir qilishini tasvirlab bering.
-4. Ikkala manbani ham aniq keltiring:
-   - Lex.uz {lex_uz_ref} ga ko'ra, ...
-   - IFRS {ifrs_ref} da ko'rsatilishicha ...
-
-Javobingiz qisqa bo'lsin: maksimum 300-400 so'z. ACCA darajasidagi buxgalter uchun yozing, moliya direktori uchun emas - aniq va amaliy bo'lsin, akademik emas.
-
-O'zbek tilida javob bering.
-
-Javobingizda albatta Lex.uz va IFRS manbalarini aniq keltirishingiz SHART. Iqtiboslarni boshqacha so'zlar bilan ifodalamang."""
+load_dotenv(os.path.join(os.path.dirname(__file__), "..", ".env"))
 
 
 def create_gap_explanation_prompt(gap: dict, statement_extract: str, language: str = "en") -> str:
     """
-    Returns a Claude prompt that explains a detected gap in plain language.
+    Returns Claude prompt that explains a detected gap in plain language.
 
     Args:
-        gap: single gap from gaps.json (has gap_id, title, nas_treatment,
-            mhms_treatment, lex_uz_ref, ifrs_ref, adjustment_hint, etc.)
-        statement_extract: relevant text/lines from the financial statement
-            showing the gap
+        gap: gap dict from gaps.json (has gap_id, title, mhms_treatment, lex_uz_ref, ifrs_ref, etc.)
+        statement_extract: relevant text from financial statement showing the gap
         language: "en" (English) or "uz" (Uzbek)
 
     Returns:
         str: Claude prompt string
     """
-    template = _UZ_TEMPLATE if language == "uz" else _EN_TEMPLATE
+    lang_instruction = "Respond in Uzbek." if language == "uz" else "Respond in English."
 
-    return template.format(
-        title=_field(gap, "title"),
-        mhms_id=_field(gap, "mhms_id"),
-        risk=_field(gap, "risk"),
-        nas_treatment=_field(gap, "nas_treatment"),
-        mhms_treatment=_field(gap, "mhms_treatment"),
-        lex_uz_ref=_field(gap, "lex_uz_ref", "lex_uz_reference"),
-        ifrs_ref=_field(gap, "ifrs_ref", "ifrs_reference"),
-        statement_extract=statement_extract,
+    prompt = f"""
+You are an expert Uzbek accountant explaining NAS→MHMS gaps to professionals.
+
+## GAP DETECTED: {gap['title']} (Gap ID: {gap['gap_id']})
+
+### Current Treatment (NAS):
+[This is what the company currently does under old standards]
+
+### Required Treatment (MHMS/IFRS):
+{gap['mhms_treatment']}
+
+### Statement Extract (the evidence):
+{statement_extract}
+
+### Your Task:
+1. Explain WHY this is a gap (what changed, why it matters)
+2. Explain WHAT the impact is (which financial statement line items change)
+3. Cite BOTH:
+   - {gap['lex_uz_ref']} (the exact Uzbek standard)
+   - {gap['ifrs_ref']} (the IFRS equivalent)
+
+Use plain language — no jargon. Assume the reader is an accountant, not an auditor.
+
+{lang_instruction}
+
+CRITICAL: Your response MUST include BOTH citations exactly as written above. Do not paraphrase or merge them.
+"""
+    return prompt
+
+
+def call_gap_explanation(gap: dict, statement_extract: str, language: str = "en") -> str:
+    """
+    Calls Claude API to explain a gap.
+
+    Returns:
+        str: Claude's explanation with mandatory citations
+    """
+    client = Anthropic()
+    prompt = create_gap_explanation_prompt(gap, statement_extract, language)
+
+    message = client.messages.create(
+        model="claude-3-5-sonnet-20241022",
+        max_tokens=1000,
+        messages=[
+            {"role": "user", "content": prompt}
+        ]
     )
+
+    return message.content[0].text
