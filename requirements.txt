@@ -1,8 +1,7 @@
 anthropic==1.7.0
 streamlit==1.61.1
-pdfplumber==0.11.10
+pdfminer.six==20260107
 openpyxl==3.1.2
 python-dotenv==1.0.0
 pytest==9.1.1
-pandas==2.1.4
 requests==2.33.1
