@@ -79,6 +79,7 @@ def extract_from_excel(excel_path: str) -> dict:
     """
     data = {"line_items": {}, "notes": {}}
 
+    wb = None
     try:
         wb = load_workbook(excel_path, read_only=True)
 
@@ -101,6 +102,11 @@ def extract_from_excel(excel_path: str) -> dict:
 
     except Exception as e:
         data['error'] = str(e)
+    finally:
+        # read_only workbooks keep the underlying file handle open until
+        # closed; on Windows this locks the file and blocks deletion.
+        if wb is not None:
+            wb.close()
 
     return data
 
