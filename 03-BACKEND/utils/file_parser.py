@@ -3,6 +3,109 @@ import re
 from pdfminer.high_level import extract_text as _pdfminer_extract_text
 from openpyxl import load_workbook
 
+# A trailing amount at the end of a line: optional leading minus/parenthesis,
+# digits grouped by comma/space/dot separators, optional decimal part,
+# optional closing parenthesis (accounting notation for negatives).
+_AMOUNT_RE = re.compile(r'\(?-?\d[\d,.\s\xa0]{0,20}\d\)?\s*$')
+# An optional numeric account code at the start of a line (e.g. "1000",
+# "10.1"), separated from the account name by whitespace.
+_LEADING_CODE_RE = re.compile(r'^\s*(\d{1,6}(?:[.\-]\d+)?)\s+')
+
+
+def _parse_amount(raw: str):
+    """
+    Parses a numeric string into a float, tolerating the amount formats seen
+    across real financial statements: comma or space thousands separators
+    (including non-breaking spaces), a comma OR dot decimal separator
+    (auto-detected), and parentheses or a leading minus for negatives.
+    Returns None if the string isn't a parseable number.
+    """
+    s = raw.strip()
+    if not s:
+        return None
+
+    negative = False
+    if s.startswith('(') and s.endswith(')'):
+        negative = True
+        s = s[1:-1].strip()
+    if s.startswith('-'):
+        negative = True
+        s = s[1:].strip()
+
+    s = s.replace(' ', '').replace('\xa0', '')
+    if not s:
+        return None
+
+    if ',' in s and '.' in s:
+        # Whichever separator appears last is the decimal point.
+        if s.rfind(',') > s.rfind('.'):
+            s = s.replace('.', '').replace(',', '.')
+        else:
+            s = s.replace(',', '')
+    elif ',' in s:
+        parts = s.split(',')
+        if len(parts) == 2 and len(parts[1]) in (1, 2):
+            s = s.replace(',', '.')  # single comma, 1-2 trailing digits -> decimal
+        else:
+            s = s.replace(',', '')  # otherwise a thousands separator
+    elif '.' in s:
+        parts = s.split('.')
+        if len(parts) > 2 or len(parts[-1]) == 3:
+            s = s.replace('.', '')  # multiple dots, or 3 trailing digits -> thousands separator
+
+    try:
+        value = float(s)
+    except ValueError:
+        return None
+    return -value if negative else value
+
+
+def _extract_line_items(text: str, source: str) -> dict:
+    """
+    Scans text line by line for "<optional code> <name> <amount>" rows,
+    without requiring a rigid account-code prefix or a specific number
+    format -- real statement text extracted from a PDF rarely preserves
+    strict column alignment, decimals/space-thousands are common, and many
+    line items have no visible code at all.
+    """
+    line_items = {}
+    for raw_line in text.split('\n'):
+        line = raw_line.strip()
+        if not line:
+            continue
+
+        amount_match = _AMOUNT_RE.search(line)
+        if not amount_match:
+            continue
+
+        amount_str = amount_match.group().strip()
+        if sum(c.isdigit() for c in amount_str) < 2:
+            continue  # skip isolated single digits (e.g. footnote markers)
+
+        name_part = line[:amount_match.start()].strip()
+        if not name_part:
+            continue
+
+        code = None
+        code_match = _LEADING_CODE_RE.match(name_part)
+        if code_match:
+            code = code_match.group(1)
+            name_part = name_part[code_match.end():].strip()
+        if not name_part:
+            continue
+
+        amount = _parse_amount(amount_str)
+        if amount is None:
+            continue
+
+        line_items[name_part] = {
+            'code': code,
+            'amount': amount,
+            'source': source,
+        }
+
+    return line_items
+
 
 def extract_from_pdf(pdf_path: str) -> dict:
     """
@@ -34,24 +137,10 @@ def extract_from_pdf(pdf_path: str) -> dict:
         if period_match:
             data['period_end'] = f"{period_match.group(1)}-{period_match.group(2)}-{period_match.group(3)}"
 
-        # Extract balance sheet items (simplified: look for account codes + amounts)
-        # Format: "1000  Current Assets  50,000,000"
-        bs_pattern = r'(\d{4})\s+([A-Za-z\s\w]+?)\s+([\d,]+)'
-        for match in re.finditer(bs_pattern, full_text):
-            account_code = match.group(1)
-            account_name = match.group(2).strip()
-            amount_str = match.group(3).replace(',', '')
-            try:
-                amount = float(amount_str)
-                data['line_items'][account_name] = {
-                    'code': account_code,
-                    'amount': amount,
-                    'source': 'PDF'
-                }
-            except ValueError:
-                pass
+        data['line_items'] = _extract_line_items(full_text, source='PDF')
 
-        # Extract notes (section after "Notes to Financial Statements").
+        # Notes section, if a header for one is present (used for a shorter,
+        # more targeted excerpt when available).
         # find() returns 0 for a match at the very start of the text, and 0 is
         # falsy, so `a.find(x) or a.find(y)` would wrongly fall through to the
         # second search in that case. Check each marker explicitly instead.
@@ -59,8 +148,13 @@ def extract_from_pdf(pdf_path: str) -> dict:
         if notes_start == -1:
             notes_start = full_text.find("Тушунтиришлар")
         if notes_start >= 0:
-            notes_text = full_text[notes_start:notes_start + 5000]  # First 5000 chars of notes
-            data['notes']['raw'] = notes_text
+            data['notes']['raw'] = full_text[notes_start:notes_start + 5000]
+        else:
+            # No recognizable "notes" header -- most real statements won't
+            # use this exact phrase. Fall back to a chunk of the full
+            # document text so gap-keyword matching still has real content
+            # to search, instead of nothing at all.
+            data['notes']['raw'] = full_text[:5000]
 
     except Exception as e:
         data['error'] = str(e)
@@ -84,18 +178,31 @@ def extract_from_excel(excel_path: str) -> dict:
         for sheet_idx, sheet_name in enumerate(wb.sheetnames[:2]):
             ws = wb[sheet_name]
 
-            for row in ws.iter_rows(min_row=1, max_row=100, values_only=True):
-                if len(row) >= 2 and row[0] and row[1]:  # Account name, amount
-                    try:
-                        account_name = str(row[0]).strip()
-                        amount = float(str(row[1]).replace(',', '')) if row[1] else 0
-                        data['line_items'][account_name] = {
-                            'sheet': sheet_name,
-                            'amount': amount,
-                            'source': 'Excel'
-                        }
-                    except ValueError:
-                        pass
+            for row in ws.iter_rows(min_row=1, max_row=200, values_only=True):
+                if len(row) < 2 or not row[0]:
+                    continue
+
+                account_name = str(row[0]).strip()
+                if not account_name:
+                    continue
+
+                # The amount isn't always in column B (e.g. current/prior
+                # period columns) -- take the last cell in the row that
+                # parses as a number.
+                amount = None
+                for cell in reversed(row[1:]):
+                    if cell is None:
+                        continue
+                    amount = cell if isinstance(cell, (int, float)) else _parse_amount(str(cell))
+                    if amount is not None:
+                        break
+
+                if amount is not None:
+                    data['line_items'][account_name] = {
+                        'sheet': sheet_name,
+                        'amount': float(amount),
+                        'source': 'Excel'
+                    }
 
     except Exception as e:
         data['error'] = str(e)

@@ -37,6 +37,8 @@ if 'detected_gaps' not in st.session_state:
     st.session_state.detected_gaps = None
 if 'explanations' not in st.session_state:
     st.session_state.explanations = {}
+if 'uploaded_file_name' not in st.session_state:
+    st.session_state.uploaded_file_name = None
 
 # Sidebar navigation
 st.sidebar.title("📑 Navigation")
@@ -53,6 +55,18 @@ if page == "1️⃣ Upload":
     st.header("Step 1: Upload Your NAS Financial Statement")
     st.write("Upload a PDF or Excel file containing your financial statement (Balance Sheet, P&L, Notes)")
 
+    # The file_uploader widget forgets its selection whenever this branch
+    # isn't rendered on a run (e.g. the user was on a different step) --
+    # that's a Streamlit widget-lifecycle quirk, not data loss. The actual
+    # extraction result lives in session_state and survives navigation
+    # regardless, so show that persisted status explicitly rather than
+    # letting an empty-looking uploader imply the extraction was lost.
+    if st.session_state.extracted_data is not None and 'error' not in st.session_state.extracted_data:
+        n_items = len(st.session_state.extracted_data.get('line_items', {}))
+        name = st.session_state.get('uploaded_file_name', 'your file')
+        st.info(f"ℹ️ Already extracted from **{name}** ({n_items} line items found). "
+                f"Uploading a new file below will replace this.")
+
     uploaded_file = st.file_uploader("Choose file", type=['pdf', 'xlsx', 'xls'])
 
     if uploaded_file:
@@ -63,6 +77,7 @@ if page == "1️⃣ Upload":
                 temp_path = _save_uploaded_file(uploaded_file)
                 try:
                     st.session_state.extracted_data = extract_statement(temp_path)
+                    st.session_state.uploaded_file_name = uploaded_file.name
                 finally:
                     os.remove(temp_path)
                 st.success("✅ Data extracted! Go to Step 2.")
@@ -93,6 +108,15 @@ elif page == "2️⃣ Extract":
                     st.write(f"- **{account}:** {details.get('amount', 0):,.0f} UZS")
             else:
                 st.warning("No line items found. Check your file format.")
+
+            # Extraction is regex/text-pattern based (MVP), so it can miss
+            # unusual layouts. Show what was actually pulled from the file
+            # so a mismatch is visible and diagnosable, instead of a silent
+            # "nothing found" with no way to tell why.
+            raw_preview = data.get('notes', {}).get('raw', '')
+            if raw_preview:
+                with st.expander("🔍 Raw extracted text (for troubleshooting)"):
+                    st.text(raw_preview[:3000])
 
 # ============ PAGE 3: DETECT GAPS ============
 elif page == "3️⃣ Detect Gaps":
