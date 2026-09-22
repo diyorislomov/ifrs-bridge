@@ -1,0 +1,146 @@
+[
+  {
+    "gap_id": "1.1",
+    "mhms_id": "1",
+    "title": "Conceptual Framework - Asset & Liability Definitions",
+    "nas_treatment": "[NEED_MENTOR_INPUT]",
+    "mhms_treatment": "Per the IFRS Conceptual Framework (adopted as MHMS Annex 1), an asset exists only if THREE criteria are all met: (1) Right - the entity holds a right that has the potential to produce economic benefits (contractual right to receive cash, right over a physical object, or a right to use intellectual property); (2) Potential to produce economic benefits - the right must be capable of producing economic benefits for the entity in at least one circumstance, even if that is not certain or highly probable; (3) Control - the entity has the present ability to direct the use of the resource and obtain the economic benefits it produces, and to prevent others from doing so. Spending cash does not automatically create an asset - control over the resulting resource must also exist. A liability exists only if THREE criteria are all met: (1) the entity has an obligation; (2) the obligation is to transfer an economic resource; (3) the obligation arose from past events (the entity has already received the economic benefits, or taken the action, that obliges the future transfer). An obligation can arise from law/contract, or from an entity's established practice, published policy, or specific statements (a constructive obligation) if the entity has no practical ability to act inconsistently with them.",
+    "detection_keywords": ["актив", "мажбурият", "ҳуқуқ", "назорат", "жавобгарлик", "иқтисодий нафлар", "иқтисодий ресурсни ўтказиш", "олдинги ҳодиса", "тан олиш мезони", "asset", "liability", "right", "control", "obligation", "economic benefit", "transfer of economic resource", "past event", "recognition criteria"],
+    "detection_rules": [
+      "Rule 1: For each balance-sheet line item, check whether the note discloses a basis for recognition tied only to legal title/ownership or invoice existence, rather than to control + probable future economic benefit (a sign the three-part IFRS asset test per CF §4.3-4.25 was not applied).",
+      "Rule 2: Look for capitalized items where the entity does not have the present ability to direct use / restrict others' access (e.g., goods held on consignment, assets pledged/transferred but still shown on the balance sheet) - these fail the IFRS 'control' criterion (CF §4.19-4.25) even if legal title exists.",
+      "Rule 3: For obligations, check whether liabilities are recognized only when a legal claim/invoice exists, versus constructive obligations arising from established practice or public commitments (CF §4.28-4.35) that IFRS would also require to be recognized.",
+      "Rule 4: Flag balance sheet items recorded purely because cash was spent (e.g., capitalized costs with no identifiable future economic benefit or control), since CF §4.20 explicitly states that incurring expenditure does not by itself create an asset."
+    ],
+    "adjustment_hint": "Re-test each recognized asset and liability against the three-part IFRS definitions (asset: right + potential for economic benefit + control; liability: obligation + transfer of economic resource + arises from past event) rather than legal form or invoice existence alone. Items that fail the test should be derecognized; unrecognized constructive obligations or control-based assets should be added, with balance sheet and equity impact assessed together.",
+    "example": "[ILLUSTRATIVE] A manufacturer capitalizes advance payments made to a supplier for machinery that has not yet been delivered and over which the manufacturer has no present ability to direct use (e.g., the supplier can still substitute or redirect the asset). Under a legal-form/cash-spent view this looks like an asset because cash left the business. Under the IFRS Conceptual Framework's control criterion (§4.19-4.25), no asset exists until the entity has the present ability to control the machinery's use and obtain its economic benefits - until then, the amount is a receivable (right to receive the asset or a refund), not the machinery itself.",
+    "lex_uz_ref": "Lex.uz MHMS #1, §4.3, §4.26 (1-ilova \"Kontseptual asos\")",
+    "ifrs_ref": "IFRS Conceptual Framework §4.3-4.25 (Asset), §4.26-4.47 (Liability)"
+  },
+  {
+    "gap_id": "4.1",
+    "mhms_id": "4",
+    "title": "Events After the Reporting Period - Adjusting vs Non-Adjusting Classification",
+    "nas_treatment": "[NEED_MENTOR_INPUT]",
+    "mhms_treatment": "Events after the reporting period are events, favorable or unfavorable, that occur between the end of the reporting period and the date the financial statements are authorized for issue. There are two types: (1) adjusting events - those that provide evidence of conditions that existed at the end of the reporting period (the financial statements MUST be adjusted); (2) non-adjusting events - those that are indicative of conditions that arose after the reporting period (no adjustment to recognized amounts, but disclosure is required if material). Examples of adjusting events: a court ruling after period-end that confirms a present obligation existed at period-end; a customer's bankruptcy after period-end confirming a receivable was already impaired at period-end; determination of the cost/proceeds of assets purchased/sold before period-end; discovery of fraud or errors. Examples of non-adjusting events (disclose only, if material): a major business combination or disposal after period-end; announcing a plan to discontinue an operation; destruction of a major production facility; announcing a major restructuring; abnormal changes in asset prices or FX rates; changes in tax rates/law. If events after the reporting period show that the going-concern assumption is no longer appropriate, the financial statements must NOT be prepared on a going-concern basis.",
+    "detection_keywords": ["ҳисобот давридан кейинги ҳодисалар", "тузатувчи ҳодиса", "тузатувчи бўлмаган ҳодиса", "фаолият узлуксизлиги", "events after the reporting period", "adjusting event", "non-adjusting event", "subsequent events", "going concern", "суд қарори", "банкротлик"],
+    "detection_rules": [
+      "Rule 1: Check the notes for a 'Subsequent Events' section. If none exists but the signing date is materially later than period-end, flag as a potential disclosure gap.",
+      "Rule 2: Look for post-period-end events confirming a period-end condition (court rulings, customer bankruptcies, determination of pre-period-end transaction amounts) not reflected as adjustments - signals a missing adjusting-event correction.",
+      "Rule 3: Look for material post-period-end events (asset destruction, restructuring, large FX/price swings, new tax legislation) not disclosed at all - signals a missing non-adjusting-event disclosure.",
+      "Rule 4: If sources indicate financial distress after period-end, check whether going-concern was reassessed and disclosed."
+    ],
+    "adjustment_hint": "For adjusting events: revise the recognized provision, receivable impairment, or other affected balance to reflect the condition that existed at period-end. For non-adjusting events: do not change recognized amounts; disclose the event's nature and estimated financial effect. If a non-adjusting event undermines going concern, flag for reassessment of the entire basis of preparation.",
+    "example": "[ILLUSTRATIVE] A manufacturer's year-end (31 Dec) statements are authorized for issue on 15 March. In February, a court rules against the company in a lawsuit already ongoing at 31 Dec, confirming a present obligation existed at year-end. The company had disclosed this only as a contingent liability. Under IAS 10, this is an adjusting event: a provision must be recognized as of 31 Dec, not merely disclosed as contingent.",
+    "lex_uz_ref": "Lex.uz MHMS #4, §3 (ta'riflar), §8-9 (10-son BHXS \"Hisobot davridan keyingi hodisalar\")",
+    "ifrs_ref": "IAS 10.3 (Definitions), IAS 10.8-9 (Adjusting events after the reporting period)"
+  },
+  {
+    "gap_id": "40.1",
+    "mhms_id": "40",
+    "title": "Operating Lease Capitalization - Right-of-Use Asset and Lease Liability",
+    "nas_treatment": "[NEED_MENTOR_INPUT]",
+    "mhms_treatment": "At the commencement date of a lease, the lessee recognizes BOTH a right-of-use (ROU) asset AND a lease liability on the balance sheet - there is no off-balance-sheet 'operating lease' category for lessees (a narrow exemption exists only for short-term leases of 12 months or less, and low-value underlying assets). The lease liability is initially measured at the present value of lease payments not yet paid, discounted using the rate implicit in the lease or, if not readily determinable, the lessee's incremental borrowing rate. Lease payments include: fixed payments (less incentives), index/rate-linked variable payments, residual value guarantee amounts, purchase option exercise price (if reasonably certain), and termination penalties (if applicable). The ROU asset is initially measured at cost: the initial lease liability, payments made at/before commencement (less incentives), initial direct costs, and estimated dismantling/restoration costs. The lessee subsequently depreciates the ROU asset and accretes interest on the lease liability separately - front-loading the combined expense relative to straight-line operating lease expense.",
+    "detection_keywords": ["ижара", "фойдаланиш ҳуқуқидаги актив", "ижара бўйича мажбурият", "оператив ижара", "operating lease", "right-of-use asset", "lease liability", "дисконтланган қиймат", "lease commencement"],
+    "detection_rules": [
+      "Rule 1: Search for a straight-line 'rent expense' line with no corresponding right-of-use asset or lease liability on the balance sheet - the primary signature of an uncapitalized operating lease.",
+      "Rule 2: Look for lease commitment disclosures stated only as future minimum payment schedules, without any recognized balance sheet asset/liability.",
+      "Rule 3: Check whether depreciation and interest expense are reported separately for leased assets; a single flat 'rent' line signals the ROU/lease-liability split was not applied.",
+      "Rule 4: Confirm any identified lease genuinely qualifies for the short-term or low-value exemption before flagging it as a gap."
+    ],
+    "adjustment_hint": "For each lease that isn't short-term or low-value, recognize a right-of-use asset and a lease liability at the present value of remaining lease payments. Replace the flat rent expense with depreciation of the ROU asset plus interest expense on the lease liability. Balance sheet assets and liabilities both increase; expense timing shifts from straight-line to front-loaded.",
+    "example": "[ILLUSTRATIVE] A retailer leases a warehouse for 5 years at 200,000,000 UZS/year, currently expensing rent straight-line with no balance sheet recognition. Under IFRS 16.22, at commencement the retailer must recognize a lease liability equal to the present value of the five payments and a right-of-use asset of similar initial amount, then depreciate the asset and accrete interest on the liability separately.",
+    "lex_uz_ref": "Lex.uz MHMS #40, §22 (16-son MHXS \"Ijara\")",
+    "ifrs_ref": "IFRS 16.22 (Recognition: right-of-use asset and lease liability)"
+  },
+  {
+    "gap_id": "50.1",
+    "mhms_id": "50",
+    "title": "Revenue Recognition - Five-Step Model Timing and Criteria",
+    "nas_treatment": "[NEED_MENTOR_INPUT]",
+    "mhms_treatment": "The core principle is that an entity recognizes revenue to depict the transfer of promised goods or services to customers in an amount that reflects the consideration to which the entity expects to be entitled. This is applied through a five-step model: (1) Identify the contract with a customer; (2) Identify the performance obligations - each distinct promised good/service accounted for separately; (3) Determine the transaction price, including estimates of variable consideration; (4) Allocate the transaction price to the performance obligations, generally by relative standalone selling price; (5) Recognize revenue when (or as) each performance obligation is satisfied - i.e. when control transfers - either at a point in time or over time. This differs fundamentally from single-event recognition (e.g., recognizing all revenue on shipment or invoicing) because a contract with multiple deliverables must be split into separate performance obligations, each potentially recognized at a different time or pattern.",
+    "detection_keywords": ["тушум", "харидорлар билан шартнома", "бажариш жавобгарлиги", "беш қадамли модел", "revenue recognition", "performance obligation", "transaction price", "point in time", "over time", "тушумни тан олиш"],
+    "detection_rules": [
+      "Rule 1: Check whether revenue is recognized as a single event tied to invoicing or shipment regardless of contract content - a sign the five-step model was not applied.",
+      "Rule 2: For contracts bundling multiple deliverables (equipment + installation + service), check whether revenue was recognized as one lump sum at delivery instead of allocated across separate performance obligations.",
+      "Rule 3: Look for long-term contracts where revenue is recognized only on final completion rather than over time as work progresses.",
+      "Rule 4: Check whether variable consideration (discounts, rebates, returns) is estimated into the transaction price, or only recognized once certain."
+    ],
+    "adjustment_hint": "Re-map each customer contract against the five-step model: split it into distinct performance obligations, determine the transaction price (including estimated variable consideration), allocate it by relative standalone selling price, and recognize revenue as each obligation is satisfied rather than all at once.",
+    "example": "[ILLUSTRATIVE] A company sells industrial equipment for 500,000,000 UZS with a bundled 2-year maintenance service, currently recognizing the full amount on delivery. Under the five-step model, the price must be allocated between the equipment (point-in-time obligation) and the maintenance service (over-time obligation), so only the equipment's portion is recognized at delivery.",
+    "lex_uz_ref": "Lex.uz MHMS #50, §2 (asosiy tamoyil), §9 (15-son MHXS \"Xaridorlar bilan shartnomalar bo'yicha tushum\")",
+    "ifrs_ref": "IFRS 15.2 (Core principle), IFRS 15.9 (Contract identification criteria)"
+  },
+  {
+    "gap_id": "22.1",
+    "mhms_id": "22",
+    "title": "PP&E Componentization - Separate Depreciation of Significant Parts",
+    "nas_treatment": "[NEED_MENTOR_INPUT]",
+    "mhms_treatment": "An item of PP&E is recognized only if it is probable that future economic benefits will flow to the entity and its cost can be measured reliably. Beyond initial recognition, each part of an item of PP&E with a cost significant in relation to the total cost must be depreciated separately (componentization) - e.g., an aircraft's airframe and engines depreciated separately due to different useful lives. Parts with the same useful life and depreciation method may be grouped. The standard does not prescribe the unit of account, so judgment is required - in some cases, individually insignificant items (tools, molds, dies) may be aggregated.",
+    "detection_keywords": ["асосий воситалар", "компонент", "эскириш", "аҳамиятли компонент", "componentization", "significant part", "depreciation", "component depreciation", "PP&E", "useful life"],
+    "detection_rules": [
+      "Rule 1: Check whether major PP&E items are depreciated as a single unit over one useful life rather than split into significant components each with its own useful life.",
+      "Rule 2: Check the fixed asset register for whether replacement of a major part is capitalized as a new component with the old part derecognized, versus expensed or added without derecognition.",
+      "Rule 3: Compare disclosed useful lives against the physical/economic reality of major asset classes - one useful life per asset class regardless of complexity signals missing componentization.",
+      "Rule 4: For land-and-building combinations, confirm land and buildings are accounted for as separate components."
+    ],
+    "adjustment_hint": "Identify PP&E items with significant parts of materially different useful lives, split the recognized cost across those parts, and depreciate each separately. When a significant part is replaced, derecognize the replaced part's carrying amount and capitalize the new part as its own component.",
+    "example": "[ILLUSTRATIVE] A cement plant capitalizes its production facility as a single asset depreciated over 25 years, including a kiln lining replaced every 5 years. Under IAS 16.43-44, the lining should be a separate component depreciated over 5 years; when replaced, its remaining carrying amount is derecognized and the new lining capitalized separately.",
+    "lex_uz_ref": "Lex.uz MHMS #22, §7 (tan olish mezonlari), §43-44 (16-son BHXS \"Asosiy vositalar\")",
+    "ifrs_ref": "IAS 16.7 (Recognition), IAS 16.43-44 (Componentization / separate depreciation of significant parts)"
+  },
+  {
+    "gap_id": "20.1",
+    "mhms_id": "20",
+    "title": "Inventory Valuation - Lower of Cost and Net Realizable Value",
+    "nas_treatment": "[NEED_MENTOR_INPUT]",
+    "mhms_treatment": "Inventories are measured at the lower of cost and net realizable value (NRV) - not at cost alone. Cost comprises all costs of purchase, conversion, and other costs to bring inventory to its present location and condition. NRV is the estimated selling price in the ordinary course of business, less estimated costs of completion and costs necessary to make the sale. Cost of non-interchangeable items uses specific identification; for interchangeable items, FIFO or weighted-average is used (LIFO is not permitted). Write-downs to NRV are typically made item by item, reflecting increased completion/selling costs, physical damage, obsolescence, or falling selling prices. Costs excluded from inventory (expensed as incurred) include abnormal waste, unnecessary storage costs, unrelated administrative overheads, and selling costs.",
+    "detection_keywords": ["захиралар", "соф сотиш қиймати", "таннарх", "ФИФО", "ўртача тортилган қиймат", "inventory", "net realizable value", "NRV", "lower of cost and NRV", "FIFO", "write-down"],
+    "detection_rules": [
+      "Rule 1: Check for evidence of year-end NRV testing; inventory carried strictly at cost with no NRV comparison or write-down history is a red flag where slow-moving/obsolete stock is plausible.",
+      "Rule 2: Look for obsolete, slow-moving, or damaged inventory (aging schedules, low turnover, discontinued lines) not written down.",
+      "Rule 3: Confirm the disclosed cost formula is FIFO or weighted-average, not LIFO or an unsupported method.",
+      "Rule 4: Check whether fixed production overheads are allocated based on normal capacity versus fully absorbed regardless of actual output."
+    ],
+    "adjustment_hint": "Compare the carrying cost of inventory against NRV at each reporting date, and write down any inventory carried above NRV, expensing the write-down in the period it occurs. Confirm cost is determined by FIFO or weighted-average.",
+    "example": "[ILLUSTRATIVE] A company carries discontinued finished-goods inventory at its original cost of 150,000,000 UZS, but it can now only be sold for 90,000,000 UZS after reconditioning costs of 10,000,000 UZS. Under IAS 2.9, inventory should be written down to its NRV of 80,000,000 UZS, with the 70,000,000 UZS write-down expensed immediately.",
+    "lex_uz_ref": "Lex.uz MHMS #20, §6 (ta'riflar), §9 (2-son BHXS \"Zahiralar\")",
+    "ifrs_ref": "IAS 2.6 (Definitions), IAS 2.9 (Lower of cost and net realizable value)"
+  },
+  {
+    "gap_id": "30.1",
+    "mhms_id": "30",
+    "title": "Financial Instruments Classification and Expected Credit Loss Model",
+    "nas_treatment": "[NEED_MENTOR_INPUT]",
+    "mhms_treatment": "Financial assets are classified based on two tests applied together: the entity's business model for managing the asset, and its contractual cash flow characteristics. A financial asset is measured at amortized cost only if BOTH: (a) held within a business model to collect contractual cash flows, AND (b) contractual terms give rise to cash flows that are solely payments of principal and interest (SPPI). Measured at FVOCI if held to both collect and sell, and passes SPPI. All others (including most equity investments) are measured at FVTPL. Separately, a loss allowance for expected credit losses (ECL) must be recognized on amortized-cost and FVOCI assets - replacing the old 'incurred loss' model where provisions were only recognized after a loss event. Under the general approach, a 12-month ECL allowance is recognized initially, moving to lifetime ECL once credit risk has increased significantly - meaning credit losses must be estimated even before any specific default trigger.",
+    "detection_keywords": ["молиявий инструментлар", "амортизацияланган қиймат", "ҳаққоний қиймат", "кутилаётган кредит зарарлар", "financial instruments", "amortized cost", "fair value", "expected credit loss", "ECL", "business model test", "SPPI"],
+    "detection_rules": [
+      "Rule 1: Check whether receivables, loans, and debt investments are classified via a formal business-model + SPPI test, or simply carried at cost/invoice value by default.",
+      "Rule 2: Look for a specific-provision-only approach (provision booked only on default/dispute) with no general loss allowance for performing balances - signals the ECL model was not applied.",
+      "Rule 3: Check whether equity investments are carried at cost with no annual fair value reassessment.",
+      "Rule 4: Review whether trade receivables have any loss allowance for performing (not-yet-overdue) balances - a zero allowance with no disclosed ECL methodology is a red flag."
+    ],
+    "adjustment_hint": "Classify each financial asset by business model and contractual cash flow characteristics (amortized cost, FVOCI, or FVTPL), and separately recognize a loss allowance for expected credit losses on amortized-cost and FVOCI assets - even performing receivables need a forward-looking allowance, not just specifically-identified bad debts.",
+    "example": "[ILLUSTRATIVE] A company holds trade receivables of 300,000,000 UZS from a diversified customer base, none overdue, with no provision recognized. Under IFRS 9.5.5.1-5.5.5, expected credit losses must be estimated (e.g., from historical default rates) and a loss allowance recognized now, reducing the receivables' net carrying value.",
+    "lex_uz_ref": "Lex.uz MHMS #30, §4.1.1-4.1.2 (tasniflash mezonlari), §5.5.1-5.5.5 (9-son MHXS \"Moliyaviy instrumentlar\")",
+    "ifrs_ref": "IFRS 9.4.1.1-4.1.2 (Classification of financial assets), IFRS 9.5.5.1-5.5.5 (Expected credit losses - general approach)"
+  },
+  {
+    "gap_id": "55.1",
+    "mhms_id": "55",
+    "title": "Income Tax - Deferred Tax Assets and Liabilities",
+    "nas_treatment": "[NEED_MENTOR_INPUT]",
+    "mhms_treatment": "A deferred tax liability or asset arises whenever the carrying amount of an asset or liability differs from its tax base, creating a 'temporary difference.' The tax base of an asset is the amount deductible for tax purposes against taxable economic benefits when the entity recovers the carrying amount; if benefits are not taxable, tax base equals carrying amount. The tax base of a liability is generally its carrying amount less amounts deductible in future periods. Taxable temporary differences give rise to deferred tax liabilities; deductible temporary differences give rise to deferred tax assets. Deferred tax must generally be recognized for essentially all temporary differences - not just the current-period tax liability from the tax return. A deferred tax asset is also recognized for unused tax losses/credits carried forward, to the extent future taxable profit is probable.",
+    "detection_keywords": ["фойда солиғи", "кечиктирилган солиқ", "вақтинчалик фарқлар", "солиқ базаси", "income tax", "deferred tax asset", "deferred tax liability", "temporary difference", "tax base", "current tax"],
+    "detection_rules": [
+      "Rule 1: Check for any deferred tax asset/liability line; complete absence, with only a 'current tax payable' line, signals deferred tax was not recognized.",
+      "Rule 2: For assets with book vs. tax depreciation rate differences, verify whether the resulting temporary difference was quantified and deferred tax recognized.",
+      "Rule 3: Check for unused tax losses carried forward with no corresponding deferred tax asset, or recognized without assessing probable future taxable profit.",
+      "Rule 4: Look for PP&E revaluation (Gap 22.1) without corresponding deferred tax on the revaluation surplus."
+    ],
+    "adjustment_hint": "Compare the tax base of each material asset/liability against its book carrying amount, identify resulting temporary differences, and recognize the corresponding deferred tax liabilities/assets (assets only to the extent future taxable profit is probable). This affects both the balance sheet (new DTA/DTL lines) and income statement (deferred tax expense/income).",
+    "example": "[ILLUSTRATIVE] A company's equipment has a book value of 100,000,000 UZS but a tax base of 70,000,000 UZS due to faster tax depreciation, with no deferred tax recognized. Under IAS 12.5 and .7-8, this 30,000,000 UZS taxable temporary difference requires a deferred tax liability at the applicable tax rate.",
+    "lex_uz_ref": "Lex.uz MHMS #55, §5 (ta'riflar), §7-8 (12-son BHXS \"Foyda soliqlari\")",
+    "ifrs_ref": "IAS 12.5 (Definitions - temporary differences, tax base, DTA/DTL), IAS 12.7-8 (Tax base)"
+  }
+]
