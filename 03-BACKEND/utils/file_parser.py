@@ -3,13 +3,60 @@ import re
 from pdfminer.high_level import extract_text as _pdfminer_extract_text
 from openpyxl import load_workbook
 
-# A trailing amount at the end of a line: optional leading minus/parenthesis,
-# digits grouped by comma/space/dot separators, optional decimal part,
-# optional closing parenthesis (accounting notation for negatives).
-_AMOUNT_RE = re.compile(r'\(?-?\d[\d,.\s\xa0]{0,20}\d\)?\s*$')
+# An amount token: optional leading minus/parenthesis, digits grouped by
+# comma/space/dot separators, optional decimal part, optional closing
+# parenthesis (accounting notation for negatives).
+_AMOUNT_TOKEN = r'\(?-?\d[\d,.\s\xa0]{0,20}\d\)?'
+# A trailing amount at the end of a line.
+_AMOUNT_RE = re.compile(_AMOUNT_TOKEN + r'\s*$')
+# Same as _AMOUNT_TOKEN but WITHOUT internal spaces, used only for the
+# two-column pattern below. Two separate space-grouped amounts on one line
+# (e.g. "30 000 000  25 000 000") are ambiguous with a single space-grouped
+# amount ("30 000 000") -- allowing spaces inside each column's token there
+# would let a single number get mis-split across the two columns. Comma/dot
+# grouping doesn't have this ambiguity, so it's still supported.
+_AMOUNT_TOKEN_NO_SPACE = r'\(?-?\d[\d,.]{0,20}\d\)?'
+# Two trailing amounts (current + prior period columns), with a label
+# before them that contains at least one letter -- [^\W\d_] is a
+# Unicode-aware "is a letter" check, so this covers Latin and Cyrillic
+# (including Ў Қ Ғ Ҳ) without hardcoding specific alphabets.
+_TWO_COLUMN_RE = re.compile(
+    rf'^(?P<label>.*?[^\W\d_].*?)\s+(?P<cur>{_AMOUNT_TOKEN_NO_SPACE})\s+(?P<prev>{_AMOUNT_TOKEN_NO_SPACE})\s*$'
+)
 # An optional numeric account code at the start of a line (e.g. "1000",
 # "10.1"), separated from the account name by whitespace.
 _LEADING_CODE_RE = re.compile(r'^\s*(\d{1,6}(?:[.\-]\d+)?)\s+')
+# Date header lines like "June 30, 2026", which would otherwise look like
+# a label followed by a trailing amount ("2026").
+_DATE_LINE_RE = re.compile(r',\s*(19|20)\d{2}\s*$')
+# Company legal-entity suffix (Latin and Cyrillic, Uzbek and international).
+_COMPANY_SUFFIX_RE = re.compile(r'\b(?:Ltd|LLC|JSC|MChJ|AJ|АЖ|МЧЖ|QK|ҚК)\b', re.IGNORECASE)
+# A quoted company name, e.g. '"Example"' or '«Namuna»'.
+_QUOTED_NAME_RE = re.compile(r'[«"]([^«»"]{2,80})[»"]')
+
+
+def _find_company_name(text: str):
+    """
+    Finds a company name near a legal-entity suffix (e.g. LLC, MChJ). Uzbek
+    company names are conventionally quoted (e.g. «Namuna» MChJ), so a
+    quoted chunk on the same line as the suffix is preferred; otherwise
+    falls back to the last few words before the suffix.
+    """
+    suffix_match = _COMPANY_SUFFIX_RE.search(text)
+    if not suffix_match:
+        return None
+
+    line_start = text.rfind('\n', 0, suffix_match.start()) + 1
+    window = text[line_start:suffix_match.end()]
+
+    quoted_match = _QUOTED_NAME_RE.search(window)
+    if quoted_match:
+        return f'{quoted_match.group(1).strip()} {suffix_match.group()}'
+
+    prefix = window[:suffix_match.start() - line_start].strip(' \'"«»()-—')
+    words = prefix.split()
+    name = ' '.join(words[-6:]) if words else ''
+    return f'{name} {suffix_match.group()}'.strip()
 
 
 def _parse_amount(raw: str):
@@ -60,18 +107,71 @@ def _parse_amount(raw: str):
     return -value if negative else value
 
 
+def _clean_label(name_part: str) -> tuple:
+    """
+    Strips an optional leading numeric account code and, for bilingual
+    "Uzbek label / English label" rows, keeps only the segment after the
+    last "/". Returns (code, cleaned_label).
+    """
+    code = None
+    code_match = _LEADING_CODE_RE.match(name_part)
+    if code_match:
+        code = code_match.group(1)
+        name_part = name_part[code_match.end():].strip()
+
+    if '/' in name_part:
+        name_part = name_part.rsplit('/', 1)[-1].strip()
+
+    return code, name_part
+
+
+def _is_header_like(name_part: str) -> bool:
+    """True for a "label" that's actually leftover digits/punctuation from a
+    header/column-title row, not a real account name."""
+    return not name_part or re.fullmatch(r'[\d\-\s.]*', name_part) is not None
+
+
 def _extract_line_items(text: str, source: str) -> dict:
     """
-    Scans text line by line for "<optional code> <name> <amount>" rows,
+    Scans text line by line for "<optional code> <name> <amount(s)>" rows,
     without requiring a rigid account-code prefix or a specific number
     format -- real statement text extracted from a PDF rarely preserves
     strict column alignment, decimals/space-thousands are common, and many
     line items have no visible code at all.
+
+    Prefers a two-column match (current + prior period, common in
+    comparative statements) and falls back to a single trailing amount.
     """
     line_items = {}
     for raw_line in text.split('\n'):
         line = raw_line.strip()
-        if not line:
+        if not line or _DATE_LINE_RE.search(line):
+            continue
+
+        two_col_match = _TWO_COLUMN_RE.match(line)
+        if two_col_match:
+            label_raw = two_col_match.group('label').strip()
+            label_words = label_raw.split()
+            # If the label's last word is itself all digits, this is almost
+            # certainly a single space-grouped number ("30 000 000") that
+            # got mis-split across the two "columns", not a real two-column
+            # row -- a real account name essentially never ends in a bare
+            # number. Fall through to single-amount handling instead.
+            if label_words and re.fullmatch(r'[\d,.]+', label_words[-1]):
+                two_col_match = None
+
+        if two_col_match:
+            code, name_part = _clean_label(label_raw)
+            if _is_header_like(name_part):
+                continue
+            amount = _parse_amount(two_col_match.group('cur'))
+            prior_amount = _parse_amount(two_col_match.group('prev'))
+            if amount is None:
+                continue
+            entry = {'code': code, 'amount': amount, 'source': source}
+            if prior_amount is not None:
+                entry['prior_amount'] = prior_amount
+            line_items[name_part] = entry
             continue
 
         amount_match = _AMOUNT_RE.search(line)
@@ -82,16 +182,8 @@ def _extract_line_items(text: str, source: str) -> dict:
         if sum(c.isdigit() for c in amount_str) < 2:
             continue  # skip isolated single digits (e.g. footnote markers)
 
-        name_part = line[:amount_match.start()].strip()
-        if not name_part:
-            continue
-
-        code = None
-        code_match = _LEADING_CODE_RE.match(name_part)
-        if code_match:
-            code = code_match.group(1)
-            name_part = name_part[code_match.end():].strip()
-        if not name_part:
+        code, name_part = _clean_label(line[:amount_match.start()].strip())
+        if _is_header_like(name_part):
             continue
 
         amount = _parse_amount(amount_str)
@@ -128,9 +220,9 @@ def extract_from_pdf(pdf_path: str) -> dict:
         # (In production, use ML-based table detection; for MVP, regex is fine)
 
         # Extract company name (usually on first page)
-        company_match = re.search(r'(?:компания|ТОВ|МЧЖ|JSC|LLC)\s+(["\']?[\w\s\-]+["\']?)', full_text[:500])
-        if company_match:
-            data['company_name'] = company_match.group(1).strip()
+        company_name = _find_company_name(full_text[:2000])
+        if company_name:
+            data['company_name'] = company_name
 
         # Extract reporting period (look for date pattern YYYY-MM-DD or Uzbek date)
         period_match = re.search(r'(\d{4})-(\d{2})-(\d{2})', full_text)

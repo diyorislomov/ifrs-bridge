@@ -8,7 +8,7 @@ sys.path.insert(
     0, os.path.join(os.path.dirname(__file__), "..", "03-BACKEND")
 )
 
-from utils.file_parser import _parse_amount, _extract_line_items  # noqa: E402
+from utils.file_parser import _parse_amount, _extract_line_items, _find_company_name  # noqa: E402
 
 
 class TestParseAmount(unittest.TestCase):
@@ -76,6 +76,54 @@ class TestExtractLineItems(unittest.TestCase):
     def test_source_is_tagged(self):
         items = _extract_line_items("Revenue 1,000,000\n", source="PDF")
         self.assertEqual(items["Revenue"]["source"], "PDF")
+
+    def test_two_column_current_and_prior_period(self):
+        text = (
+            "Захиралар / Inventory 30,000,000 25,000,000\n"
+            "Cash (500,000) (400,000)\n"
+            "1000 Current Assets 50,000,000 45,000,000\n"
+        )
+        items = _extract_line_items(text, source="PDF")
+
+        # Bilingual "uz / en" label keeps only the segment after the slash.
+        self.assertEqual(items["Inventory"]["amount"], 30000000.0)
+        self.assertEqual(items["Inventory"]["prior_amount"], 25000000.0)
+
+        self.assertEqual(items["Cash"]["amount"], -500000.0)
+        self.assertEqual(items["Cash"]["prior_amount"], -400000.0)
+
+        self.assertEqual(items["Current Assets"]["code"], "1000")
+        self.assertEqual(items["Current Assets"]["prior_amount"], 45000000.0)
+
+    def test_space_grouped_number_not_mis_split_as_two_columns(self):
+        # "30 000 000" is ONE number using spaces as thousands separators,
+        # not two separate columns -- regression test for a real bug found
+        # while adding two-column support (it briefly split this into
+        # cur="000" prev="000" with "Захиралар 30" swallowed as the label).
+        items = _extract_line_items("Захиралар 30 000 000\n", source="PDF")
+        self.assertEqual(items["Захиралар"]["amount"], 30000000.0)
+        self.assertNotIn("prior_amount", items["Захиралар"])
+
+    def test_date_header_line_ignored(self):
+        items = _extract_line_items("Statement as of June 30, 2026\n", source="PDF")
+        self.assertEqual(items, {})
+
+
+class TestFindCompanyName(unittest.TestCase):
+    def test_quoted_name_with_latin_suffix(self):
+        text = '"Example Trading" LLC\nFinancial Statements'
+        self.assertEqual(_find_company_name(text), "Example Trading LLC")
+
+    def test_quoted_name_with_guillemets_and_cyrillic_suffix(self):
+        text = "«Namuna Savdo» MChJ\nMoliyaviy hisobot"
+        self.assertEqual(_find_company_name(text), "Namuna Savdo MChJ")
+
+    def test_unquoted_name_falls_back_to_trailing_words(self):
+        text = "ABC AJ konsolidatsiyalashgan hisobot"
+        self.assertEqual(_find_company_name(text), "ABC AJ")
+
+    def test_no_suffix_returns_none(self):
+        self.assertIsNone(_find_company_name("No legal suffix here at all"))
 
 
 if __name__ == "__main__":
