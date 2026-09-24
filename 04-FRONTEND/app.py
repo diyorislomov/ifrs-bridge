@@ -101,6 +101,14 @@ elif page == "2️⃣ Extract":
             with col2:
                 st.write(f"**Period End:** {data.get('period_end', 'Unknown')}")
 
+            if data.get('ocr_used'):
+                st.info(
+                    "This file had no text layer (a scanned/image PDF), so it was "
+                    "read with OCR. Numbers extracted this way are less reliable than "
+                    "from a native PDF or Excel file -- please double-check amounts "
+                    "against the original scan before relying on them."
+                )
+
             st.subheader("Line Items Extracted")
             if data['line_items']:
                 st.write(f"Found {len(data['line_items'])} line items:")

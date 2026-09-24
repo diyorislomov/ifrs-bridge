@@ -1,3 +1,4 @@
+import io
 import re
 
 from pdfminer.high_level import extract_text as _pdfminer_extract_text
@@ -343,6 +344,140 @@ def _extract_line_items_cell_per_line(text: str, source: str) -> dict:
     return line_items
 
 
+# A row code (2-4 digits) sitting mid-line between a label and its amount
+# column(s) -- the shape OCR text naturally produces for a scanned table
+# row, since OCR reads left-to-right across a whole row rather than
+# preserving per-cell boundaries the way a text-layer PDF's cell-per-line
+# extraction does. The lookbehind requires the code to immediately follow a
+# letter or ")" (the end of label text), not another digit group -- this
+# excludes account-code references inside the label itself (e.g. the digits
+# in "(0100, 0300)"), which are preceded by other digits/punctuation, not by
+# label text.
+_OCR_MID_CODE_RE = re.compile(
+    r'(?:(?<=[^\W\d_])|(?<=\)))\s+(\d{2,4})\s+(?=[\d(\-{|\xa6\[\]])'
+)
+# OCR misreads a table's vertical gridline as one of several stray
+# characters depending on image noise -- normalize all of them to find the
+# boundary between the current- and prior-period amount columns.
+_OCR_COLUMN_DELIM_RE = re.compile(r'[{|\xa6\[\]]+')
+
+
+def _split_ocr_amount_region(region: str):
+    """
+    Splits the trailing "amount region" of an OCR'd table row (everything
+    after the row code) into a (current, prior) pair of raw amount strings.
+    `prior` is None when only one amount could be identified.
+
+    Prefers an explicit column delimiter (the OCR-misread gridline
+    character) when present. Without one, the two amounts were run together
+    with nothing but a space -- ambiguous in general, since space is also
+    the thousands-group separator, but a short (<=2 digit) trailing group
+    is never the tail of a longer grouped number in this document (real
+    amounts group in 3s), so it's treated as a distinct, separate amount
+    (a common case here: a zero balance in the prior-period column).
+    """
+    region = region.strip()
+    if not region:
+        return None, None
+
+    # A lone "_" sometimes appears right after the gridline character, as a
+    # second OCR misread of the same border -- strip it before it gets
+    # treated as part of the amount that follows.
+    parts = [
+        re.sub(r'^_\s+', '', p.strip()).strip()
+        for p in _OCR_COLUMN_DELIM_RE.split(region)
+        if p.strip()
+    ]
+    parts = [p for p in parts if p]
+    if len(parts) >= 2:
+        return parts[0], parts[-1]
+    if not parts:
+        return None, None
+
+    tokens = parts[0].split()
+    if len(tokens) >= 2 and len(tokens[-1]) <= 2:
+        return ' '.join(tokens[:-1]), tokens[-1]
+
+    # No delimiter and no short trailing group: if this were genuinely one
+    # amount it would still be a plausible statement figure, but past a
+    # certain digit count it's almost certainly two amounts run together
+    # with the gridline lost entirely -- there's no way to tell where the
+    # split belongs, and guessing would silently fabricate a wrong
+    # multi-trillion figure. Real amounts in these statements top out
+    # around 12 digits, so this leaves headroom before rejecting.
+    digit_count = sum(c.isdigit() for c in parts[0])
+    if digit_count > 13:
+        return None, None
+
+    return parts[0], None
+
+
+def _extract_line_items_ocr(text: str, source: str) -> dict:
+    """
+    Extracts line items from OCR'd text (scanned/image-only PDF pages).
+    OCR naturally reconstructs each table row as a single text line --
+    unlike a text-layer PDF, where each cell may land on its own line --
+    so this looks for "<label> <code> <amount(s)>" on one line rather than
+    the cell-per-line pattern.
+    """
+    line_items = {}
+    for raw_line in text.split('\n'):
+        line = raw_line.strip()
+        if not line or _DATE_LINE_RE.search(line):
+            continue
+
+        matches = list(_OCR_MID_CODE_RE.finditer(line))
+        if not matches:
+            continue
+        code_match = matches[0]
+
+        name_part = line[:code_match.start()].strip()
+        if _is_header_like(name_part):
+            continue
+
+        cur_str, prior_str = _split_ocr_amount_region(line[code_match.end():])
+        if cur_str is None:
+            continue
+        amount = _parse_amount(cur_str)
+        if amount is None:
+            continue
+
+        entry = {'code': code_match.group(1), 'amount': amount, 'source': source}
+        if prior_str is not None:
+            prior_amount = _parse_amount(prior_str)
+            if prior_amount is not None:
+                entry['prior_amount'] = prior_amount
+        line_items[name_part] = entry
+
+    return line_items
+
+
+def _ocr_extract_text(pdf_path: str) -> str:
+    """
+    Falls back to OCR for scanned/image-only PDFs (no embedded text layer).
+    Extracts each page's embedded image and runs Tesseract over it.
+
+    Requires the `tesseract-ocr` binary and `pytesseract`/`Pillow` -- on
+    Streamlit Cloud these come from packages.txt / requirements.txt; if
+    they're unavailable (e.g. a local dev machine without Tesseract
+    installed), this raises and the caller falls back to empty text rather
+    than crashing the whole extraction.
+    """
+    import pytesseract
+    from PIL import Image
+    from PyPDF2 import PdfReader
+
+    reader = PdfReader(pdf_path)
+    pages_text = []
+    for page in reader.pages:
+        page_text_parts = []
+        for image in page.images:
+            img = Image.open(io.BytesIO(image.data))
+            page_text_parts.append(pytesseract.image_to_string(img, lang='rus'))
+        pages_text.append('\n'.join(page_text_parts))
+    return '\f'.join(pages_text)
+
+
 def extract_from_pdf(pdf_path: str) -> dict:
     """
     Extracts financial statement data from PDF.
@@ -359,6 +494,19 @@ def extract_from_pdf(pdf_path: str) -> dict:
 
     try:
         full_text = _pdfminer_extract_text(pdf_path) or ""
+
+        # A pure-image/scanned PDF has no embedded text layer at all --
+        # pdfminer then returns nothing but one form-feed character (\x0c)
+        # per page. Fall back to OCR in that case; if OCR itself isn't
+        # available (e.g. Tesseract not installed), leave full_text as-is
+        # rather than failing the whole extraction.
+        used_ocr = False
+        if not full_text.strip('\x0c\n\r\t '):
+            try:
+                full_text = _ocr_extract_text(pdf_path)
+                used_ocr = True
+            except Exception:
+                pass
 
         # Simple extraction: look for balance sheet and P&L sections
         # (In production, use ML-based table detection; for MVP, regex is fine)
@@ -380,6 +528,8 @@ def extract_from_pdf(pdf_path: str) -> dict:
         # typically matches one or the other, so both are run and merged.
         data['line_items'] = _extract_line_items(full_text, source='PDF')
         data['line_items'].update(_extract_line_items_cell_per_line(full_text, source='PDF'))
+        if used_ocr:
+            data['line_items'].update(_extract_line_items_ocr(full_text, source='PDF (OCR)'))
 
         # notes['raw'] is what gap_detector.py searches for keyword matches,
         # so it holds the FULL text (a substring search over it is cheap) --
@@ -387,6 +537,7 @@ def extract_from_pdf(pdf_path: str) -> dict:
         # documents.
         data['notes']['raw'] = full_text
         data['raw_text'] = full_text
+        data['ocr_used'] = used_ocr
 
         # Rough balance sheet / P&L / cash-flow / notes regions, each with
         # its own line-item scan. This is additional structure on top of

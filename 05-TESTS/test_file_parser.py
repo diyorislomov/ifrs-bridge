@@ -12,6 +12,8 @@ from utils.file_parser import (  # noqa: E402
     _parse_amount,
     _extract_line_items,
     _extract_line_items_cell_per_line,
+    _extract_line_items_ocr,
+    _split_ocr_amount_region,
     _find_company_name,
     _find_sections,
 )
@@ -239,6 +241,109 @@ class TestExtractLineItemsCellPerLine(unittest.TestCase):
         self.assertIsNone(result.get("error"))
         self.assertEqual(len(result["line_items"]), 2)
         self.assertEqual(result["line_items"]["износ (0200)"]["amount"], 11094637081.0)
+
+    def test_scanned_pdf_falls_back_to_ocr(self):
+        # A scanned/image-only PDF: pdfminer finds no text layer at all,
+        # returning just one form-feed character per page. extract_from_pdf
+        # must detect that and fall back to OCR rather than reporting zero
+        # line items.
+        import unittest.mock as mock
+        from utils.file_parser import extract_from_pdf
+
+        ocr_text = "износ (0500) 021 21 591 934 0\n"
+        with mock.patch("utils.file_parser._pdfminer_extract_text", return_value="\x0c\x0c"), \
+             mock.patch("utils.file_parser._ocr_extract_text", return_value=ocr_text):
+            result = extract_from_pdf("fake.pdf")
+
+        self.assertIsNone(result.get("error"))
+        self.assertTrue(result["ocr_used"])
+        self.assertEqual(result["line_items"]["износ (0500)"]["amount"], 21591934.0)
+        self.assertEqual(result["line_items"]["износ (0500)"]["prior_amount"], 0.0)
+
+    def test_ocr_unavailable_leaves_empty_text_without_crashing(self):
+        import unittest.mock as mock
+        from utils.file_parser import extract_from_pdf
+
+        with mock.patch("utils.file_parser._pdfminer_extract_text", return_value="\x0c"), \
+             mock.patch("utils.file_parser._ocr_extract_text", side_effect=Exception("tesseract not found")):
+            result = extract_from_pdf("fake.pdf")
+
+        self.assertIsNone(result.get("error"))
+        self.assertFalse(result["ocr_used"])
+        self.assertEqual(result["line_items"], {})
+
+
+class TestSplitOcrAmountRegion(unittest.TestCase):
+    def test_explicit_delimiter_splits_current_and_prior(self):
+        cur, prior = _split_ocr_amount_region("| 19 312 416 279 | _ 28 089 943 259")
+        self.assertEqual(cur, "19 312 416 279")
+        self.assertEqual(prior, "28 089 943 259")
+
+    def test_short_trailing_group_treated_as_separate_zero_balance(self):
+        cur, prior = _split_ocr_amount_region("27 274 021 0")
+        self.assertEqual(cur, "27 274 021")
+        self.assertEqual(prior, "0")
+
+    def test_no_delimiter_single_plausible_amount_kept(self):
+        cur, prior = _split_ocr_amount_region("34 110 619 922")
+        self.assertEqual(cur, "34 110 619 922")
+        self.assertIsNone(prior)
+
+    def test_ambiguous_run_together_amounts_rejected_not_guessed(self):
+        # Two real amounts ("7 551 481" twice) OCR'd with no visible column
+        # gap between them -- regression test for a bug where this got
+        # silently concatenated into a fabricated ~75-trillion-unit amount
+        # instead of being recognized as unparseable.
+        cur, prior = _split_ocr_amount_region("7 551 481 7 551 481")
+        self.assertIsNone(cur)
+        self.assertIsNone(prior)
+
+    def test_empty_region_returns_none(self):
+        self.assertEqual(_split_ocr_amount_region(""), (None, None))
+
+
+class TestExtractLineItemsOcr(unittest.TestCase):
+    # Real Tesseract OCR output for a scanned (image-only, no text layer)
+    # Uzbek NAS balance sheet -- unlike a text-layer PDF, OCR reconstructs
+    # each table row as ONE line (label, row code, and amount(s) together),
+    # with the column gridline sometimes misread as a stray "|" character
+    # and sometimes lost entirely.
+    def test_real_ocr_row_with_delimiter(self):
+        text = (
+            "первоначальная (восстановительная) стоимость (0100, 0300) "
+            "010 | 19 312 416 279 | _ 28 089 943 259\n"
+        )
+        items = _extract_line_items_ocr(text, source="OCR")
+        key = "первоначальная (восстановительная) стоимость (0100, 0300)"
+        self.assertEqual(items[key]["code"], "010")
+        self.assertEqual(items[key]["amount"], 19312416279.0)
+        self.assertEqual(items[key]["prior_amount"], 28089943259.0)
+
+    def test_row_code_not_confused_with_account_code_reference_in_label(self):
+        # The label itself contains "(0100, 0300)" -- digits preceded by a
+        # comma+space, not by label text -- which must NOT be mistaken for
+        # the row code.
+        text = "остаточная стоимость (стр 010-011) 012 | 8217 779 198 | _ 13 358 866 945\n"
+        items = _extract_line_items_ocr(text, source="OCR")
+        key = "остаточная стоимость (стр 010-011)"
+        self.assertEqual(items[key]["code"], "012")
+        self.assertEqual(items[key]["amount"], 8217779198.0)
+
+    def test_no_delimiter_ambiguous_amounts_produce_no_entry(self):
+        text = "Инвестиции в дочернии и хозяйственные общества (0620) 050 7 551 481 7 551 481\n"
+        items = _extract_line_items_ocr(text, source="OCR")
+        self.assertNotIn(
+            "Инвестиции в дочернии и хозяйственные общества (0620)", items
+        )
+
+    def test_label_only_line_produces_no_entry(self):
+        text = "бошлангич (кайта тиклаш) киймат (0100, 0300)\n"
+        self.assertEqual(_extract_line_items_ocr(text, source="OCR"), {})
+
+    def test_source_is_tagged(self):
+        text = "износ (0500) 021 21 591 934 0\n"
+        items = _extract_line_items_ocr(text, source="OCR")
+        self.assertEqual(items["износ (0500)"]["source"], "OCR")
 
 
 if __name__ == "__main__":
