@@ -1690,33 +1690,55 @@
         "key_gaps": [
           {
             "gap_id": "3.1",
-            "title": "TODO: gap title (prior-period error corrected prospectively instead of retrospectively)",
+            "title": "Prior-Period Errors Corrected Prospectively Instead of Retrospectively",
             "risk": "MEDIUM",
             "detection_keywords": [
-              "TODO: keywords"
+              "ўтган давр хатолари",
+              "prior period errors",
+              "ретроспектив тарзда тузатиш",
+              "retrospective restatement",
+              "қиёсий маълумотларни қайта ҳисоблаш",
+              "restate comparatives"
             ],
             "detection_rules": [
-              "TODO: rule 1",
-              "TODO: rule 2"
+              "Rule 1: When a material error from a prior period is discovered, check whether it was corrected by restating the comparative amounts for the period(s) the error occurred, rather than simply being absorbed into the current period's profit or loss as a one-off adjustment.",
+              "Rule 2: If the error occurred before the earliest period presented in the current financial statements, check whether the opening balances of assets, liabilities, and equity for the earliest period presented were restated, rather than the error being ignored or dumped into the current period.",
+              "Rule 3: Confirm the correction is clearly labeled and disclosed as a prior-period error correction (nature of the error, amount of correction for each prior period presented), not silently blended into current-period results with no disclosure.",
+              "Rule 4: Check that the error correction was not mistakenly treated as a change in accounting estimate (which is applied prospectively) when it is actually a genuine error -- a mathematical mistake, misapplication of an accounting policy, oversight, or misinterpretation of facts existing at the time is an error, not a new estimate."
             ],
             "claude_prompt_template": "TODO: template",
-            "adjustment_hint": "TODO: hint",
-            "example": "TODO: example"
+            "adjustment_hint": "You will need to correct material prior-period errors retrospectively by restating the comparative amounts for the period(s) the error occurred (or the opening balances of the earliest period presented, if the error predates it), rather than recognizing the correction as a current-period gain or loss.",
+            "example": "[ILLUSTRATIVE] A company discovers in the current year that a prior-period expense was materially understated due to a calculation mistake, and simply records a one-off \"prior year adjustment\" expense in the current year's profit or loss instead of restating the prior year's comparative figures and opening equity.",
+            "nas_treatment": "[NEED_MENTOR_INPUT]",
+            "mhms_treatment": "Prior period errors are omissions from, and misstatements in, an entity's financial statements for one or more prior periods arising from a failure to use, or misuse of, reliable information that was available when those statements were authorized for issue and could reasonably be expected to have been obtained and taken into account (§41). Except to the extent impracticable, an entity must correct material prior period errors retrospectively in the first financial statements authorized for issue after their discovery, by: restating the comparative amounts for the prior period(s) presented in which the error occurred, or, if the error occurred before the earliest period presented, restating the opening balances of assets, liabilities, and equity for the earliest period presented (§42).",
+            "lex_uz_ref": "Lex.uz MHMS #3, §41-42 (8-son BHXS \"Hisob siyosati, hisob baholaridagi o'zgarishlar va xatolar\")",
+            "ifrs_ref": "IAS 8.41 (Definition of prior period errors), IAS 8.42 (Retrospective restatement method)"
           },
           {
             "gap_id": "3.2",
-            "title": "TODO: gap title (change in estimate vs change in policy misclassification)",
+            "title": "Change in Accounting Estimate Misclassified as Change in Accounting Policy (or Vice Versa)",
             "risk": "LOW",
             "detection_keywords": [
-              "TODO: keywords"
+              "ҳисоб баҳосидаги ўзгариш",
+              "change in accounting estimate",
+              "баҳолаш асосидаги ўзгариш",
+              "change in measurement basis",
+              "перспектив тарзда тан олиниши",
+              "prospective application"
             ],
             "detection_rules": [
-              "TODO: rule 1",
-              "TODO: rule 2"
+              "Rule 1: For a revised bad-debt allowance, inventory obsolescence estimate, useful life, warranty obligation, or fair value input, check that it was applied prospectively (affecting the current and/or future periods only), not retrospectively as if it were a policy change or error correction.",
+              "Rule 2: For a change in the MEASUREMENT BASIS applied to an item (e.g. switching from historical cost to a fair value/revaluation model, or changing a cost formula), check that this was correctly treated as a change in ACCOUNTING POLICY (requiring retrospective application under §19-22), not misclassified as a mere change in estimate applied only prospectively.",
+              "Rule 3: Where it is difficult to distinguish a change in accounting policy from a change in accounting estimate, confirm the entity treated it as a change in estimate (the standard's default tie-breaker), rather than picking whichever classification produces a more favorable presentation.",
+              "Rule 4: Check that the effect of a change in estimate affecting an asset, liability, or equity item was recognized by adjusting the carrying amount of that item in the period of change, and that current- and future-period P&L effects were properly separated from any retrospective treatment."
             ],
             "claude_prompt_template": "TODO: template",
-            "adjustment_hint": "TODO: hint",
-            "example": "TODO: example"
+            "adjustment_hint": "You will need to correctly distinguish a change in accounting estimate (revised judgment based on new information, applied prospectively) from a change in accounting policy (a change in measurement basis, applied retrospectively) -- and where the distinction is genuinely unclear, treat it as a change in estimate by default.",
+            "example": "[ILLUSTRATIVE] A company revises its estimated useful life for a class of equipment based on updated experience and restates prior years' depreciation as if it were correcting an error, when this is actually a change in accounting estimate that should only affect the current and future periods' depreciation, applied prospectively with no restatement of prior periods.",
+            "nas_treatment": "[NEED_MENTOR_INPUT]",
+            "mhms_treatment": "Many items in the financial statements cannot be measured with precision but can only be estimated -- examples include bad debts, inventory obsolescence, the fair value of financial assets or liabilities, the useful life of depreciable assets, and warranty obligations (§32). A change in an accounting estimate is an adjustment reflecting new information or new developments and, by its nature, is not a correction of an error (§34). A change in the measurement basis applied is a change in accounting policy, not a change in accounting estimate; if it is difficult to distinguish a change in accounting policy from a change in accounting estimate, the change is treated as a change in accounting estimate (§35). The effect of a change in accounting estimate must be recognized prospectively by including it in profit or loss in the period of change (if it affects that period only) or the period of change and future periods (if both are affected) (§36).",
+            "lex_uz_ref": "Lex.uz MHMS #3, §32, §34-36 (8-son BHXS \"Hisob siyosati, hisob baholaridagi o'zgarishlar va xatolar\")",
+            "ifrs_ref": "IAS 8.32 (Examples of estimates), IAS 8.34 (Not an error correction), IAS 8.35-36 (Distinguishing policy vs estimate changes; prospective application)"
           }
         ]
       }
