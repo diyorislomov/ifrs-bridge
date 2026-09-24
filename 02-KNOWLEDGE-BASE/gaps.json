@@ -1319,33 +1319,55 @@
         "key_gaps": [
           {
             "gap_id": "53.1",
-            "title": "TODO: gap title (borrowing costs not capitalized on qualifying assets)",
+            "title": "Borrowing Costs Expensed Instead of Capitalized on Qualifying Assets",
             "risk": "MEDIUM",
             "detection_keywords": [
-              "TODO: keywords"
+              "қарзлар бўйича сарфлар",
+              "квалификацияланадиган актив",
+              "borrowing costs",
+              "qualifying asset",
+              "capitalization",
+              "фоиз харажати"
             ],
             "detection_rules": [
-              "TODO: rule 1",
-              "TODO: rule 2"
+              "Rule 1: Check whether the entity has any self-constructed or manufactured asset (production facility, power plant, intangible asset under development, investment property under construction) that necessarily takes a substantial period to get ready for its intended use or sale -- this is a 'qualifying asset' candidate for borrowing cost capitalization.",
+              "Rule 2: For any such qualifying asset financed at least partly by debt, check whether directly attributable borrowing costs (interest, per the effective interest method) were capitalized into the asset's cost, or were simply expensed as finance costs in the P&L.",
+              "Rule 3: Confirm that inventories manufactured in large quantities on a repetitive basis, and assets ready for use or sale when acquired, were correctly excluded from capitalization (these do not qualify even if debt-financed).",
+              "Rule 4: Check whether capitalization stopped once the asset was substantially ready for its intended use or sale, rather than continuing indefinitely."
             ],
             "claude_prompt_template": "TODO: template",
-            "adjustment_hint": "TODO: hint",
-            "example": "TODO: example"
+            "adjustment_hint": "You will need to identify assets that necessarily take a substantial period to get ready for use or sale (qualifying assets) and capitalize the borrowing costs directly attributable to their acquisition, construction, or production into the asset's cost, rather than expensing all borrowing costs as incurred.",
+            "example": "[ILLUSTRATIVE] A company builds a new manufacturing facility over 18 months, financed partly by a bank loan, and expenses all interest on that loan as a finance cost in the P&L during construction instead of capitalizing the interest attributable to the construction period into the facility's cost.",
+            "nas_treatment": "[NEED_MENTOR_INPUT]",
+            "mhms_treatment": "Borrowing costs that are directly attributable to the acquisition, construction, or production of a qualifying asset must be capitalized as part of the cost of that asset; other borrowing costs are recognized as an expense (§1). Borrowing costs are interest and other costs an entity incurs in connection with borrowing funds (§5). A qualifying asset is an asset that necessarily takes a substantial period of time to get ready for its intended use or sale -- examples include inventories, manufacturing plants, power generation facilities, intangible assets, and investment property under construction (§7); inventories manufactured in large quantities on a repetitive basis, and assets ready for use or sale when acquired, do not qualify. The entity must capitalize such borrowing costs when it is probable they will result in future economic benefits and the cost can be measured reliably (§8-9).",
+            "lex_uz_ref": "Lex.uz MHMS #53, §1, §5, §7-9 (23-son BHXS \"Qarzlar bo'yicha sarflar\")",
+            "ifrs_ref": "IAS 23.1 (Core principle), IAS 23.5 (Definitions), IAS 23.7-9 (Qualifying assets and recognition)"
           },
           {
             "gap_id": "53.2",
-            "title": "TODO: gap title (capitalization rate calculation missing)",
+            "title": "Capitalization Rate for General Borrowings Not Calculated",
             "risk": "LOW",
             "detection_keywords": [
-              "TODO: keywords"
+              "капиталлаштириш ставкаси",
+              "capitalization rate",
+              "ўртача тортилган",
+              "weighted average",
+              "умумий мақсадлар учун қарз маблағлари",
+              "general borrowings"
             ],
             "detection_rules": [
-              "TODO: rule 1",
-              "TODO: rule 2"
+              "Rule 1: For a qualifying asset financed by funds borrowed specifically for that purpose, check whether the capitalized amount was determined as actual borrowing costs incurred on that specific debt, less any investment income earned on temporarily investing the unused borrowed funds.",
+              "Rule 2: For a qualifying asset financed out of general-purpose borrowings (no debt specifically raised for it), check whether a capitalization rate was calculated as the weighted average of the borrowing costs applicable to all the entity's outstanding general borrowings during the period.",
+              "Rule 3: Confirm that borrowings specifically raised for another qualifying asset were excluded from the general-borrowings pool used to calculate the capitalization rate, rather than being blended in.",
+              "Rule 4: Check that the amount of borrowing costs capitalized during a period does not exceed the amount of borrowing costs the entity actually incurred during that period."
             ],
             "claude_prompt_template": "TODO: template",
-            "adjustment_hint": "TODO: hint",
-            "example": "TODO: example"
+            "adjustment_hint": "You will need to determine, for specific-purpose borrowings, the actual borrowing costs incurred less any investment income on temporarily investing the unused funds; and for general borrowings, calculate a capitalization rate as the weighted average of borrowing costs applicable to the entity's outstanding general borrowings (excluding any borrowings specific to another qualifying asset), applying that rate to expenditures on the qualifying asset.",
+            "example": "[ILLUSTRATIVE] A company funds construction of a new facility from its general pool of borrowings (no loan taken specifically for the project) and capitalizes an arbitrary estimated interest amount, rather than calculating a weighted-average capitalization rate across its outstanding general borrowings and applying it to actual expenditure on the asset.",
+            "nas_treatment": "[NEED_MENTOR_INPUT]",
+            "mhms_treatment": "To the extent an entity borrows funds specifically for the purpose of obtaining a qualifying asset, it must determine the amount of borrowing costs eligible for capitalization as the actual borrowing costs incurred on that borrowing during the period, less any investment income earned on the temporary investment of those funds (§12). To the extent an entity borrows funds generally and uses them for obtaining a qualifying asset, it must determine the amount of borrowing costs eligible for capitalization by applying a capitalization rate to the expenditures on that asset -- the capitalization rate is the weighted average of the borrowing costs applicable to the entity's borrowings that are outstanding during the period, excluding borrowings made specifically for the purpose of obtaining another qualifying asset (§14).",
+            "lex_uz_ref": "Lex.uz MHMS #53, §12, §14 (23-son BHXS \"Qarzlar bo'yicha sarflar\")",
+            "ifrs_ref": "IAS 23.12 (Specific borrowings), IAS 23.14 (General borrowings capitalization rate)"
           }
         ]
       },
@@ -1440,33 +1462,55 @@
         "key_gaps": [
           {
             "gap_id": "62.1",
-            "title": "TODO: gap title (grant income recognized on receipt instead of matched to expense)",
+            "title": "Government Grant Income Recognized on Receipt Instead of Matched to Related Costs",
             "risk": "MEDIUM",
             "detection_keywords": [
-              "TODO: keywords"
+              "давлат грантлари",
+              "government grants",
+              "тизимли асосда тан олиниши",
+              "systematic basis",
+              "matching principle",
+              "субсидия"
             ],
             "detection_rules": [
-              "TODO: rule 1",
-              "TODO: rule 2"
+              "Rule 1: Check whether any government grant, subsidy, or subvention received is recognized in profit or loss entirely in the period cash is received, rather than being matched to the periods in which the related costs it's meant to compensate are recognized as expenses.",
+              "Rule 2: Confirm the grant was only recognized once there was reasonable assurance the entity would comply with any attached conditions AND that the grant would be received -- receipt alone is not sufficient evidence conditions have been or will be met.",
+              "Rule 3: For a grant related to expenses already incurred, or given with no future related costs, check whether it was recognized in the period it becomes receivable (not deferred with no basis).",
+              "Rule 4: For a government loan at a below-market interest rate, check whether the below-market-rate benefit was measured and accounted for as a government grant, separate from the loan's own IFRS 9 recognition and measurement."
             ],
             "claude_prompt_template": "TODO: template",
-            "adjustment_hint": "TODO: hint",
-            "example": "TODO: example"
+            "adjustment_hint": "You will need to recognize government grants in profit or loss on a systematic basis over the periods in which the entity recognizes the related costs the grant is intended to compensate, rather than in the period cash is received, and confirm recognition only begins once there is reasonable assurance the attached conditions will be complied with.",
+            "example": "[ILLUSTRATIVE] A company receives a government subsidy intended to offset several years of operating costs for a new facility, and recognizes the entire subsidy as income in the year it is received, instead of matching it to profit or loss over the periods in which the related operating costs are expensed.",
+            "nas_treatment": "[NEED_MENTOR_INPUT]",
+            "mhms_treatment": "Government grants, including non-monetary grants at fair value, are not recognized until there is reasonable assurance that the entity will comply with the conditions attaching to them, and that the grants will be received (§7). Receipt of a grant does not by itself provide conclusive evidence that the conditions attached to it have been or will be fulfilled (§8). Government grants must be recognized in profit or loss on a systematic basis over the periods in which the entity recognizes as expenses the related costs the grants are intended to compensate (§12). A government loan granted at a below-market rate of interest is treated as a government grant, measured as the difference between the initial carrying amount of the loan determined under IFRS 9 and the proceeds received (§10A).",
+            "lex_uz_ref": "Lex.uz MHMS #62, §7-9, §12, §10A (20-son BHXS \"Davlat grantlari hisobi va davlat yordami to'g'risidagi ma'lumotlarni yoritib berish\")",
+            "ifrs_ref": "IAS 20.7-9 (Recognition threshold), IAS 20.12 (Matching to related costs), IAS 20.10A (Below-market-rate government loans)"
           },
           {
             "gap_id": "62.2",
-            "title": "TODO: gap title (grant-related asset presentation gap)",
+            "title": "Asset-Related Government Grants Not Presented Under an Accepted Method",
             "risk": "LOW",
             "detection_keywords": [
-              "TODO: keywords"
+              "активларга оид грантлар",
+              "asset-related grants",
+              "кечиктирилган даромад",
+              "deferred income",
+              "баланс қийматини чегириш",
+              "deduct from carrying amount"
             ],
             "detection_rules": [
-              "TODO: rule 1",
-              "TODO: rule 2"
+              "Rule 1: For any grant received to help fund the purchase or construction of a long-term asset, check whether it is presented in the financial statements using one of the two accepted methods -- as deferred income released to profit or loss over the asset's useful life, or as a deduction from the asset's carrying amount -- rather than recognized entirely as income upfront or omitted from the asset's presentation altogether.",
+              "Rule 2: If the deferred-income method is used, confirm the grant is released to profit or loss systematically over the useful life of the related asset, matching the pattern of the asset's depreciation.",
+              "Rule 3: If the deduct-from-carrying-amount method is used, confirm the depreciation charge on the asset reflects the reduced (net-of-grant) carrying amount, and check this is consistently applied and disclosed.",
+              "Rule 4: Regardless of which presentation method is used for the balance sheet, check that the cash flow statement separately discloses the cash flow related to the asset purchase and the related grant, rather than netting them."
             ],
             "claude_prompt_template": "TODO: template",
-            "adjustment_hint": "TODO: hint",
-            "example": "TODO: example"
+            "adjustment_hint": "You will need to present each asset-related government grant using one of the two accepted methods -- as deferred income recognized in profit or loss systematically over the asset's useful life, or as a deduction in arriving at the asset's carrying amount (with depreciation calculated on the reduced amount) -- and separately disclose the related cash flows.",
+            "example": "[ILLUSTRATIVE] A company receives a grant to help fund the purchase of new production equipment and recognizes the full grant amount as other income in the year of purchase, with the equipment capitalized at its full pre-grant cost and depreciated on that basis -- neither of the two accepted presentation methods (deferred income or deduction from carrying amount) was applied.",
+            "nas_treatment": "[NEED_MENTOR_INPUT]",
+            "mhms_treatment": "Government grants related to assets, including non-monetary grants at fair value, must be presented in the statement of financial position either by setting up the grant as deferred income, or by deducting the grant in arriving at the asset's carrying amount (§24) -- both presentation methods are accepted alternatives (§25). Under the deferred income method, the grant is recognized in profit or loss on a systematic basis over the useful life of the asset (§26). Under the alternative method, the grant is deducted in arriving at the carrying amount of the asset, and is recognized in profit or loss over the life of a depreciable asset as a reduced depreciation expense (§27).",
+            "lex_uz_ref": "Lex.uz MHMS #62, §24-27 (20-son BHXS \"Davlat grantlari hisobi va davlat yordami to'g'risidagi ma'lumotlarni yoritib berish\")",
+            "ifrs_ref": "IAS 20.24-25 (Two accepted presentation methods), IAS 20.26-27 (Deferred income vs deduction from carrying amount)"
           }
         ]
       },
