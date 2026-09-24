@@ -1185,33 +1185,55 @@
         "key_gaps": [
           {
             "gap_id": "42.1",
-            "title": "TODO: gap title (unused vacation/leave accrual not recognized)",
+            "title": "Unused Accumulating Leave/Vacation Entitlement Not Accrued",
             "risk": "MEDIUM",
             "detection_keywords": [
-              "TODO: keywords"
+              "ишланмаган вақт учун тўланадиган ҳақ",
+              "жамғариладиган таътил",
+              "accumulating compensated absences",
+              "unused leave",
+              "accrued vacation",
+              "carry-forward leave"
             ],
             "detection_rules": [
-              "TODO: rule 1",
-              "TODO: rule 2"
+              "Rule 1: Check whether the entity accrues a liability for employees' unused, carried-forward vacation/leave entitlement at each reporting date, rather than only expensing leave when it is actually taken.",
+              "Rule 2: Confirm the accrual is measured as the additional amount the entity expects to pay as a result of the unused accumulated entitlement at period end (extra leave days x pay rate), not just a notional or zero balance.",
+              "Rule 3: Check whether the accrual is recognized even for non-vesting accumulating leave (employees not entitled to a cash payment for unused leave on termination) -- a liability still arises because employees render service that increases their entitlement, regardless of whether it's ultimately paid out in cash or taken as time off.",
+              "Rule 4: Confirm the amount reflects that some employees may leave before using their carried-forward entitlement, where that affects the obligation's measurement."
             ],
             "claude_prompt_template": "TODO: template",
-            "adjustment_hint": "TODO: hint",
-            "example": "TODO: example"
+            "adjustment_hint": "You will need to recognize a liability at each reporting date for the additional amount expected to be paid or utilized as a result of employees' unused accumulated leave entitlement carried forward from the period, rather than expensing leave only when it is taken.",
+            "example": "[ILLUSTRATIVE] A company's 100 employees each accrue paid annual leave that can be carried forward one year, and a significant number have unused leave balances at year-end, but the company only recognizes leave expense as employees actually take time off, with no year-end accrual for the carried-forward entitlement.",
+            "nas_treatment": "[NEED_MENTOR_INPUT]",
+            "mhms_treatment": "An entity recognizes the expected cost of short-term employee benefits in the form of compensated absences when the employee renders service that increases their entitlement to future compensated absences, in the case of accumulating compensated absences (§13). Accumulating compensated absences are those that are carried forward and can be used in future periods if the current period's entitlement is not used in full -- these may be vesting (employees entitled to a cash payment for unused entitlement on leaving) or non-vesting. An obligation arises as employees render service that increases their entitlement, and is recognized even if non-vesting, though the possibility employees may leave before using a non-vesting entitlement affects the measurement of that obligation (§15). The entity measures the expected cost of accumulating compensated absences as the additional amount it expects to pay as a result of the unused entitlement accumulated at the reporting date (§16).",
+            "lex_uz_ref": "Lex.uz MHMS #42, §13, §15-16 (19-son BHXS \"Xodimlarning daromadlari\")",
+            "ifrs_ref": "IAS 19.13 (Recognition of short-term compensated absences), IAS 19.15-16 (Accumulating compensated absences measurement)"
           },
           {
             "gap_id": "42.2",
-            "title": "TODO: gap title (long-term benefit actuarial valuation missing)",
+            "title": "Long-Term Employee Benefit Obligations Not Actuarially Valued",
             "risk": "MEDIUM",
             "detection_keywords": [
-              "TODO: keywords"
+              "узоқ муддатли ходимлар даромадлари",
+              "актуар усули",
+              "actuarial valuation",
+              "projected unit credit method",
+              "long-term employee benefits",
+              "юбилей мукофотлари"
             ],
             "detection_rules": [
-              "TODO: rule 1",
-              "TODO: rule 2"
+              "Rule 1: Look for long-service/jubilee awards, long-term disability benefits, or deferred compensation payable more than 12 months after the period in which employees render the related service -- check whether these are measured using an actuarial method, or simply accrued at face/nominal value.",
+              "Rule 2: For any such long-term benefit obligation, confirm it was measured using the Projected Unit Credit Method (the same actuarial approach used for defined benefit pension obligations), incorporating demographic assumptions (employee turnover, mortality) and financial assumptions (future salary increases).",
+              "Rule 3: Check that the net obligation recognized in profit or loss includes current service cost and net interest on the net obligation, consistent with how post-employment defined benefit obligations are measured.",
+              "Rule 4: Confirm that no long-term employee benefit obligation was left completely unrecognized just because its ultimate settlement is uncertain in timing or amount -- uncertainty is addressed through actuarial estimation, not omission."
             ],
             "claude_prompt_template": "TODO: template",
-            "adjustment_hint": "TODO: hint",
-            "example": "TODO: example"
+            "adjustment_hint": "You will need to identify employee benefits payable more than twelve months after the period in which the related service was rendered (long-service awards, long-term disability benefits, deferred bonuses) and measure the resulting obligation using an actuarial method (the same projected unit credit approach used for defined benefit pension plans) rather than a simple undiscounted accrual.",
+            "example": "[ILLUSTRATIVE] A company promises a lump-sum jubilee bonus to employees who complete 20 years of service, but records no liability for this obligation at all until the bonus is actually paid, instead of building up an actuarially estimated obligation as employees render the qualifying service.",
+            "nas_treatment": "[NEED_MENTOR_INPUT]",
+            "mhms_treatment": "Other long-term employee benefits include items such as long-term paid absences (e.g. long-service or sabbatical leave), jubilee or other long-service benefits, long-term disability benefits, profit-sharing and bonuses payable more than twelve months after the end of the period in which employees render the related service, and deferred compensation (§153). Because the measurement of other long-term employee benefits is not usually subject to the same degree of uncertainty as post-employment benefits, the standard requires a simplified method of accounting for them, applying the same recognition and measurement approach (§56-98, §113-115) used for defined benefit post-employment plans, but without recognizing remeasurements in other comprehensive income (§154-155). The net total of current service cost, net interest on the net obligation, and remeasurements of the net obligation is recognized in profit or loss (§156).",
+            "lex_uz_ref": "Lex.uz MHMS #42, §57, §153, §155-156 (19-son BHXS \"Xodimlarning daromadlari\")",
+            "ifrs_ref": "IAS 19.57 (Projected unit credit method), IAS 19.153 (Other long-term benefits defined), IAS 19.155-156 (Simplified recognition and measurement)"
           }
         ]
       },
@@ -1230,33 +1252,55 @@
         "key_gaps": [
           {
             "gap_id": "45.1",
-            "title": "TODO: gap title (compound financial instrument split not performed)",
-            "risk": "LOW",
+            "title": "Compound Financial Instruments Not Split into Liability and Equity Components",
+            "risk": "MEDIUM",
             "detection_keywords": [
-              "TODO: keywords"
+              "таркибли молиявий инструмент",
+              "compound financial instrument",
+              "конвертацияланадиган облигация",
+              "convertible bond",
+              "split accounting",
+              "улушли компонент"
             ],
             "detection_rules": [
-              "TODO: rule 1",
-              "TODO: rule 2"
+              "Rule 1: Look for any issued instrument with both a debt-like feature (fixed repayment/interest obligation) AND an equity-like feature (e.g. an option for the holder to convert into a fixed number of the entity's own shares) -- check whether it was split into separate liability and equity components rather than recorded entirely as a single liability.",
+              "Rule 2: Confirm the liability component was measured first, at the fair value of a similar liability without the conversion feature, with the equity component recognized as the residual (total instrument fair value less the liability component) -- not the other way around.",
+              "Rule 3: Check that no gain or loss was recognized on initial recognition from splitting the instrument into its two components.",
+              "Rule 4: Confirm the classification of the debt and equity components was not reassessed later just because conversion became more or less likely -- the original split stands until actual conversion, redemption, or another transaction changes it."
             ],
             "claude_prompt_template": "TODO: template",
-            "adjustment_hint": "TODO: hint",
-            "example": "TODO: example"
+            "adjustment_hint": "You will need to split any issued compound instrument (e.g. a convertible bond) into a financial liability component and an equity component at issuance, measuring the liability first at the fair value of a similar instrument without the conversion feature, and recognizing the equity component as the residual amount, with no gain or loss on the split itself.",
+            "example": "[ILLUSTRATIVE] A company issues a bond convertible into a fixed number of its own ordinary shares and records the entire proceeds as a single financial liability, without separating out the value of the conversion option as a component of equity.",
+            "nas_treatment": "[NEED_MENTOR_INPUT]",
+            "mhms_treatment": "The issuer of a non-derivative financial instrument must evaluate the terms of the instrument to determine whether it contains both a liability and an equity component, and classify each component separately as a financial liability, financial asset, or equity instrument (§28). A bond or similar instrument convertible by the holder into a fixed number of the entity's ordinary shares is a compound financial instrument comprising a financial liability (a contractual arrangement to deliver cash or another financial asset) and an equity instrument (a call option granting the holder the right to convert into a fixed number of ordinary shares) (§29). The liability component is measured first at the fair value of a similar liability without an equity conversion option; the equity component is recognized as the residual, being the fair value of the compound instrument as a whole less the fair value of the liability component separately determined, with no gain or loss arising from the split (§31-32).",
+            "lex_uz_ref": "Lex.uz MHMS #45, §28-32 (32-son BHXS \"Moliyaviy instrumentlar: taqdim etish\")",
+            "ifrs_ref": "IAS 32.28-29 (Compound instrument classification), IAS 32.31-32 (Split measurement approach)"
           },
           {
             "gap_id": "45.2",
-            "title": "TODO: gap title (treasury share and equity reserve disclosure gap)",
+            "title": "Treasury Shares Not Deducted from Equity or Disclosed",
             "risk": "LOW",
             "detection_keywords": [
-              "TODO: keywords"
+              "сотиб олинган ўз акциялари",
+              "treasury shares",
+              "own equity instruments",
+              "хусусий капиталдан чегирилиши",
+              "buyback",
+              "own shares repurchase"
             ],
             "detection_rules": [
-              "TODO: rule 1",
-              "TODO: rule 2"
+              "Rule 1: Check whether repurchased own equity instruments (treasury shares) are deducted directly from equity, rather than shown as a financial asset or investment on the balance sheet.",
+              "Rule 2: Confirm no gain or loss was recognized in profit or loss on the purchase, sale, issuance, or cancellation of the entity's own equity instruments -- consideration paid or received should be recognized directly in equity.",
+              "Rule 3: Check that the notes or a separate statement of financial position disclose the amount of treasury shares held, as required, and not simply netted away with no visibility.",
+              "Rule 4: If treasury shares were acquired from a related party, confirm the related-party disclosure requirements were also applied."
             ],
             "claude_prompt_template": "TODO: template",
-            "adjustment_hint": "TODO: hint",
-            "example": "TODO: example"
+            "adjustment_hint": "You will need to deduct any repurchased own equity instruments (treasury shares) directly from equity rather than recognizing them as an asset, recognize no gain or loss on their purchase/sale/reissue/cancellation (with consideration paid or received recognized directly in equity), and disclose the amount held.",
+            "example": "[ILLUSTRATIVE] A company buys back some of its own shares on the market and records them as a financial asset investment at cost, later recognizing a gain in profit or loss when it resells them at a higher price -- treasury shares should instead have been deducted from equity with no gain or loss recognized on the transaction.",
+            "nas_treatment": "[NEED_MENTOR_INPUT]",
+            "mhms_treatment": "If an entity reacquires its own equity instruments, those instruments (\"treasury shares\") must be deducted from equity. No gain or loss is recognized in profit or loss on the purchase, sale, issue, or cancellation of an entity's own equity instruments. Such treasury shares may be held by the entity or by other members of the consolidated group. Consideration paid or received is recognized directly in equity (§33). The amount of treasury shares held must be disclosed separately either on the face of the statement of financial position or in the notes, in accordance with IAS 1; if treasury shares are acquired from related parties, related-party disclosure requirements also apply (§34).",
+            "lex_uz_ref": "Lex.uz MHMS #45, §33-34 (32-son BHXS \"Moliyaviy instrumentlar: taqdim etish\")",
+            "ifrs_ref": "IAS 32.33 (Treasury shares deducted from equity, no gain/loss), IAS 32.34 (Disclosure requirement)"
           }
         ]
       },
