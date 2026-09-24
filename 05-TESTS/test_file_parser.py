@@ -8,7 +8,7 @@ sys.path.insert(
     0, os.path.join(os.path.dirname(__file__), "..", "03-BACKEND")
 )
 
-from utils.file_parser import _parse_amount, _extract_line_items, _find_company_name  # noqa: E402
+from utils.file_parser import _parse_amount, _extract_line_items, _find_company_name, _find_sections  # noqa: E402
 
 
 class TestParseAmount(unittest.TestCase):
@@ -124,6 +124,34 @@ class TestFindCompanyName(unittest.TestCase):
 
     def test_no_suffix_returns_none(self):
         self.assertIsNone(_find_company_name("No legal suffix here at all"))
+
+
+class TestFindSections(unittest.TestCase):
+    def test_splits_into_recognized_sections(self):
+        text = (
+            "БАЛАНС ҲИСОБОТИ\n"
+            "Захиралар 30,000,000\n"
+            "\n"
+            "ДАРОМАД ВА ХАРАЖАТЛАР ТЎҒРИСИДАГИ ҲИСОБОТ\n"
+            "Revenue 100,000,000\n"
+            "\n"
+            "ТУШУНТИРИШЛАР\n"
+            "Note 1: something.\n"
+        )
+        sections = _find_sections(text)
+        self.assertEqual(set(sections.keys()), {"balance_sheet", "p_and_l", "notes"})
+        self.assertIn("Захиралар", sections["balance_sheet"])
+        self.assertNotIn("Revenue", sections["balance_sheet"])  # bounded, not full text
+        self.assertIn("Revenue", sections["p_and_l"])
+        self.assertIn("Note 1", sections["notes"])
+
+    def test_no_recognized_headers_returns_empty(self):
+        self.assertEqual(_find_sections("Just some random text with numbers 123"), {})
+
+    def test_last_section_runs_to_end_of_text(self):
+        text = "ТУШУНТИРИШЛАР\nline one\nline two\n"
+        sections = _find_sections(text)
+        self.assertEqual(sections["notes"], text)
 
 
 if __name__ == "__main__":

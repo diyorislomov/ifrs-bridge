@@ -34,6 +34,39 @@ _COMPANY_SUFFIX_RE = re.compile(r'\b(?:Ltd|LLC|JSC|MChJ|AJ|АЖ|МЧЖ|QK|ҚК)\
 # A quoted company name, e.g. '"Example"' or '«Namuna»'.
 _QUOTED_NAME_RE = re.compile(r'[«"]([^«»"]{2,80})[»"]')
 
+# Section headers (Uzbek Cyrillic + English), used to split the document
+# into rough balance-sheet / P&L / cash-flow / notes regions for a more
+# targeted view -- separate from (not a replacement for) the whole-document
+# line-item scan below, which stays the primary extraction path since real
+# section headers vary too much in exact wording to rely on alone.
+_SECTION_PATTERNS = {
+    'balance_sheet': re.compile(r'БАЛАНС|BALANCE\s+SHEET|АКТИВ(?:ЛАР)?\s+ВА\s+ПАССИВ', re.IGNORECASE),
+    'p_and_l': re.compile(r'ДАРОМАД|ФОЙДА\s+(?:ВА|ЁКИ)\s+ЗАРАР|PROFIT\s+(?:AND|OR)\s+LOSS|INCOME\s+STATEMENT', re.IGNORECASE),
+    'cash_flow': re.compile(r'ПУЛ\s+МАБЛАҒЛАРИ|CASH\s+FLOW', re.IGNORECASE),
+    'notes': re.compile(r'ТУШУНТИРИШЛАР|NOTES\s+TO\s+FINANCIAL\s+STATEMENTS', re.IGNORECASE),
+}
+
+
+def _find_sections(text: str) -> dict:
+    """
+    Locates each recognizable section by its first keyword match, then
+    spans that section's text up to the START of the next recognized
+    section (in document order), not a fixed-size window -- a fixed window
+    either cuts off long sections or wastes space on short ones.
+    """
+    hits = []
+    for name, pattern in _SECTION_PATTERNS.items():
+        match = pattern.search(text)
+        if match:
+            hits.append((match.start(), name))
+    hits.sort()
+
+    sections = {}
+    for i, (start, name) in enumerate(hits):
+        end = hits[i + 1][0] if i + 1 < len(hits) else len(text)
+        sections[name] = text[start:end]
+    return sections
+
 
 def _find_company_name(text: str):
     """
@@ -231,22 +264,26 @@ def extract_from_pdf(pdf_path: str) -> dict:
 
         data['line_items'] = _extract_line_items(full_text, source='PDF')
 
-        # Notes section, if a header for one is present (used for a shorter,
-        # more targeted excerpt when available).
-        # find() returns 0 for a match at the very start of the text, and 0 is
-        # falsy, so `a.find(x) or a.find(y)` would wrongly fall through to the
-        # second search in that case. Check each marker explicitly instead.
-        notes_start = full_text.find("Notes to Financial Statements")
-        if notes_start == -1:
-            notes_start = full_text.find("Тушунтиришлар")
-        if notes_start >= 0:
-            data['notes']['raw'] = full_text[notes_start:notes_start + 5000]
-        else:
-            # No recognizable "notes" header -- most real statements won't
-            # use this exact phrase. Fall back to a chunk of the full
-            # document text so gap-keyword matching still has real content
-            # to search, instead of nothing at all.
-            data['notes']['raw'] = full_text[:5000]
+        # notes['raw'] is what gap_detector.py searches for keyword matches,
+        # so it holds the FULL text (a substring search over it is cheap) --
+        # not a truncated preview, which could miss real content in longer
+        # documents.
+        data['notes']['raw'] = full_text
+        data['raw_text'] = full_text
+
+        # Rough balance sheet / P&L / cash-flow / notes regions, each with
+        # its own line-item scan. This is additional structure on top of
+        # (not a replacement for) the whole-document scan above, since
+        # section headers vary too much in exact wording to be the only
+        # source of line items -- a document whose headers don't match
+        # would otherwise yield nothing at all.
+        data['sections'] = {
+            name: {
+                'text': section_text,
+                'line_items': _extract_line_items(section_text, source='PDF'),
+            }
+            for name, section_text in _find_sections(full_text).items()
+        }
 
     except Exception as e:
         data['error'] = str(e)
