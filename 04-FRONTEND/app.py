@@ -165,7 +165,11 @@ elif page == "4️⃣ Explain":
     if st.session_state.detected_gaps is None:
         st.warning("⚠️ No gaps detected yet. Go to Step 3 first.")
     else:
-        st.write("Click on a gap below to get Claude's explanation with mandatory Lex.uz + IFRS citations")
+        st.write(
+            "Click a gap below to expand it, then click its **Explain** button to get "
+            "Claude's explanation with mandatory Lex.uz + IFRS citations. You'll need "
+            "at least one explanation generated before Step 5's report is available."
+        )
 
         language = st.selectbox("Response language:", ["English", "Uzbek"])
         lang_code = "uz" if language == "Uzbek" else "en"
@@ -227,8 +231,14 @@ elif page == "4️⃣ Explain":
 elif page == "5️⃣ Export Report":
     st.header("Step 5: Download Report")
 
-    if not st.session_state.detected_gaps or not st.session_state.explanations:
-        st.warning("⚠️ No analysis done yet. Complete Steps 3-4 first.")
+    if not st.session_state.detected_gaps:
+        st.warning("⚠️ No gaps detected yet. Go to Step 3 and click \"Scan for Gaps\" first.")
+    elif not st.session_state.explanations:
+        st.warning(
+            "⚠️ No explanations generated yet. Go to Step 4, open a gap, and click "
+            "\"Explain\" for at least one gap -- the report is built from those "
+            "explanations."
+        )
     else:
         report_format = st.selectbox("Format:", ["PDF", "JSON", "Text"])
 
