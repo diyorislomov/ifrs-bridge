@@ -24,18 +24,42 @@
         "key_gaps": [
           {
             "gap_id": "1.1",
-            "title": "TODO: gap title (qualitative characteristics disclosure)",
+            "title": "Conceptual Framework - Asset & Liability Definitions",
             "risk": "LOW",
             "detection_keywords": [
-              "TODO: keywords"
+              "актив",
+              "мажбурият",
+              "ҳуқуқ",
+              "назорат",
+              "жавобгарлик",
+              "иқтисодий нафлар",
+              "иқтисодий ресурсни ўтказиш",
+              "олдинги ҳодиса",
+              "тан олиш мезони",
+              "asset",
+              "liability",
+              "right",
+              "control",
+              "obligation",
+              "economic benefit",
+              "transfer of economic resource",
+              "past event",
+              "recognition criteria"
             ],
             "detection_rules": [
-              "TODO: rule 1",
-              "TODO: rule 2"
+              "Rule 1: For each balance-sheet line item, check whether the note discloses a basis for recognition tied only to legal title/ownership or invoice existence, rather than to control + probable future economic benefit (a sign the three-part IFRS asset test per CF §4.3-4.25 was not applied).",
+              "Rule 2: Look for capitalized items where the entity does not have the present ability to direct use / restrict others' access (e.g., goods held on consignment, assets pledged/transferred but still shown on the balance sheet) - these fail the IFRS 'control' criterion (CF §4.19-4.25) even if legal title exists.",
+              "Rule 3: For obligations, check whether liabilities are recognized only when a legal claim/invoice exists, versus constructive obligations arising from established practice or public commitments (CF §4.28-4.35) that IFRS would also require to be recognized.",
+              "Rule 4: Flag balance sheet items recorded purely because cash was spent (e.g., capitalized costs with no identifiable future economic benefit or control), since CF §4.20 explicitly states that incurring expenditure does not by itself create an asset."
             ],
             "claude_prompt_template": "TODO: template",
-            "adjustment_hint": "TODO: hint",
-            "example": "TODO: example"
+            "adjustment_hint": "Re-test each recognized asset and liability against the three-part IFRS definitions (asset: right + potential for economic benefit + control; liability: obligation + transfer of economic resource + arises from past event) rather than legal form or invoice existence alone. Items that fail the test should be derecognized; unrecognized constructive obligations or control-based assets should be added, with balance sheet and equity impact assessed together.",
+            "example": "[ILLUSTRATIVE] A manufacturer capitalizes advance payments made to a supplier for machinery that has not yet been delivered and over which the manufacturer has no present ability to direct use (e.g., the supplier can still substitute or redirect the asset). Under a legal-form/cash-spent view this looks like an asset because cash left the business. Under the IFRS Conceptual Framework's control criterion (§4.19-4.25), no asset exists until the entity has the present ability to control the machinery's use and obtain its economic benefits - until then, the amount is a receivable (right to receive the asset or a refund), not the machinery itself.",
+            "mhms_id": "1",
+            "nas_treatment": "[NEED_MENTOR_INPUT]",
+            "mhms_treatment": "Per the IFRS Conceptual Framework (adopted as MHMS Annex 1), an asset exists only if THREE criteria are all met: (1) Right - the entity holds a right that has the potential to produce economic benefits (contractual right to receive cash, right over a physical object, or a right to use intellectual property); (2) Potential to produce economic benefits - the right must be capable of producing economic benefits for the entity in at least one circumstance, even if that is not certain or highly probable; (3) Control - the entity has the present ability to direct the use of the resource and obtain the economic benefits it produces, and to prevent others from doing so. Spending cash does not automatically create an asset - control over the resulting resource must also exist. A liability exists only if THREE criteria are all met: (1) the entity has an obligation; (2) the obligation is to transfer an economic resource; (3) the obligation arose from past events (the entity has already received the economic benefits, or taken the action, that obliges the future transfer). An obligation can arise from law/contract, or from an entity's established practice, published policy, or specific statements (a constructive obligation) if the entity has no practical ability to act inconsistently with them.",
+            "lex_uz_ref": "Lex.uz MHMS #1, §4.3, §4.26 (1-ilova \"Kontseptual asos\")",
+            "ifrs_ref": "IFRS Conceptual Framework §4.3-4.25 (Asset), §4.26-4.47 (Liability)"
           },
           {
             "gap_id": "1.2",
@@ -140,18 +164,35 @@
         "key_gaps": [
           {
             "gap_id": "4.1",
-            "title": "TODO: gap title (adjusting vs non-adjusting classification)",
+            "title": "Events After the Reporting Period - Adjusting vs Non-Adjusting Classification",
             "risk": "MEDIUM",
             "detection_keywords": [
-              "TODO: keywords"
+              "ҳисобот давридан кейинги ҳодисалар",
+              "тузатувчи ҳодиса",
+              "тузатувчи бўлмаган ҳодиса",
+              "фаолият узлуксизлиги",
+              "events after the reporting period",
+              "adjusting event",
+              "non-adjusting event",
+              "subsequent events",
+              "going concern",
+              "суд қарори",
+              "банкротлик"
             ],
             "detection_rules": [
-              "TODO: rule 1",
-              "TODO: rule 2"
+              "Rule 1: Check the notes for a 'Subsequent Events' section. If none exists but the signing date is materially later than period-end, flag as a potential disclosure gap.",
+              "Rule 2: Look for post-period-end events confirming a period-end condition (court rulings, customer bankruptcies, determination of pre-period-end transaction amounts) not reflected as adjustments - signals a missing adjusting-event correction.",
+              "Rule 3: Look for material post-period-end events (asset destruction, restructuring, large FX/price swings, new tax legislation) not disclosed at all - signals a missing non-adjusting-event disclosure.",
+              "Rule 4: If sources indicate financial distress after period-end, check whether going-concern was reassessed and disclosed."
             ],
             "claude_prompt_template": "TODO: template",
-            "adjustment_hint": "TODO: hint",
-            "example": "TODO: example"
+            "adjustment_hint": "For adjusting events: revise the recognized provision, receivable impairment, or other affected balance to reflect the condition that existed at period-end. For non-adjusting events: do not change recognized amounts; disclose the event's nature and estimated financial effect. If a non-adjusting event undermines going concern, flag for reassessment of the entire basis of preparation.",
+            "example": "[ILLUSTRATIVE] A manufacturer's year-end (31 Dec) statements are authorized for issue on 15 March. In February, a court rules against the company in a lawsuit already ongoing at 31 Dec, confirming a present obligation existed at year-end. The company had disclosed this only as a contingent liability. Under IAS 10, this is an adjusting event: a provision must be recognized as of 31 Dec, not merely disclosed as contingent.",
+            "mhms_id": "4",
+            "nas_treatment": "[NEED_MENTOR_INPUT]",
+            "mhms_treatment": "Events after the reporting period are events, favorable or unfavorable, that occur between the end of the reporting period and the date the financial statements are authorized for issue. There are two types: (1) adjusting events - those that provide evidence of conditions that existed at the end of the reporting period (the financial statements MUST be adjusted); (2) non-adjusting events - those that are indicative of conditions that arose after the reporting period (no adjustment to recognized amounts, but disclosure is required if material). Examples of adjusting events: a court ruling after period-end that confirms a present obligation existed at period-end; a customer's bankruptcy after period-end confirming a receivable was already impaired at period-end; determination of the cost/proceeds of assets purchased/sold before period-end; discovery of fraud or errors. Examples of non-adjusting events (disclose only, if material): a major business combination or disposal after period-end; announcing a plan to discontinue an operation; destruction of a major production facility; announcing a major restructuring; abnormal changes in asset prices or FX rates; changes in tax rates/law. If events after the reporting period show that the going-concern assumption is no longer appropriate, the financial statements must NOT be prepared on a going-concern basis.",
+            "lex_uz_ref": "Lex.uz MHMS #4, §3 (ta'riflar), §8-9 (10-son BHXS \"Hisobot davridan keyingi hodisalar\")",
+            "ifrs_ref": "IAS 10.3 (Definitions), IAS 10.8-9 (Adjusting events after the reporting period)"
           },
           {
             "gap_id": "4.2",
@@ -200,48 +241,85 @@
         "key_gaps": [
           {
             "gap_id": "10.1",
-            "title": "TODO: gap title (operating vs investing vs financing misclassification)",
+            "title": "Cash Flows Not Classified by Operating, Investing, and Financing Activity",
             "risk": "MEDIUM",
             "detection_keywords": [
-              "TODO: keywords"
+              "операцион фаолият",
+              "инвестиция фаолияти",
+              "молиявий фаолият",
+              "operating activities",
+              "investing activities",
+              "financing activities",
+              "пул оқимлари",
+              "cash flow classification"
             ],
             "detection_rules": [
-              "TODO: rule 1",
-              "TODO: rule 2"
+              "Rule 1: Check whether the cash flow statement presents three distinct sections (operating, investing, financing) rather than a single undifferentiated list of receipts and payments.",
+              "Rule 2: For loan/debt repayments, check whether the interest portion and the principal portion are classified separately (interest can be operating; principal repayment is financing) rather than lumped into one financing-activity line.",
+              "Rule 3: Check that purchases/disposals of long-term assets (PP&E, intangibles, investments) are classified as investing activity, not operating.",
+              "Rule 4: Check that proceeds from issuing shares or borrowings, and repayments of borrowings, are classified as financing activity, not operating."
             ],
             "claude_prompt_template": "TODO: template",
-            "adjustment_hint": "TODO: hint",
-            "example": "TODO: example"
+            "adjustment_hint": "You will need to re-classify each cash receipt and payment into operating, investing, or financing activity based on its underlying nature (not its bank account or payment method), splitting single transactions that mix categories (e.g., a loan repayment) into their separate components.",
+            "example": "[ILLUSTRATIVE] A company presents all cash movements as a single list under \"Cash Movements\" with no operating/investing/financing split, and reports the full repayment of a bank loan (principal plus interest) as one financing-activity line without separating the interest portion.",
+            "nas_treatment": "[NEED_MENTOR_INPUT]",
+            "mhms_treatment": "Cash flows for the period must be classified and presented as operating, investing, or financing activities (§10). Operating activities are the entity's main revenue-producing activities and other activities that are not investing or financing (§6); investing activities are the acquisition and disposal of long-term assets and other investments not included in cash equivalents; financing activities are activities that result in changes in the size and composition of the contributed equity and borrowings of the entity. A single transaction may contain cash flows classified differently -- for example, a loan repayment may include both interest (which may be classified as operating) and principal (classified as financing), and these components must be separated (§12).",
+            "lex_uz_ref": "Lex.uz MHMS #10, §6, §10-12 (7-son BHXS \"Pul mablag'lari harakati to'g'risidagi hisobot\")",
+            "ifrs_ref": "IAS 7.6 (Definitions), IAS 7.10-12 (Presentation of a statement of cash flows)"
           },
           {
             "gap_id": "10.2",
-            "title": "TODO: gap title (interest and dividend classification inconsistency)",
+            "title": "Inconsistent Classification of Interest and Dividends Received/Paid",
             "risk": "MEDIUM",
             "detection_keywords": [
-              "TODO: keywords"
+              "фоизлар",
+              "дивидендлар",
+              "interest received",
+              "interest paid",
+              "dividends received",
+              "dividends paid",
+              "изчил таснифлаш",
+              "consistent classification"
             ],
             "detection_rules": [
-              "TODO: rule 1",
-              "TODO: rule 2"
+              "Rule 1: Check that interest paid, interest received, and dividends received/paid are each disclosed as their own separate line item, not netted together or buried inside a broader category.",
+              "Rule 2: Check that the SAME classification (operating, investing, or financing) is used for a given cash flow type (e.g., interest paid) consistently from one period to the next, not switched without explanation.",
+              "Rule 3: Confirm the total interest paid during the period is disclosed in the cash flow statement regardless of whether it was expensed or capitalized under borrowing-cost rules.",
+              "Rule 4: Check that dividends paid are classified under a single, clearly identified activity category (financing, or operating if the entity elects that alternative) rather than split inconsistently across categories."
             ],
             "claude_prompt_template": "TODO: template",
-            "adjustment_hint": "TODO: hint",
-            "example": "TODO: example"
+            "adjustment_hint": "You will need to separately disclose interest paid, interest received, and dividends received/paid as their own line items, and apply the same classification for each cash flow type consistently period to period.",
+            "example": "[ILLUSTRATIVE] A company classified dividends paid as a financing outflow last year but reports it as an operating outflow this year with no disclosed reason for the change, and does not separately disclose interest paid at all.",
+            "nas_treatment": "[NEED_MENTOR_INPUT]",
+            "mhms_treatment": "Cash flows from interest and dividends received and paid must each be disclosed separately, and each must be classified in a consistent manner from period to period as operating, investing, or financing activity (§31). Total interest paid during the period must be disclosed in the statement of cash flows whether it was recognized as an expense in profit or loss or capitalized as a borrowing cost (§32). Dividends paid may be classified as a financing activity, since they are a cost of obtaining financial resources, or alternatively as an operating activity, to help users assess the entity's ability to pay dividends out of operating cash flows (§34).",
+            "lex_uz_ref": "Lex.uz MHMS #10, §31-32, §34 (7-son BHXS \"Pul mablag'lari harakati to'g'risidagi hisobot\")",
+            "ifrs_ref": "IAS 7.31-32 (Interest and dividends), IAS 7.34 (Dividends paid)"
           },
           {
             "gap_id": "10.3",
-            "title": "TODO: gap title (non-cash transaction disclosure omission)",
+            "title": "Non-Cash Investing and Financing Transactions Not Disclosed",
             "risk": "LOW",
             "detection_keywords": [
-              "TODO: keywords"
+              "пулсиз операциялар",
+              "non-cash transactions",
+              "айрибошлаш",
+              "debt-to-equity conversion",
+              "asset exchange",
+              "noqd operatsiyalar"
             ],
             "detection_rules": [
-              "TODO: rule 1",
-              "TODO: rule 2"
+              "Rule 1: Look for balance-sheet movements (new PP&E, new debt, new share capital) that have no corresponding cash inflow/outflow in the cash flow statement -- these may be unrecognized non-cash transactions.",
+              "Rule 2: Check the notes for disclosure of non-cash investing/financing transactions such as acquiring an asset by assuming directly related debt, converting debt into equity, acquiring an asset via a finance lease, or exchanging non-monetary assets.",
+              "Rule 3: If the entity issued shares to acquire an asset or settle a liability, confirm this is disclosed in the notes rather than only reflected as a movement in equity with no explanation.",
+              "Rule 4: Confirm non-cash transactions are NOT included within the operating/investing/financing sections of the cash flow statement itself (they should be excluded from it and disclosed separately)."
             ],
             "claude_prompt_template": "TODO: template",
-            "adjustment_hint": "TODO: hint",
-            "example": "TODO: example"
+            "adjustment_hint": "You will need to identify any investing or financing transaction that did not involve cash or cash equivalents (e.g., asset acquired by assuming debt, debt converted to equity, non-monetary asset exchange) and disclose it separately elsewhere in the financial statements, rather than including it in or omitting it entirely from the cash flow statement.",
+            "example": "[ILLUSTRATIVE] A company acquired equipment by directly assuming a supplier's loan (no cash changed hands) and converted a portion of shareholder debt into share capital during the year, but neither transaction is disclosed anywhere in the notes or the cash flow statement.",
+            "nas_treatment": "[NEED_MENTOR_INPUT]",
+            "mhms_treatment": "Investing and financing transactions that do not require the use of cash or cash equivalents must be excluded from the statement of cash flows, but must be disclosed elsewhere in the financial statements in a way that provides all relevant information about the investing and financing activity (§43). Most investing and financing activities affect the composition of an entity's capital and assets but do not necessarily have a direct impact on current cash flows, such as converting debt to equity or acquiring an asset by directly assuming a related liability (§44).",
+            "lex_uz_ref": "Lex.uz MHMS #10, §43-44 (7-son BHXS \"Pul mablag'lari harakati to'g'risidagi hisobot\")",
+            "ifrs_ref": "IAS 7.43 (Non-cash transactions excluded from the statement), IAS 7.44 (Examples)"
           }
         ]
       },
@@ -260,18 +338,35 @@
         "key_gaps": [
           {
             "gap_id": "20.1",
-            "title": "TODO: gap title (net realizable value testing not performed)",
+            "title": "Inventory Valuation - Lower of Cost and Net Realizable Value",
             "risk": "HIGH",
             "detection_keywords": [
-              "TODO: keywords"
+              "захиралар",
+              "соф сотиш қиймати",
+              "таннарх",
+              "ФИФО",
+              "ўртача тортилган қиймат",
+              "inventory",
+              "net realizable value",
+              "NRV",
+              "lower of cost and NRV",
+              "FIFO",
+              "write-down"
             ],
             "detection_rules": [
-              "TODO: rule 1",
-              "TODO: rule 2"
+              "Rule 1: Check for evidence of year-end NRV testing; inventory carried strictly at cost with no NRV comparison or write-down history is a red flag where slow-moving/obsolete stock is plausible.",
+              "Rule 2: Look for obsolete, slow-moving, or damaged inventory (aging schedules, low turnover, discontinued lines) not written down.",
+              "Rule 3: Confirm the disclosed cost formula is FIFO or weighted-average, not LIFO or an unsupported method.",
+              "Rule 4: Check whether fixed production overheads are allocated based on normal capacity versus fully absorbed regardless of actual output."
             ],
             "claude_prompt_template": "TODO: template",
-            "adjustment_hint": "TODO: hint",
-            "example": "TODO: example"
+            "adjustment_hint": "Compare the carrying cost of inventory against NRV at each reporting date, and write down any inventory carried above NRV, expensing the write-down in the period it occurs. Confirm cost is determined by FIFO or weighted-average.",
+            "example": "[ILLUSTRATIVE] A company carries discontinued finished-goods inventory at its original cost of 150,000,000 UZS, but it can now only be sold for 90,000,000 UZS after reconditioning costs of 10,000,000 UZS. Under IAS 2.9, inventory should be written down to its NRV of 80,000,000 UZS, with the 70,000,000 UZS write-down expensed immediately.",
+            "mhms_id": "20",
+            "nas_treatment": "[NEED_MENTOR_INPUT]",
+            "mhms_treatment": "Inventories are measured at the lower of cost and net realizable value (NRV) - not at cost alone. Cost comprises all costs of purchase, conversion, and other costs to bring inventory to its present location and condition. NRV is the estimated selling price in the ordinary course of business, less estimated costs of completion and costs necessary to make the sale. Cost of non-interchangeable items uses specific identification; for interchangeable items, FIFO or weighted-average is used (LIFO is not permitted). Write-downs to NRV are typically made item by item, reflecting increased completion/selling costs, physical damage, obsolescence, or falling selling prices. Costs excluded from inventory (expensed as incurred) include abnormal waste, unnecessary storage costs, unrelated administrative overheads, and selling costs.",
+            "lex_uz_ref": "Lex.uz MHMS #20, §6 (ta'riflar), §9 (2-son BHXS \"Zahiralar\")",
+            "ifrs_ref": "IAS 2.6 (Definitions), IAS 2.9 (Lower of cost and net realizable value)"
           },
           {
             "gap_id": "20.2",
@@ -320,18 +415,34 @@
         "key_gaps": [
           {
             "gap_id": "22.1",
-            "title": "TODO: gap title (componentization of major PP&E parts not applied)",
+            "title": "PP&E Componentization - Separate Depreciation of Significant Parts",
             "risk": "HIGH",
             "detection_keywords": [
-              "TODO: keywords"
+              "асосий воситалар",
+              "компонент",
+              "эскириш",
+              "аҳамиятли компонент",
+              "componentization",
+              "significant part",
+              "depreciation",
+              "component depreciation",
+              "PP&E",
+              "useful life"
             ],
             "detection_rules": [
-              "TODO: rule 1",
-              "TODO: rule 2"
+              "Rule 1: Check whether major PP&E items are depreciated as a single unit over one useful life rather than split into significant components each with its own useful life.",
+              "Rule 2: Check the fixed asset register for whether replacement of a major part is capitalized as a new component with the old part derecognized, versus expensed or added without derecognition.",
+              "Rule 3: Compare disclosed useful lives against the physical/economic reality of major asset classes - one useful life per asset class regardless of complexity signals missing componentization.",
+              "Rule 4: For land-and-building combinations, confirm land and buildings are accounted for as separate components."
             ],
             "claude_prompt_template": "TODO: template",
-            "adjustment_hint": "TODO: hint",
-            "example": "TODO: example"
+            "adjustment_hint": "Identify PP&E items with significant parts of materially different useful lives, split the recognized cost across those parts, and depreciate each separately. When a significant part is replaced, derecognize the replaced part's carrying amount and capitalize the new part as its own component.",
+            "example": "[ILLUSTRATIVE] A cement plant capitalizes its production facility as a single asset depreciated over 25 years, including a kiln lining replaced every 5 years. Under IAS 16.43-44, the lining should be a separate component depreciated over 5 years; when replaced, its remaining carrying amount is derecognized and the new lining capitalized separately.",
+            "mhms_id": "22",
+            "nas_treatment": "[NEED_MENTOR_INPUT]",
+            "mhms_treatment": "An item of PP&E is recognized only if it is probable that future economic benefits will flow to the entity and its cost can be measured reliably. Beyond initial recognition, each part of an item of PP&E with a cost significant in relation to the total cost must be depreciated separately (componentization) - e.g., an aircraft's airframe and engines depreciated separately due to different useful lives. Parts with the same useful life and depreciation method may be grouped. The standard does not prescribe the unit of account, so judgment is required - in some cases, individually insignificant items (tools, molds, dies) may be aggregated.",
+            "lex_uz_ref": "Lex.uz MHMS #22, §7 (tan olish mezonlari), §43-44 (16-son BHXS \"Asosiy vositalar\")",
+            "ifrs_ref": "IAS 16.7 (Recognition), IAS 16.43-44 (Componentization / separate depreciation of significant parts)"
           },
           {
             "gap_id": "22.2",
@@ -380,48 +491,85 @@
         "key_gaps": [
           {
             "gap_id": "25.1",
-            "title": "TODO: gap title (development costs expensed instead of capitalized)",
+            "title": "Development Costs Expensed Instead of Capitalized",
             "risk": "HIGH",
             "detection_keywords": [
-              "TODO: keywords"
+              "тадқиқот босқичи",
+              "тажриба конструкторлик ишлари",
+              "research phase",
+              "development phase",
+              "capitalization criteria",
+              "номоддий актив яратиш",
+              "R&D"
             ],
             "detection_rules": [
-              "TODO: rule 1",
-              "TODO: rule 2"
+              "Rule 1: Check whether the entity distinguishes a research phase from a development phase for internal projects (e.g., new software, product design) -- if the P&L simply expenses all 'R&D' as one line with no phase distinction, capitalizable development costs may be missing from the balance sheet.",
+              "Rule 2: For costs incurred after technical feasibility of a project is established, check whether all six development-phase recognition criteria were assessed (technical feasibility, intention to complete, ability to use/sell, how it will generate future benefits, resource availability, ability to reliably measure the expenditure) before deciding to expense rather than capitalize.",
+              "Rule 3: Confirm no internally generated brands, trademarks, mastheads, publishing titles, or customer lists have been capitalized as intangible assets -- these are specifically prohibited from recognition regardless of development spend.",
+              "Rule 4: Check that once expensed in a prior period, development-type costs were not later reinstated/capitalized -- expenditure recognized as an expense may not be capitalized in a subsequent period."
             ],
             "claude_prompt_template": "TODO: template",
-            "adjustment_hint": "TODO: hint",
-            "example": "TODO: example"
+            "adjustment_hint": "You will need to identify the point at which a project moved from the research phase into the development phase, confirm all six capitalization criteria are met from that point, and capitalize the development expenditure incurred from that point onward (not before it, and not expenditure already recognized as an expense in a prior period).",
+            "example": "[ILLUSTRATIVE] A software company expenses 100% of its engineering costs as \"R&D expense\" even after a new product reaches the stage where technical feasibility, management's intent to complete it, and its ability to generate future revenue are all demonstrable -- development-phase costs from that point should have been capitalized as an intangible asset.",
+            "nas_treatment": "[NEED_MENTOR_INPUT]",
+            "mhms_treatment": "No intangible asset arising from research (or the research phase of an internal project) is recognized -- expenditure on research is recognized as an expense when incurred, because an entity cannot demonstrate that a resulting intangible asset exists that will generate probable future economic benefits (§54-55). An intangible asset arising from development (or the development phase of an internal project) is recognized only if the entity can demonstrate ALL of: technical feasibility of completing the asset, intention to complete and use or sell it, ability to use or sell it, how it will generate probable future economic benefits, availability of adequate resources to complete it, and ability to reliably measure the expenditure attributable to it (§57). Internally generated brands, mastheads, publishing titles, customer lists, and similar items are never recognized as intangible assets, because expenditure on them cannot be distinguished from the cost of developing the business as a whole (§63-64).",
+            "lex_uz_ref": "Lex.uz MHMS #25, §54-57, §63-64 (38-son BHXS \"Nomoddiy aktivlar\")",
+            "ifrs_ref": "IAS 38.54-55 (Research phase), IAS 38.57 (Development phase recognition criteria), IAS 38.63-64 (Internally generated brands etc.)"
           },
           {
             "gap_id": "25.2",
-            "title": "TODO: gap title (indefinite vs finite useful life assessment missing)",
+            "title": "Indefinite vs Finite Useful Life Not Assessed for Intangible Assets",
             "risk": "MEDIUM",
             "detection_keywords": [
-              "TODO: keywords"
+              "фойдали хизмат муддати",
+              "аниқ хизмат муддати",
+              "ноаниқ хизмат муддати",
+              "useful life",
+              "indefinite useful life",
+              "finite useful life",
+              "amortization",
+              "impairment test"
             ],
             "detection_rules": [
-              "TODO: rule 1",
-              "TODO: rule 2"
+              "Rule 1: Check whether each recognized intangible asset (licenses, trademarks, customer relationships, software) has an explicitly assessed useful life (finite with a stated period, or indefinite) rather than a default amortization period applied without analysis.",
+              "Rule 2: For intangibles being amortized, check that the amortization period doesn't exceed the term of any underlying contractual or legal right (e.g., a license period), unless renewal is virtually certain at negligible cost.",
+              "Rule 3: For any intangible asset treated as having an indefinite useful life (not amortized), confirm it is instead tested for impairment at least annually rather than simply left unamortized with no further testing.",
+              "Rule 4: Check that 'indefinite' useful life hasn't been used as a substitute for 'we haven't decided' -- the entity should be able to show no foreseeable limit to the period the asset is expected to generate net cash inflows."
             ],
             "claude_prompt_template": "TODO: template",
-            "adjustment_hint": "TODO: hint",
-            "example": "TODO: example"
+            "adjustment_hint": "You will need to assess and document whether each intangible asset's useful life is finite or indefinite based on the relevant economic and legal factors; amortize finite-life assets over that life, and instead impairment-test (at least annually) any assets assessed as having an indefinite useful life rather than leaving them unamortized by default with no further testing.",
+            "example": "[ILLUSTRATIVE] A company holds a perpetual trademark and amortizes it over an arbitrary 10-year period with no documented useful-life assessment, while a separately acquired 5-year distribution license is left unamortized on the balance sheet with no impairment testing performed.",
+            "nas_treatment": "[NEED_MENTOR_INPUT]",
+            "mhms_treatment": "An entity must assess whether the useful life of an intangible asset is finite or indefinite; if finite, it must determine the length of that period. An intangible asset is regarded as having an indefinite useful life when, based on an analysis of all relevant factors, there is no foreseeable limit to the period over which the asset is expected to generate net cash inflows for the entity (§88). An intangible asset with a finite useful life is amortized over that life; one with an indefinite useful life is not amortized, but is instead tested for impairment (§89). \"Indefinite\" does not mean \"infinite\" (§91). The useful life of an intangible arising from contractual or other legal rights must not exceed the period of those rights, unless the entity has a right to renew and can do so at negligible cost (§94).",
+            "lex_uz_ref": "Lex.uz MHMS #25, §88-89, §91, §94 (38-son BHXS \"Nomoddiy aktivlar\")",
+            "ifrs_ref": "IAS 38.88-89 (Assessing useful life), IAS 38.91 (Indefinite is not infinite), IAS 38.94 (Contractual/legal right limits)"
           },
           {
             "gap_id": "25.3",
-            "title": "TODO: gap title (goodwill vs intangible asset distinction)",
+            "title": "Goodwill Not Distinguished from Separately Identifiable Intangible Assets",
             "risk": "MEDIUM",
             "detection_keywords": [
-              "TODO: keywords"
+              "гудвил",
+              "идентификацияланадиган",
+              "goodwill",
+              "identifiability",
+              "separable",
+              "internally generated goodwill",
+              "бизнес бирлашуви"
             ],
             "detection_rules": [
-              "TODO: rule 1",
-              "TODO: rule 2"
+              "Rule 1: Check that any amount labeled \"goodwill\" on the balance sheet arose only from an actual business combination (an acquisition of another business), not from internally built reputation, customer loyalty, or market position.",
+              "Rule 2: Confirm no internally generated goodwill has been recognized as an asset at all -- MHMS/IFRS specifically prohibit this regardless of how much was spent building the business's reputation.",
+              "Rule 3: For an acquired business, check whether identifiable intangible assets (e.g., trademarks, customer contracts, technology, licenses) that meet the separability or contractual/legal-rights test were recognized separately from goodwill, rather than the entire premium being dumped into a single goodwill balance.",
+              "Rule 4: Check that items lacking either separability or a contractual/legal basis (e.g., an assembled workforce's skill, uncontracted customer relationships) were correctly left within goodwill rather than mislabeled as a separate identifiable intangible asset."
             ],
             "claude_prompt_template": "TODO: template",
-            "adjustment_hint": "TODO: hint",
-            "example": "TODO: example"
+            "adjustment_hint": "You will need to confirm goodwill exists only where it arose from an actual business combination, ensure no internally generated goodwill is recognized as an asset, and separately identify and recognize any acquired intangible asset that is either separable from the business or arises from contractual/legal rights, rather than folding it into goodwill.",
+            "example": "[ILLUSTRATIVE] A company recognizes a \"goodwill\" asset representing its own long-built brand reputation and customer loyalty, built up internally over many years with no business acquisition involved -- this fails the prohibition on recognizing internally generated goodwill.",
+            "nas_treatment": "[NEED_MENTOR_INPUT]",
+            "mhms_treatment": "The definition of an intangible asset requires it to be identifiable, to distinguish it from goodwill. Goodwill recognized in a business combination represents future economic benefits from other acquired assets that are not individually identified and separately recognized (§11). An asset is identifiable if it is either separable (capable of being separated and sold, transferred, licensed, rented, or exchanged, individually or together with a related contract) or arises from contractual or other legal rights, regardless of whether those rights are transferable or separable from the entity (§12). Internally generated goodwill is never recognized as an asset, because it is not an identifiable resource controlled by the entity that can be measured reliably at cost (§48).",
+            "lex_uz_ref": "Lex.uz MHMS #25, §11-12, §48 (38-son BHXS \"Nomoddiy aktivlar\")",
+            "ifrs_ref": "IAS 38.11 (Goodwill vs identifiable intangibles), IAS 38.12 (Identifiability criterion), IAS 38.48 (Internally generated goodwill not recognized)"
           }
         ]
       },
@@ -440,63 +588,116 @@
         "key_gaps": [
           {
             "gap_id": "30.1",
-            "title": "TODO: gap title (expected credit loss model not applied)",
+            "title": "Financial Instruments Classification and Expected Credit Loss Model",
             "risk": "HIGH",
             "detection_keywords": [
-              "TODO: keywords"
+              "молиявий инструментлар",
+              "амортизацияланган қиймат",
+              "ҳаққоний қиймат",
+              "кутилаётган кредит зарарлар",
+              "financial instruments",
+              "amortized cost",
+              "fair value",
+              "expected credit loss",
+              "ECL",
+              "business model test",
+              "SPPI"
             ],
             "detection_rules": [
-              "TODO: rule 1",
-              "TODO: rule 2"
+              "Rule 1: Check whether receivables, loans, and debt investments are classified via a formal business-model + SPPI test, or simply carried at cost/invoice value by default.",
+              "Rule 2: Look for a specific-provision-only approach (provision booked only on default/dispute) with no general loss allowance for performing balances - signals the ECL model was not applied.",
+              "Rule 3: Check whether equity investments are carried at cost with no annual fair value reassessment.",
+              "Rule 4: Review whether trade receivables have any loss allowance for performing (not-yet-overdue) balances - a zero allowance with no disclosed ECL methodology is a red flag."
             ],
             "claude_prompt_template": "TODO: template",
-            "adjustment_hint": "TODO: hint",
-            "example": "TODO: example"
+            "adjustment_hint": "Classify each financial asset by business model and contractual cash flow characteristics (amortized cost, FVOCI, or FVTPL), and separately recognize a loss allowance for expected credit losses on amortized-cost and FVOCI assets - even performing receivables need a forward-looking allowance, not just specifically-identified bad debts.",
+            "example": "[ILLUSTRATIVE] A company holds trade receivables of 300,000,000 UZS from a diversified customer base, none overdue, with no provision recognized. Under IFRS 9.5.5.1-5.5.5, expected credit losses must be estimated (e.g., from historical default rates) and a loss allowance recognized now, reducing the receivables' net carrying value.",
+            "mhms_id": "30",
+            "nas_treatment": "[NEED_MENTOR_INPUT]",
+            "mhms_treatment": "Financial assets are classified based on two tests applied together: the entity's business model for managing the asset, and its contractual cash flow characteristics. A financial asset is measured at amortized cost only if BOTH: (a) held within a business model to collect contractual cash flows, AND (b) contractual terms give rise to cash flows that are solely payments of principal and interest (SPPI). Measured at FVOCI if held to both collect and sell, and passes SPPI. All others (including most equity investments) are measured at FVTPL. Separately, a loss allowance for expected credit losses (ECL) must be recognized on amortized-cost and FVOCI assets - replacing the old 'incurred loss' model where provisions were only recognized after a loss event. Under the general approach, a 12-month ECL allowance is recognized initially, moving to lifetime ECL once credit risk has increased significantly - meaning credit losses must be estimated even before any specific default trigger.",
+            "lex_uz_ref": "Lex.uz MHMS #30, §4.1.1-4.1.2 (tasniflash mezonlari), §5.5.1-5.5.5 (9-son MHXS \"Moliyaviy instrumentlar\")",
+            "ifrs_ref": "IFRS 9.4.1.1-4.1.2 (Classification of financial assets), IFRS 9.5.5.1-5.5.5 (Expected credit losses - general approach)"
           },
           {
             "gap_id": "30.2",
-            "title": "TODO: gap title (financial asset classification by business model missing)",
-            "risk": "HIGH",
+            "title": "Financial Assets Defaulted to Amortized Cost Without Testing Contractual Cash Flow Terms (SPPI)",
+            "risk": "MEDIUM",
             "detection_keywords": [
-              "TODO: keywords"
+              "шартномавий пул оқимлари",
+              "асосий қарз суммаси ва фоиз",
+              "SPPI test",
+              "solely payments of principal and interest",
+              "convertible loan",
+              "contingent payment",
+              "молиявий актив таснифи"
             ],
             "detection_rules": [
-              "TODO: rule 1",
-              "TODO: rule 2"
+              "Rule 1: For loans/receivables carried at amortized cost, check whether the contract has features beyond a plain repayment schedule -- e.g. a conversion option into equity, profit-participation or contingent payment terms, or leverage features -- any of which can fail the 'solely payments of principal and interest' (SPPI) test even though the instrument looks debt-like.",
+              "Rule 2: Check whether an instrument with a conversion feature (e.g. a convertible loan given to another entity) was tested for SPPI at all, or was simply classified as a loan receivable at amortized cost by default.",
+              "Rule 3: For receivables/loans with interest rates linked to a non-standard index or with caps/floors/leverage, check whether the entity assessed if the time-value-of-money element is modified enough to fail SPPI.",
+              "Rule 4: Check that any financial asset failing the SPPI test was reclassified to fair value through profit or loss (FVTPL) rather than left at amortized cost."
             ],
             "claude_prompt_template": "TODO: template",
-            "adjustment_hint": "TODO: hint",
-            "example": "TODO: example"
+            "adjustment_hint": "You will need to review the contractual terms of each debt-like financial asset (not just the interest rate and repayment schedule) for features such as conversion options, contingent or profit-linked payments, or leverage, and reclassify any that fail the SPPI test from amortized cost to fair value through profit or loss.",
+            "example": "[ILLUSTRATIVE] A company holds a loan receivable that includes an option to convert the outstanding balance into shares of the borrower, but classifies it at amortized cost as if it were an ordinary loan -- the conversion feature means the contractual cash flows are not solely principal and interest, so it fails SPPI and should be measured at fair value through profit or loss.",
+            "nas_treatment": "[NEED_MENTOR_INPUT]",
+            "mhms_treatment": "A financial asset is measured at amortized cost only if it is held within a business model to collect contractual cash flows AND its contractual terms give rise, on specified dates, to cash flows that are solely payments of principal and interest (SPPI) on the principal amount outstanding (§4.1.2). Principal is the fair value of the asset at initial recognition, and interest consists of consideration for the time value of money, credit risk, and other basic lending risks and costs, plus a profit margin (§4.1.3). Contractual terms that introduce exposure to risks or volatility unrelated to a basic lending arrangement -- such as conversion features, leverage, or contingent/profit-linked payments -- are inconsistent with cash flows that are solely principal and interest, so the asset fails SPPI and must be measured at fair value through profit or loss instead of amortized cost (§4.1.4).",
+            "lex_uz_ref": "Lex.uz MHMS #30, §4.1.2-4.1.4 (9-son MHXS \"Moliyaviy instrumentlar\")",
+            "ifrs_ref": "IFRS 9.4.1.2 (Amortized cost criteria), IFRS 9.4.1.3 (Principal and interest defined), IFRS 9.4.1.4 (Default to FVTPL)"
           },
           {
             "gap_id": "30.3",
-            "title": "TODO: gap title (fair value measurement and hierarchy disclosure gap)",
-            "risk": "MEDIUM",
+            "title": "Fair Value Hierarchy Level Not Disclosed for Instruments Measured at Fair Value",
+            "risk": "LOW",
             "detection_keywords": [
-              "TODO: keywords"
+              "ҳаққоний қиймат иерархияси",
+              "1-даражали манба маълумотлар",
+              "fair value hierarchy",
+              "Level 1",
+              "Level 2",
+              "Level 3",
+              "observable inputs",
+              "unobservable inputs"
             ],
             "detection_rules": [
-              "TODO: rule 1",
-              "TODO: rule 2"
+              "Rule 1: For any asset or liability measured at fair value (FVTPL or FVOCI financial instruments, revalued assets), check whether the notes disclose which fair value hierarchy level (1, 2, or 3) the measurement falls into.",
+              "Rule 2: Check that instruments with quoted prices in an active market for an identical asset are classified as Level 1, not a lower level, and that no unnecessary adjustment was made to a Level 1 quoted price.",
+              "Rule 3: For instruments valued using a model (e.g. discounted cash flow) with at least one significant unobservable input, confirm they are classified as Level 3, not Level 2, and that the notes describe the unobservable inputs used.",
+              "Rule 4: Where any transfers between hierarchy levels occurred during the period, check whether this was disclosed along with the reason for the transfer."
             ],
             "claude_prompt_template": "TODO: template",
-            "adjustment_hint": "TODO: hint",
-            "example": "TODO: example"
+            "adjustment_hint": "You will need to classify each fair-value-measured asset or liability into Level 1 (quoted prices for identical items in active markets), Level 2 (observable inputs other than quoted prices), or Level 3 (unobservable inputs), based on the lowest-level input that is significant to the overall measurement, and disclose that classification along with any significant unobservable inputs used.",
+            "example": "[ILLUSTRATIVE] A company reports investments carried at fair value through profit or loss but the notes give no indication of whether the value was taken from a quoted market price, a market-comparable model, or an unobservable internal valuation -- omitting the fair value hierarchy classification required for these instruments.",
+            "nas_treatment": "[NEED_MENTOR_INPUT]",
+            "mhms_treatment": "To increase consistency and comparability, fair value measurements are categorized within a three-level hierarchy based on the inputs used in the valuation technique, giving the highest priority to quoted (unadjusted) prices in active markets for identical assets or liabilities (Level 1 inputs) and the lowest priority to unobservable inputs (Level 3 inputs) (§72). Level 1 inputs are quoted prices in active markets for identical items, used without adjustment (§76-77). Level 2 inputs are observable inputs other than quoted Level 1 prices, either directly or indirectly observable (§81). Level 3 inputs are unobservable inputs for the asset or liability (§86). A fair value measurement is categorized in its entirety at the level of the lowest-level input that is significant to the whole measurement (§73).",
+            "lex_uz_ref": "Lex.uz MHMS #30, §72-73, §76-77, §81, §86 (13-son MHXS \"Haqqoniy qiymatni baholash\" orqali, 9-son MHXS moliyaviy instrumentlarni haqqoniy qiymatda o'lchashda shu iyerarxiyaga tayanadi)",
+            "ifrs_ref": "IFRS 13.72-73 (Fair value hierarchy), IFRS 13.76-77 (Level 1), IFRS 13.81 (Level 2), IFRS 13.86 (Level 3)"
           },
           {
             "gap_id": "30.4",
-            "title": "TODO: gap title (embedded derivative identification not performed)",
+            "title": "Embedded Derivatives in Hybrid Contracts Not Identified or Separated",
             "risk": "MEDIUM",
             "detection_keywords": [
-              "TODO: keywords"
+              "бириктирилган дериватив",
+              "гибрид шартнома",
+              "embedded derivative",
+              "hybrid contract",
+              "host contract",
+              "asosiy shartnoma"
             ],
             "detection_rules": [
-              "TODO: rule 1",
-              "TODO: rule 2"
+              "Rule 1: Look for contracts (loans, supply agreements, leases, insurance-like arrangements) with a non-derivative host that also contain terms linking payments to an interest rate, financial instrument price, commodity price, FX rate, price index, or credit rating -- these are candidate hybrid contracts with an embedded derivative.",
+              "Rule 2: If the host contract itself is a financial asset within IFRS 9's scope, confirm the entity applied the classification rules to the WHOLE hybrid contract (no separate bifurcation needed) rather than trying to split out an embedded derivative.",
+              "Rule 3: If the host contract is NOT a financial asset (e.g. a supply/purchase contract, a lease, an insurance contract), check whether the embedded derivative was assessed for separate recognition: are its economic characteristics and risks NOT closely related to the host, would a standalone instrument with the same terms meet the definition of a derivative, and is the whole hybrid not already measured at FVTPL?",
+              "Rule 4: Where a derivative should have been separated from its host, confirm it is separately measured at fair value with the host accounted for under its own applicable standard, rather than the whole contract being accounted for as one item."
             ],
             "claude_prompt_template": "TODO: template",
-            "adjustment_hint": "TODO: hint",
-            "example": "TODO: example"
+            "adjustment_hint": "You will need to identify contracts with a non-derivative host that also contain a derivative-like feature (a payment term linked to an index, price, or rate), determine whether the host is itself a financial asset (if so, classify the whole hybrid contract as one instrument) or not (if not, test whether the embedded derivative must be separated and fair-valued on its own).",
+            "example": "[ILLUSTRATIVE] A company enters a multi-year raw-material purchase contract (a non-financial-asset host) where the price is partly indexed to a foreign currency exchange rate unrelated to the supplier's or buyer's own currency, but accounts for the whole contract as a simple purchase commitment without assessing whether the FX-linked pricing feature is an embedded derivative that should be separately recognized at fair value.",
+            "nas_treatment": "[NEED_MENTOR_INPUT]",
+            "mhms_treatment": "An embedded derivative is a component of a hybrid contract that also includes a non-derivative host, with the effect that some of the cash flows of the combined instrument vary in a way similar to a stand-alone derivative (§4.3.1). If the host contract is itself a financial asset within the standard's scope, the classification requirements are applied to the entire hybrid contract as one instrument (§4.3.2). If the host contract is NOT a financial asset within scope, the embedded derivative must be separated from the host and accounted for as a stand-alone derivative only if: its economic characteristics and risks are not closely related to the host's; a separate instrument with the same terms would meet the definition of a derivative; and the hybrid contract is not itself measured at fair value through profit or loss (§4.3.3).",
+            "lex_uz_ref": "Lex.uz MHMS #30, §4.3.1-4.3.3 (9-son MHXS \"Moliyaviy instrumentlar\")",
+            "ifrs_ref": "IFRS 9.4.3.1 (Embedded derivative defined), IFRS 9.4.3.2 (Financial-asset host), IFRS 9.4.3.3 (Non-financial-asset host separation criteria)"
           }
         ]
       },
@@ -515,18 +716,33 @@
         "key_gaps": [
           {
             "gap_id": "40.1",
-            "title": "TODO: gap title (operating leases not capitalized as right-of-use asset)",
+            "title": "Operating Lease Capitalization - Right-of-Use Asset and Lease Liability",
             "risk": "HIGH",
             "detection_keywords": [
-              "TODO: keywords"
+              "ижара",
+              "фойдаланиш ҳуқуқидаги актив",
+              "ижара бўйича мажбурият",
+              "оператив ижара",
+              "operating lease",
+              "right-of-use asset",
+              "lease liability",
+              "дисконтланган қиймат",
+              "lease commencement"
             ],
             "detection_rules": [
-              "TODO: rule 1",
-              "TODO: rule 2"
+              "Rule 1: Search for a straight-line 'rent expense' line with no corresponding right-of-use asset or lease liability on the balance sheet - the primary signature of an uncapitalized operating lease.",
+              "Rule 2: Look for lease commitment disclosures stated only as future minimum payment schedules, without any recognized balance sheet asset/liability.",
+              "Rule 3: Check whether depreciation and interest expense are reported separately for leased assets; a single flat 'rent' line signals the ROU/lease-liability split was not applied.",
+              "Rule 4: Confirm any identified lease genuinely qualifies for the short-term or low-value exemption before flagging it as a gap."
             ],
             "claude_prompt_template": "TODO: template",
-            "adjustment_hint": "TODO: hint",
-            "example": "TODO: example"
+            "adjustment_hint": "For each lease that isn't short-term or low-value, recognize a right-of-use asset and a lease liability at the present value of remaining lease payments. Replace the flat rent expense with depreciation of the ROU asset plus interest expense on the lease liability. Balance sheet assets and liabilities both increase; expense timing shifts from straight-line to front-loaded.",
+            "example": "[ILLUSTRATIVE] A retailer leases a warehouse for 5 years at 200,000,000 UZS/year, currently expensing rent straight-line with no balance sheet recognition. Under IFRS 16.22, at commencement the retailer must recognize a lease liability equal to the present value of the five payments and a right-of-use asset of similar initial amount, then depreciate the asset and accrete interest on the liability separately.",
+            "mhms_id": "40",
+            "nas_treatment": "[NEED_MENTOR_INPUT]",
+            "mhms_treatment": "At the commencement date of a lease, the lessee recognizes BOTH a right-of-use (ROU) asset AND a lease liability on the balance sheet - there is no off-balance-sheet 'operating lease' category for lessees (a narrow exemption exists only for short-term leases of 12 months or less, and low-value underlying assets). The lease liability is initially measured at the present value of lease payments not yet paid, discounted using the rate implicit in the lease or, if not readily determinable, the lessee's incremental borrowing rate. Lease payments include: fixed payments (less incentives), index/rate-linked variable payments, residual value guarantee amounts, purchase option exercise price (if reasonably certain), and termination penalties (if applicable). The ROU asset is initially measured at cost: the initial lease liability, payments made at/before commencement (less incentives), initial direct costs, and estimated dismantling/restoration costs. The lessee subsequently depreciates the ROU asset and accretes interest on the lease liability separately - front-loading the combined expense relative to straight-line operating lease expense.",
+            "lex_uz_ref": "Lex.uz MHMS #40, §22 (16-son MHXS \"Ijara\")",
+            "ifrs_ref": "IFRS 16.22 (Recognition: right-of-use asset and lease liability)"
           },
           {
             "gap_id": "40.2",
@@ -590,18 +806,34 @@
         "key_gaps": [
           {
             "gap_id": "50.1",
-            "title": "TODO: gap title (performance obligations not separately identified)",
+            "title": "Revenue Recognition - Five-Step Model Timing and Criteria",
             "risk": "HIGH",
             "detection_keywords": [
-              "TODO: keywords"
+              "тушум",
+              "харидорлар билан шартнома",
+              "бажариш жавобгарлиги",
+              "беш қадамли модел",
+              "revenue recognition",
+              "performance obligation",
+              "transaction price",
+              "point in time",
+              "over time",
+              "тушумни тан олиш"
             ],
             "detection_rules": [
-              "TODO: rule 1",
-              "TODO: rule 2"
+              "Rule 1: Check whether revenue is recognized as a single event tied to invoicing or shipment regardless of contract content - a sign the five-step model was not applied.",
+              "Rule 2: For contracts bundling multiple deliverables (equipment + installation + service), check whether revenue was recognized as one lump sum at delivery instead of allocated across separate performance obligations.",
+              "Rule 3: Look for long-term contracts where revenue is recognized only on final completion rather than over time as work progresses.",
+              "Rule 4: Check whether variable consideration (discounts, rebates, returns) is estimated into the transaction price, or only recognized once certain."
             ],
             "claude_prompt_template": "TODO: template",
-            "adjustment_hint": "TODO: hint",
-            "example": "TODO: example"
+            "adjustment_hint": "Re-map each customer contract against the five-step model: split it into distinct performance obligations, determine the transaction price (including estimated variable consideration), allocate it by relative standalone selling price, and recognize revenue as each obligation is satisfied rather than all at once.",
+            "example": "[ILLUSTRATIVE] A company sells industrial equipment for 500,000,000 UZS with a bundled 2-year maintenance service, currently recognizing the full amount on delivery. Under the five-step model, the price must be allocated between the equipment (point-in-time obligation) and the maintenance service (over-time obligation), so only the equipment's portion is recognized at delivery.",
+            "mhms_id": "50",
+            "nas_treatment": "[NEED_MENTOR_INPUT]",
+            "mhms_treatment": "The core principle is that an entity recognizes revenue to depict the transfer of promised goods or services to customers in an amount that reflects the consideration to which the entity expects to be entitled. This is applied through a five-step model: (1) Identify the contract with a customer; (2) Identify the performance obligations - each distinct promised good/service accounted for separately; (3) Determine the transaction price, including estimates of variable consideration; (4) Allocate the transaction price to the performance obligations, generally by relative standalone selling price; (5) Recognize revenue when (or as) each performance obligation is satisfied - i.e. when control transfers - either at a point in time or over time. This differs fundamentally from single-event recognition (e.g., recognizing all revenue on shipment or invoicing) because a contract with multiple deliverables must be split into separate performance obligations, each potentially recognized at a different time or pattern.",
+            "lex_uz_ref": "Lex.uz MHMS #50, §2 (asosiy tamoyil), §9 (15-son MHXS \"Xaridorlar bilan shartnomalar bo'yicha tushum\")",
+            "ifrs_ref": "IFRS 15.2 (Core principle), IFRS 15.9 (Contract identification criteria)"
           },
           {
             "gap_id": "50.2",
@@ -665,48 +897,85 @@
         "key_gaps": [
           {
             "gap_id": "60.1",
-            "title": "TODO: gap title (functional currency not formally determined)",
+            "title": "Functional Currency Not Formally Determined",
             "risk": "MEDIUM",
             "detection_keywords": [
-              "TODO: keywords"
+              "функционал валюта",
+              "асосий иқтисодий муҳит",
+              "functional currency",
+              "primary economic environment",
+              "chet el valyutasi",
+              "foreign currency",
+              "жорий айирбошлаш курси"
             ],
             "detection_rules": [
-              "TODO: rule 1",
-              "TODO: rule 2"
+              "Rule 1: Check the accounting policy note for an explicit statement of the entity's functional currency and the basis for that determination -- statements that simply present in UZS/USD without ever identifying or justifying a functional currency are a red flag.",
+              "Rule 2: If the entity's sales prices, labor, and major input costs are predominantly denominated/settled in a currency different from the presentation currency, check whether that mismatch was considered in determining the functional currency.",
+              "Rule 3: For a subsidiary or branch of a foreign parent, check whether the functional currency assessment considered the degree of autonomy from the parent (per the additional indicators), not just defaulted to the parent's currency.",
+              "Rule 4: Confirm the functional currency has not been changed period to period without an actual change in the underlying transactions, events, or conditions that determine it."
             ],
             "claude_prompt_template": "TODO: template",
-            "adjustment_hint": "TODO: hint",
-            "example": "TODO: example"
+            "adjustment_hint": "You will need to formally determine the functional currency by first assessing the currency that most influences sales prices and costs of goods/services (the primary indicators), and only if that's inconclusive, the secondary financing/operating-receipts indicators -- then translate foreign currency transactions and apply this basis consistently going forward.",
+            "example": "[ILLUSTRATIVE] A company sells primarily in USD-denominated export contracts and pays most of its raw material suppliers in USD, but prepares and presents its financial statements in UZS without ever assessing or disclosing what its functional currency actually is.",
+            "nas_treatment": "[NEED_MENTOR_INPUT]",
+            "mhms_treatment": "Functional currency is the currency of the primary economic environment in which the entity operates (§8) -- normally the environment in which it primarily generates and expends cash. In determining it, an entity first considers the currency that most influences the sales prices of its goods and services and the currency of the country whose competitive forces/regulations mainly determine those prices, and the currency that mainly influences labor, material, and other costs (§9); if these are not conclusive, secondary indicators (financing currency, currency in which receipts from operating activities are usually retained) are also considered (§10). Once determined, the functional currency is not changed unless there is a change in the underlying transactions, events, and conditions (§13).",
+            "lex_uz_ref": "Lex.uz MHMS #60, §8-13 (21-son BHXS \"Valyuta kurslaridagi o'zgarishlarning ta'sirlari\")",
+            "ifrs_ref": "IAS 21.8 (Definition), IAS 21.9-13 (Determining the functional currency)"
           },
           {
             "gap_id": "60.2",
-            "title": "TODO: gap title (monetary vs non-monetary item translation error)",
+            "title": "Monetary vs Non-Monetary Items Not Translated Using the Correct Basis",
             "risk": "MEDIUM",
             "detection_keywords": [
-              "TODO: keywords"
+              "монетар моддалар",
+              "номонетар моддалар",
+              "monetary items",
+              "non-monetary items",
+              "ҳисобот санасидаги курс",
+              "closing rate",
+              "historical rate",
+              "chet el valyutasi"
             ],
             "detection_rules": [
-              "TODO: rule 1",
-              "TODO: rule 2"
+              "Rule 1: Check that monetary items denominated in foreign currency (cash, receivables, payables, loans) are retranslated at the closing rate at each reporting date, not left at the original transaction-date rate.",
+              "Rule 2: Check that non-monetary items measured at historical cost in a foreign currency (most inventory, PP&E, prepayments) are NOT retranslated at the closing rate -- they should stay at the exchange rate on the original transaction date.",
+              "Rule 3: Check that non-monetary items measured at fair value in a foreign currency are translated using the exchange rate at the date the fair value was determined, not the transaction date or closing rate.",
+              "Rule 4: For items like inventory carried at the lower of cost and net realizable value, confirm both the cost and NRV were translated using their own respective correct rates before comparing, rather than translating the already-compared functional-currency amount."
             ],
             "claude_prompt_template": "TODO: template",
-            "adjustment_hint": "TODO: hint",
-            "example": "TODO: example"
+            "adjustment_hint": "You will need to classify each foreign-currency-denominated balance as monetary or non-monetary, then apply the matching translation basis: monetary items at the closing rate every period-end, non-monetary items at historical cost at the original transaction-date rate, and non-monetary items at fair value at the rate on the fair-value measurement date.",
+            "example": "[ILLUSTRATIVE] A company retranslates its USD-denominated prepaid rent (a non-monetary item carried at historical cost) at the year-end closing rate along with its USD cash and receivables, recognizing an FX gain/loss on the prepayment that IAS 21 does not permit.",
+            "nas_treatment": "[NEED_MENTOR_INPUT]",
+            "mhms_treatment": "A monetary item's essential feature is a right to receive (or obligation to deliver) a fixed or determinable number of units of currency (§16) -- examples include cash, receivables, payables, and lease liabilities. Non-monetary items (prepayments, goodwill, intangible assets, inventories, PP&E, right-of-use assets) lack that feature. At each reporting date: foreign currency monetary items are translated using the closing rate; non-monetary items measured at historical cost in a foreign currency are translated using the exchange rate at the date of the transaction; and non-monetary items measured at fair value in a foreign currency are translated using the exchange rate at the date the fair value was determined (§23).",
+            "lex_uz_ref": "Lex.uz MHMS #60, §16, §23 (21-son BHXS \"Valyuta kurslaridagi o'zgarishlarning ta'sirlari\")",
+            "ifrs_ref": "IAS 21.16 (Monetary vs non-monetary items), IAS 21.23 (Reporting at the end of subsequent periods)"
           },
           {
             "gap_id": "60.3",
-            "title": "TODO: gap title (FX gain/loss presentation and disclosure gap)",
+            "title": "Foreign Exchange Gains/Losses Not Recognized or Presented Correctly",
             "risk": "LOW",
             "detection_keywords": [
-              "TODO: keywords"
+              "курс фарқи",
+              "exchange difference",
+              "фойда ёки зарарда тан олиниши",
+              "recognized in profit or loss",
+              "FX gain",
+              "FX loss",
+              "валюта курси"
             ],
             "detection_rules": [
-              "TODO: rule 1",
-              "TODO: rule 2"
+              "Rule 1: Check that exchange differences arising on settling monetary items, or on translating monetary items at a rate different from the rate used at initial recognition or the prior reporting date, are recognized in profit or loss in the period they arise -- not deferred, capitalized, or taken directly to equity (outside the narrow net-investment-hedge exception).",
+              "Rule 2: For monetary items settled in a later period than they arose, check that the exchange difference for EACH intervening reporting period was recognized in that period, not all deferred to the settlement date.",
+              "Rule 3: Where a non-monetary item's own gain or loss is recognized in other comprehensive income (e.g., a revaluation surplus), confirm the FX component of that gain/loss is also recognized in OCI, not misclassified into profit or loss (and vice versa for items recognized in profit or loss).",
+              "Rule 4: Check that the notes disclose the amount of net exchange differences recognized in profit or loss for the period, as required for transparency."
             ],
             "claude_prompt_template": "TODO: template",
-            "adjustment_hint": "TODO: hint",
-            "example": "TODO: example"
+            "adjustment_hint": "You will need to recognize exchange differences on monetary items in profit or loss in the period they arise (splitting the difference across each reporting period a balance remains unsettled), and match the FX component of a non-monetary item's gain or loss to wherever that item's own gain or loss is recognized (profit or loss, or OCI).",
+            "example": "[ILLUSTRATIVE] A company holds a USD-denominated loan outstanding across two reporting periods and only recognizes the cumulative exchange difference in the period the loan is finally repaid, instead of recognizing the portion attributable to each period as it arises.",
+            "nas_treatment": "[NEED_MENTOR_INPUT]",
+            "mhms_treatment": "Exchange differences arising on the settlement of monetary items, or on translating monetary items at rates different from those used on initial recognition or in a previous financial statement, must be recognized in profit or loss in the period in which they arise, except for the limited net-investment-hedge case (§28). Where a monetary item arises from a foreign currency transaction and there is a change in exchange rate between the transaction date and the settlement date, an exchange difference results; if settlement occurs in a later reporting period, the exchange difference recognized in each intervening period is determined by the change in rates during that period (§29). Where a non-monetary item's gain or loss is recognized in other comprehensive income, the exchange component of that gain or loss is also recognized in other comprehensive income (§30).",
+            "lex_uz_ref": "Lex.uz MHMS #60, §28-30 (21-son BHXS \"Valyuta kurslaridagi o'zgarishlarning ta'sirlari\")",
+            "ifrs_ref": "IAS 21.28 (Recognition of exchange differences), IAS 21.29-30 (Settlement in a later period; OCI-linked items)"
           }
         ]
       }
@@ -982,18 +1251,34 @@
         "key_gaps": [
           {
             "gap_id": "55.1",
-            "title": "TODO: gap title (deferred tax asset/liability not recognized)",
+            "title": "Income Tax - Deferred Tax Assets and Liabilities",
             "risk": "HIGH",
             "detection_keywords": [
-              "TODO: keywords"
+              "фойда солиғи",
+              "кечиктирилган солиқ",
+              "вақтинчалик фарқлар",
+              "солиқ базаси",
+              "income tax",
+              "deferred tax asset",
+              "deferred tax liability",
+              "temporary difference",
+              "tax base",
+              "current tax"
             ],
             "detection_rules": [
-              "TODO: rule 1",
-              "TODO: rule 2"
+              "Rule 1: Check for any deferred tax asset/liability line; complete absence, with only a 'current tax payable' line, signals deferred tax was not recognized.",
+              "Rule 2: For assets with book vs. tax depreciation rate differences, verify whether the resulting temporary difference was quantified and deferred tax recognized.",
+              "Rule 3: Check for unused tax losses carried forward with no corresponding deferred tax asset, or recognized without assessing probable future taxable profit.",
+              "Rule 4: Look for PP&E revaluation (Gap 22.1) without corresponding deferred tax on the revaluation surplus."
             ],
             "claude_prompt_template": "TODO: template",
-            "adjustment_hint": "TODO: hint",
-            "example": "TODO: example"
+            "adjustment_hint": "Compare the tax base of each material asset/liability against its book carrying amount, identify resulting temporary differences, and recognize the corresponding deferred tax liabilities/assets (assets only to the extent future taxable profit is probable). This affects both the balance sheet (new DTA/DTL lines) and income statement (deferred tax expense/income).",
+            "example": "[ILLUSTRATIVE] A company's equipment has a book value of 100,000,000 UZS but a tax base of 70,000,000 UZS due to faster tax depreciation, with no deferred tax recognized. Under IAS 12.5 and .7-8, this 30,000,000 UZS taxable temporary difference requires a deferred tax liability at the applicable tax rate.",
+            "mhms_id": "55",
+            "nas_treatment": "[NEED_MENTOR_INPUT]",
+            "mhms_treatment": "A deferred tax liability or asset arises whenever the carrying amount of an asset or liability differs from its tax base, creating a 'temporary difference.' The tax base of an asset is the amount deductible for tax purposes against taxable economic benefits when the entity recovers the carrying amount; if benefits are not taxable, tax base equals carrying amount. The tax base of a liability is generally its carrying amount less amounts deductible in future periods. Taxable temporary differences give rise to deferred tax liabilities; deductible temporary differences give rise to deferred tax assets. Deferred tax must generally be recognized for essentially all temporary differences - not just the current-period tax liability from the tax return. A deferred tax asset is also recognized for unused tax losses/credits carried forward, to the extent future taxable profit is probable.",
+            "lex_uz_ref": "Lex.uz MHMS #55, §5 (ta'riflar), §7-8 (12-son BHXS \"Foyda soliqlari\")",
+            "ifrs_ref": "IAS 12.5 (Definitions - temporary differences, tax base, DTA/DTL), IAS 12.7-8 (Tax base)"
           },
           {
             "gap_id": "55.2",
