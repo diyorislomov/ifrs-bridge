@@ -30,7 +30,12 @@ _LEADING_CODE_RE = re.compile(r'^\s*(\d{1,6}(?:[.\-]\d+)?)\s+')
 # a label followed by a trailing amount ("2026").
 _DATE_LINE_RE = re.compile(r',\s*(19|20)\d{2}\s*$')
 # Company legal-entity suffix (Latin and Cyrillic, Uzbek and international).
-_COMPANY_SUFFIX_RE = re.compile(r'\b(?:Ltd|LLC|JSC|MChJ|AJ|АЖ|МЧЖ|QK|ҚК)\b', re.IGNORECASE)
+_COMPANY_SUFFIX_RE = re.compile(
+    r'\b(?:Ltd|LLC|JSC|MChJ|AJ|АЖ|МЧЖ|QK|ҚК'
+    r'|aksiyadorlik jamiyati|masʼuliyati cheklangan jamiyat'
+    r'|акциядорлик жамияти|масъулияти чекланган жамият)\b',
+    re.IGNORECASE,
+)
 # A quoted company name, e.g. '"Example"' or '«Namuna»'.
 _QUOTED_NAME_RE = re.compile(r'[«"]([^«»"]{2,80})[»"]')
 
@@ -79,7 +84,15 @@ def _find_company_name(text: str):
     if not suffix_match:
         return None
 
-    line_start = text.rfind('\n', 0, suffix_match.start()) + 1
+    # Look back up to two lines: the quoted name and its legal suffix are
+    # sometimes on separate lines (e.g. a form field split across a label
+    # line and a value line), not just the same line as the suffix.
+    line_start = suffix_match.start()
+    for _ in range(2):
+        line_start = text.rfind('\n', 0, line_start) + 1
+        if line_start == 0:
+            break
+        line_start -= 1
     window = text[line_start:suffix_match.end()]
 
     quoted_match = _QUOTED_NAME_RE.search(window)
@@ -132,6 +145,14 @@ def _parse_amount(raw: str):
         parts = s.split('.')
         if len(parts) > 2 or len(parts[-1]) == 3:
             s = s.replace('.', '')  # multiple dots, or 3 trailing digits -> thousands separator
+
+    # A real monetary amount's integer part never has a leading zero followed
+    # by more digits (e.g. "0100"). Text like that is an account/row-code
+    # reference (e.g. a label ending in "(0100, 0300)"), not an amount --
+    # this rejects that case rather than parsing it as -1,000,300 etc.
+    integer_part = s.split('.')[0]
+    if len(integer_part) > 1 and integer_part.startswith('0'):
+        return None
 
     try:
         value = float(s)
@@ -232,6 +253,96 @@ def _extract_line_items(text: str, source: str) -> dict:
     return line_items
 
 
+# A line that is JUST a row/account code, nothing else -- e.g. "010",
+# "0300". Real financial-statement PDF exports (e.g. Uzbek tax-portal
+# statements) often render each table cell as its own separate text line,
+# so the code ends up alone on its own line rather than prefixing the label.
+_ROW_CODE_LINE_RE = re.compile(r'^\d{2,4}$')
+# A line that is JUST an amount, nothing else.
+_AMOUNT_LINE_RE = re.compile(r'^' + _AMOUNT_TOKEN + r'$')
+
+
+def _is_amount_line(candidate: str) -> bool:
+    """
+    True if `candidate` is a standalone amount line. Requires at least 2
+    digit characters to avoid mistaking an isolated footnote marker for an
+    amount -- except a lone "0", which is a common, legitimate zero balance
+    (not ambiguous the way a bare "1" or "2" would be). "0" is handled as a
+    special case because _AMOUNT_TOKEN itself requires a digit at both the
+    start and end, so a single character can never match it structurally.
+    """
+    if candidate == '0':
+        return True
+    if not _AMOUNT_LINE_RE.fullmatch(candidate):
+        return False
+    return sum(c.isdigit() for c in candidate) >= 2
+
+
+def _extract_line_items_cell_per_line(text: str, source: str) -> dict:
+    """
+    Handles table layouts where each cell -- label, row code, and each
+    amount -- was extracted as its own separate line, rather than a whole
+    row on one line. This is common for forms exported from accounting/tax
+    systems, where each cell is its own text frame in the PDF and doesn't
+    share a line with its neighbors.
+
+    Scans sequentially for the pattern: one or more label lines, followed
+    by a bare row-code line, followed by one or two bare amount lines
+    (current period, and optionally prior period). A bilingual label
+    (e.g. Uzbek line then Russian line) is handled by keeping the last
+    accumulated label line before the code.
+    """
+    line_items = {}
+    pending_label = None
+
+    lines = [raw.strip() for raw in text.split('\n')]
+    i = 0
+    n = len(lines)
+    while i < n:
+        line = lines[i]
+        if not line:
+            i += 1
+            continue
+
+        is_code_line = bool(_ROW_CODE_LINE_RE.fullmatch(line))
+        is_amount_line = _is_amount_line(line)
+
+        if is_code_line and pending_label:
+            amounts = []
+            j = i + 1
+            while j < n and len(amounts) < 2:
+                candidate = lines[j]
+                if _is_amount_line(candidate):
+                    amounts.append(candidate)
+                    j += 1
+                else:
+                    break
+
+            if amounts:
+                amount = _parse_amount(amounts[0])
+                if amount is not None:
+                    entry = {'code': line, 'amount': amount, 'source': source}
+                    if len(amounts) > 1:
+                        prior_amount = _parse_amount(amounts[1])
+                        if prior_amount is not None:
+                            entry['prior_amount'] = prior_amount
+                    line_items[pending_label] = entry
+                pending_label = None
+                i = j
+                continue
+
+        if not is_code_line and not is_amount_line:
+            # Accumulate as a candidate label line. For a bilingual pair
+            # (Uzbek line, then Russian line) this naturally keeps the most
+            # recent line, which is the one immediately before the code.
+            pending_label = line
+        else:
+            pending_label = None
+        i += 1
+
+    return line_items
+
+
 def extract_from_pdf(pdf_path: str) -> dict:
     """
     Extracts financial statement data from PDF.
@@ -262,7 +373,13 @@ def extract_from_pdf(pdf_path: str) -> dict:
         if period_match:
             data['period_end'] = f"{period_match.group(1)}-{period_match.group(2)}-{period_match.group(3)}"
 
+        # Two complementary strategies: rows written on a single line
+        # ("label amount amount"), and rows where each cell -- label, code,
+        # each amount -- was extracted as its own separate line (common for
+        # forms exported from accounting/tax systems). A given document
+        # typically matches one or the other, so both are run and merged.
         data['line_items'] = _extract_line_items(full_text, source='PDF')
+        data['line_items'].update(_extract_line_items_cell_per_line(full_text, source='PDF'))
 
         # notes['raw'] is what gap_detector.py searches for keyword matches,
         # so it holds the FULL text (a substring search over it is cheap) --

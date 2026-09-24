@@ -8,7 +8,13 @@ sys.path.insert(
     0, os.path.join(os.path.dirname(__file__), "..", "03-BACKEND")
 )
 
-from utils.file_parser import _parse_amount, _extract_line_items, _find_company_name, _find_sections  # noqa: E402
+from utils.file_parser import (  # noqa: E402
+    _parse_amount,
+    _extract_line_items,
+    _extract_line_items_cell_per_line,
+    _find_company_name,
+    _find_sections,
+)
 
 
 class TestParseAmount(unittest.TestCase):
@@ -152,6 +158,87 @@ class TestFindSections(unittest.TestCase):
         text = "ТУШУНТИРИШЛАР\nline one\nline two\n"
         sections = _find_sections(text)
         self.assertEqual(sections["notes"], text)
+
+
+class TestParseAmountRejectsCodeReferences(unittest.TestCase):
+    # Regression tests: a label ending in a parenthetical account-code
+    # reference (e.g. "(0100, 0300)") was being misparsed as a negative
+    # amount by the single-line extractor, because its own integer part
+    # incorrectly allowed a leading zero.
+    def test_rejects_parenthesized_code_list(self):
+        self.assertIsNone(_parse_amount("(0100, 0300)"))
+
+    def test_rejects_bare_leading_zero_code(self):
+        self.assertIsNone(_parse_amount("0100"))
+
+    def test_accepts_lone_zero_as_valid_amount(self):
+        self.assertEqual(_parse_amount("0"), 0.0)
+
+    def test_accepts_decimal_starting_with_zero(self):
+        self.assertEqual(_parse_amount("0.5"), 0.5)
+        self.assertEqual(_parse_amount("0,5"), 0.5)
+
+
+class TestExtractLineItemsCellPerLine(unittest.TestCase):
+    # Real Uzbek NAS statements exported from the tax portal render each
+    # table cell (bilingual label lines, row code, each amount) as its own
+    # separate text line, rather than a whole row on one line -- this is
+    # the exact structure that was silently producing zero line items.
+    def test_bilingual_label_code_and_two_amounts(self):
+        text = (
+            "бошлангич (кайта тиклаш) киймат (0100, 0300)\n"
+            "первоначальная (восстановительная) стоимость (0100, 0300)\n"
+            "010\n"
+            "19 312 416 279\n"
+            "28 089 943 259\n"
+        )
+        items = _extract_line_items_cell_per_line(text, source="PDF")
+        key = "первоначальная (восстановительная) стоимость (0100, 0300)"
+        self.assertIn(key, items)
+        self.assertEqual(items[key]["code"], "010")
+        self.assertEqual(items[key]["amount"], 19312416279.0)
+        self.assertEqual(items[key]["prior_amount"], 28089943259.0)
+
+    def test_zero_balance_captured_as_prior_amount(self):
+        text = "эскириш (0500)\nизнос (0500)\n021\n21 591 934\n0\n"
+        items = _extract_line_items_cell_per_line(text, source="PDF")
+        self.assertEqual(items["износ (0500)"]["prior_amount"], 0.0)
+
+    def test_section_headers_produce_no_line_items(self):
+        text = "АКТИВ\nI. Узок муддатли активлар\nI. Долгосрочные активы\nАсосий воситалари:\nОсновные средства:\n"
+        self.assertEqual(_extract_line_items_cell_per_line(text, source="PDF"), {})
+
+    def test_single_amount_row_has_no_prior_amount(self):
+        text = "label uz\nlabel ru\n040\n1 000 000\n"
+        items = _extract_line_items_cell_per_line(text, source="PDF")
+        self.assertEqual(items["label ru"]["amount"], 1000000.0)
+        self.assertNotIn("prior_amount", items["label ru"])
+
+    def test_extract_from_pdf_merges_both_strategies_cleanly(self):
+        # Full end-to-end check against a real-document-derived transcript:
+        # must produce exactly the correct rows, with no garbage entries
+        # from the single-line extractor misfiring on label-only lines.
+        import unittest.mock as mock
+        from utils.file_parser import extract_from_pdf
+
+        full_text = (
+            "бошлангич (кайта тиклаш) киймат (0100, 0300)\n"
+            "первоначальная (восстановительная) стоимость (0100, 0300)\n"
+            "010\n"
+            "19 312 416 279\n"
+            "28 089 943 259\n"
+            "эскириш (0200)\n"
+            "износ (0200)\n"
+            "011\n"
+            "11 094 637 081\n"
+            "14 731 076 314\n"
+        )
+        with mock.patch("utils.file_parser._pdfminer_extract_text", return_value=full_text):
+            result = extract_from_pdf("fake.pdf")
+
+        self.assertIsNone(result.get("error"))
+        self.assertEqual(len(result["line_items"]), 2)
+        self.assertEqual(result["line_items"]["износ (0200)"]["amount"], 11094637081.0)
 
 
 if __name__ == "__main__":
