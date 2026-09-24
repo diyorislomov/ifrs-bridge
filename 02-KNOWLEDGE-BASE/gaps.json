@@ -97,18 +97,31 @@
           },
           {
             "gap_id": "2.2",
-            "title": "TODO: gap title (judgment and estimate disclosure)",
+            "title": "Missing Disclosure of Judgments and Sources of Estimation Uncertainty",
             "risk": "MEDIUM",
             "detection_keywords": [
-              "TODO: keywords"
+              "мулоҳазалар",
+              "ҳисоб баҳоларига нисбатан ноаниқлик",
+              "judgments",
+              "estimation uncertainty",
+              "significant judgment",
+              "баланс қийматига тузатиш",
+              "assumptions about the future",
+              "ноаниқлик манбалари"
             ],
             "detection_rules": [
-              "TODO: rule 1",
-              "TODO: rule 2"
+              "Rule 1: Check whether the accounting policy note explicitly identifies the judgments (apart from estimates) management made that had the most significant effect on recognized amounts (e.g., control assessments, lease classification, going concern) -- absence of any such disclosure alongside a policy note is a red flag given nearly every real statement involves at least one.",
+              "Rule 2: Look for assets/liabilities with clearly subjective valuation inputs (impairment provisions, warranty/legal provisions, employee benefit obligations, deferred tax recoverability) and check whether the notes disclose the nature and carrying amount of the underlying estimation uncertainty, not just the resulting number.",
+              "Rule 3: Compare disclosed judgments/estimates against the actual balance sheet line items -- a significant estimated balance (e.g., a large provision, an impaired receivable) with no corresponding estimation-uncertainty note is a gap.",
+              "Rule 4: Check whether disclosed estimates describe the assumptions used (e.g., discount rates, future cost/price assumptions) rather than just stating that a policy or estimate exists."
             ],
             "claude_prompt_template": "TODO: template",
-            "adjustment_hint": "TODO: hint",
-            "example": "TODO: example"
+            "adjustment_hint": "You'll need to add a dedicated disclosure identifying the specific judgments management made in applying its accounting policies (separate from estimates), and, for each asset/liability carrying a significant risk of material adjustment next year, disclose its nature, carrying amount, and the key assumptions used to estimate it.",
+            "example": "[ILLUSTRATIVE] A company recognizes a material warranty provision and a doubtful-debt allowance on the balance sheet, but the notes only state \"provisions are estimated based on management judgment\" without disclosing the assumptions used or the specific carrying amounts at risk of significant adjustment next year -- this fails the estimation-uncertainty disclosure requirement.",
+            "nas_treatment": "[NEED_MENTOR_INPUT]",
+            "mhms_treatment": "In addition to disclosing significant accounting policies, an entity must disclose the judgments (other than those involving estimates) that management made in applying accounting policies which have the most significant effect on the amounts recognized in the financial statements (§122) -- for example, judgments on whether substantially all risks and rewards of ownership of financial assets or leased assets were transferred, or whether a sale is in substance a financing arrangement. Separately, the entity must disclose information about assumptions it makes about the future, and other major sources of estimation uncertainty at the reporting date, that have a significant risk of causing a material adjustment to the carrying amounts of assets and liabilities within the next financial year, including the nature of the item and its carrying amount at period end (§125-126).",
+            "lex_uz_ref": "Lex.uz MHMS #2, §122, §125-126 (1-son BHXS \"Moliyaviy hisobotni taqdim etish\" orqali -- IAS 8 §2 aynan shu talab uchun 1-son BHXSga havola qiladi)",
+            "ifrs_ref": "IAS 1.122 (Judgments in applying accounting policies), IAS 1.125-126 (Sources of estimation uncertainty)"
           }
         ]
       },
