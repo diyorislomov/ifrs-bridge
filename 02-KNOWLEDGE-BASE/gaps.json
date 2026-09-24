@@ -996,48 +996,83 @@
         "key_gaps": [
           {
             "gap_id": "12.1",
-            "title": "TODO: gap title (control assessment not performed (ownership-based only))",
+            "title": "Consolidation Based on Ownership Percentage Instead of a Control Assessment",
             "risk": "HIGH",
             "detection_keywords": [
-              "TODO: keywords"
+              "назорат",
+              "ваколат",
+              "control",
+              "power over the investee",
+              "variable returns",
+              "консолидациялашган молиявий ҳисобот",
+              "consolidated financial statements"
             ],
             "detection_rules": [
-              "TODO: rule 1",
-              "TODO: rule 2"
+              "Rule 1: Check whether entities were consolidated (or excluded from consolidation) purely based on crossing an ownership percentage threshold (e.g. >50%), with no documented assessment of power, exposure to variable returns, and the ability to use that power.",
+              "Rule 2: Look for an investee where the reporting entity holds less than 50% of voting rights but has other rights (e.g. contractual management rights, potential voting rights, a dominant minority position with other shareholders dispersed) that could still give it control -- if such an investee is NOT consolidated, check whether control was properly assessed rather than assumed absent based on the ownership percentage alone.",
+              "Rule 3: Conversely, check whether an investee where the entity holds a majority stake but lacks practical power (e.g. governance rights held by another party, protective rights only) has been consolidated anyway just because of the ownership percentage.",
+              "Rule 4: Confirm control was reassessed when facts and circumstances changed (e.g. changes in voting rights, contractual arrangements), not left as a one-time determination at acquisition."
             ],
             "claude_prompt_template": "TODO: template",
-            "adjustment_hint": "TODO: hint",
-            "example": "TODO: example"
+            "adjustment_hint": "You will need to assess control for each investee using the three-part test -- power over the investee, exposure or rights to variable returns from it, and the ability to use that power to affect the amount of those returns -- rather than relying on an ownership percentage threshold alone, and consolidate (or deconsolidate) based on that assessment.",
+            "example": "[ILLUSTRATIVE] A company holds 45% of the voting shares in another entity, with the remaining 55% dispersed among many small unrelated shareholders who rarely vote as a bloc, giving the 45% holder practical power to direct the investee's relevant activities -- but the investee is not consolidated because the ownership stake is below the 50% threshold, without any documented control assessment.",
+            "nas_treatment": "[NEED_MENTOR_INPUT]",
+            "mhms_treatment": "An investor must determine whether it is a parent by assessing whether it controls the investee, regardless of the nature of its involvement (§5). An investor controls an investee only if it has ALL of: power over the investee, exposure or rights to variable returns from its involvement with the investee, and the ability to use its power over the investee to affect the amount of the investor's returns (§6-7). The investor must consider all facts and circumstances in assessing control, and must reassess whether it controls an investee if facts and circumstances indicate that one or more of the three elements of control have changed (§8).",
+            "lex_uz_ref": "Lex.uz MHMS #12, §5-8 (10-son MHXS \"Konsolidatsiyalashgan moliyaviy hisobot\")",
+            "ifrs_ref": "IFRS 10.5 (Determining parent status), IFRS 10.6-7 (Definition of control), IFRS 10.8 (Reassessment)"
           },
           {
             "gap_id": "12.2",
-            "title": "TODO: gap title (non-controlling interest measurement gap)",
+            "title": "Non-Controlling Interest Not Separately Presented or Allocated Loss-Sharing Ignored",
             "risk": "MEDIUM",
             "detection_keywords": [
-              "TODO: keywords"
+              "назорат кучига эга бўлмаган улуш",
+              "non-controlling interest",
+              "NCI",
+              "хусусий капитал таркибида алоҳида",
+              "presented separately within equity",
+              "profit allocation to NCI"
             ],
             "detection_rules": [
-              "TODO: rule 1",
-              "TODO: rule 2"
+              "Rule 1: Check that non-controlling interests are presented within equity in the consolidated balance sheet, separately from the equity attributable to the parent's owners, rather than being shown as a liability or netted against the parent's equity.",
+              "Rule 2: Check that profit or loss and each component of other comprehensive income are allocated between the parent and non-controlling interest owners based on their respective ownership, even in periods where the subsidiary made a loss (which can push NCI's balance negative).",
+              "Rule 3: Confirm total comprehensive income is attributed to the parent and NCI even when this results in a deficit (negative) balance for the non-controlling interest, rather than allocating all losses to the parent alone.",
+              "Rule 4: If a partial disposal or acquisition of additional shares in a subsidiary occurred without a change in control, check that this was accounted for as an equity transaction (an adjustment between NCI and parent equity), not as a gain or loss in profit or loss."
             ],
             "claude_prompt_template": "TODO: template",
-            "adjustment_hint": "TODO: hint",
-            "example": "TODO: example"
+            "adjustment_hint": "You will need to present non-controlling interests as a separate component within consolidated equity (not as a liability), allocate profit/loss and OCI between the parent and NCI based on their ownership even where this produces a negative NCI balance, and account for any change in ownership interest that does not result in a loss of control as a transaction with owners in their capacity as owners (an equity adjustment, not a gain/loss).",
+            "example": "[ILLUSTRATIVE] A subsidiary that is 70% owned made a significant loss for the year, and the consolidated financial statements allocate the entire loss to the parent's equity, leaving the non-controlling interest balance unchanged, instead of allocating 30% of the loss to NCI (even if that produces a negative NCI balance).",
+            "nas_treatment": "[NEED_MENTOR_INPUT]",
+            "mhms_treatment": "A parent must present non-controlling interests in the consolidated statement of financial position within equity, separately from the equity of the owners of the parent (§22). Changes in a parent's ownership interest in a subsidiary that do not result in a loss of control are accounted for as equity transactions -- transactions with owners in their capacity as owners (§23). Profit or loss and each component of other comprehensive income are attributed to the owners of the parent and to the non-controlling interests -- total comprehensive income is attributed to the parent and NCI even if this results in the non-controlling interests having a deficit balance.",
+            "lex_uz_ref": "Lex.uz MHMS #12, §22-23, B94 (10-son MHXS \"Konsolidatsiyalashgan moliyaviy hisobot\")",
+            "ifrs_ref": "IFRS 10.22 (NCI presented within equity), IFRS 10.23 (Ownership changes without loss of control), IFRS 10.B94 (Allocation of profit/loss and OCI to NCI)"
           },
           {
             "gap_id": "12.3",
-            "title": "TODO: gap title (intercompany elimination incompleteness)",
+            "title": "Intragroup Balances and Transactions Not Fully Eliminated on Consolidation",
             "risk": "MEDIUM",
             "detection_keywords": [
-              "TODO: keywords"
+              "гуруҳ ичидаги операциялар",
+              "ўзаро ҳисоб-китоб",
+              "intragroup elimination",
+              "intercompany elimination",
+              "unrealized profit",
+              "чиқариб ташлаш"
             ],
             "detection_rules": [
-              "TODO: rule 1",
-              "TODO: rule 2"
+              "Rule 1: Check that the parent's investment balance in each subsidiary is eliminated against the parent's share of that subsidiary's equity, rather than both being left on the consolidated balance sheet.",
+              "Rule 2: Check that intragroup assets, liabilities, equity, income, expenses, and cash flows relating to transactions between group entities are fully eliminated -- e.g. an intercompany receivable/payable pair, or intercompany sales and purchases, should net to zero on consolidation.",
+              "Rule 3: For inventory or PP&E still held within the group that was transferred between group entities at a markup, check whether the unrealized profit embedded in that asset's carrying amount was eliminated, not left recognized as if it were a sale to an external party.",
+              "Rule 4: Where intragroup losses may indicate impairment of the underlying asset, confirm that impairment is still recognized in the consolidated financial statements even though the intragroup loss itself is eliminated.",
+              "Rule 5: Check that group members used consistent accounting policies for similar transactions when preparing the consolidated financial statements, with adjustments made to any group member's financial statements prepared using a different policy."
             ],
             "claude_prompt_template": "TODO: template",
-            "adjustment_hint": "TODO: hint",
-            "example": "TODO: example"
+            "adjustment_hint": "You will need to eliminate the parent's investment in each subsidiary against the parent's share of that subsidiary's equity, fully eliminate intragroup assets, liabilities, equity, income, expenses and cash flows arising from transactions between group entities (including any unrealized profit in year-end inventory or PP&E transferred within the group), while still recognizing any impairment that an intragroup loss may point to.",
+            "example": "[ILLUSTRATIVE] A parent sells inventory to its subsidiary at a markup, and at year-end the subsidiary still holds that inventory unsold to an external party -- the consolidated financial statements still include the intercompany profit embedded in that inventory's carrying amount because the intragroup sale and the resulting unrealized profit were never eliminated.",
+            "nas_treatment": "[NEED_MENTOR_INPUT]",
+            "mhms_treatment": "In preparing consolidated financial statements: the assets, liabilities, equity, income, expenses, and cash flows of the parent are combined with those of its subsidiaries line by line; the carrying amount of the parent's investment in each subsidiary is eliminated (offset) against the parent's share of equity in each subsidiary; and intragroup assets, liabilities, equity, income, expenses, and cash flows relating to transactions between group entities are eliminated in full -- profits or losses from intragroup transactions recognized in assets such as inventory and PP&E are eliminated in full, though intragroup losses may indicate an impairment that must still be recognized in the consolidated financial statements (§B86). Uniform accounting policies must be applied across the group, with adjustments made to a group member's financial statements if it uses different policies for similar transactions (§B87).",
+            "lex_uz_ref": "Lex.uz MHMS #12, §B86-B87 (10-son MHXS \"Konsolidatsiyalashgan moliyaviy hisobot\")",
+            "ifrs_ref": "IFRS 10.B86 (Consolidation procedures: combination, investment elimination, intragroup elimination), IFRS 10.B87 (Uniform accounting policies)"
           }
         ]
       },
@@ -1056,48 +1091,82 @@
         "key_gaps": [
           {
             "gap_id": "35.1",
-            "title": "TODO: gap title (recognition criteria (probable/reliable estimate) not tested)",
+            "title": "Provisions Recognized Without Testing the Three Recognition Criteria",
             "risk": "MEDIUM",
             "detection_keywords": [
-              "TODO: keywords"
+              "баҳоланган мажбурият",
+              "provision",
+              "конструктив жавобгарлик",
+              "constructive obligation",
+              "legal obligation",
+              "probable outflow",
+              "reliable estimate"
             ],
             "detection_rules": [
-              "TODO: rule 1",
-              "TODO: rule 2"
+              "Rule 1: Check whether recognized provisions correspond to a present obligation (legal or constructive) arising from a past event, rather than being set up for possible future operating costs or management's general intention to spend.",
+              "Rule 2: For provisions based on a constructive obligation (no contract or law requiring payment), check whether the entity's past practice, published policy, or specific current statement actually created a valid expectation in other parties that it would discharge that responsibility -- absent that, a constructive obligation does not exist.",
+              "Rule 3: Confirm each recognized provision has an outflow of resources assessed as probable (more likely than not), not merely possible.",
+              "Rule 4: Check that provisions are only recognized where the obligation amount can be reliably estimated -- if not, confirm it was disclosed as a contingent liability instead of recognized as a provision."
             ],
             "claude_prompt_template": "TODO: template",
-            "adjustment_hint": "TODO: hint",
-            "example": "TODO: example"
+            "adjustment_hint": "You will need to test each recognized provision against all three criteria -- a present legal or constructive obligation from a past event, a probable (not merely possible) outflow of resources, and a reliable estimate of the amount -- and derecognize any provision that fails one of these, reclassifying it as a contingent liability disclosure if appropriate instead.",
+            "example": "[ILLUSTRATIVE] A company recognizes a provision for anticipated future restructuring costs based only on management's internal intention to restructure next year, with no detailed formal plan announced to any affected parties -- this fails the present-obligation criterion since no past event has created an actual obligation yet.",
+            "nas_treatment": "[NEED_MENTOR_INPUT]",
+            "mhms_treatment": "A provision is recognized only when: the entity has a present obligation (legal or constructive) as a result of a past event; it is probable that an outflow of resources embodying economic benefits will be required to settle the obligation; and a reliable estimate can be made of the amount of the obligation (§14). If these conditions are not met, no provision is recognized. A constructive obligation arises from an entity's actions where, through an established pattern of past practice, published policies, or a sufficiently specific current statement, the entity has indicated to other parties that it will accept certain responsibilities, and has created a valid expectation on the part of those other parties that it will discharge those responsibilities (§10).",
+            "lex_uz_ref": "Lex.uz MHMS #35, §10, §14 (37-son BHXS \"Baholangan majburiyatlar, shartli majburiyatlar va shartli aktivlar\")",
+            "ifrs_ref": "IAS 37.10 (Definitions), IAS 37.14 (Recognition criteria)"
           },
           {
             "gap_id": "35.2",
-            "title": "TODO: gap title (contingent liability disclosure omission)",
+            "title": "Contingent Liabilities Not Disclosed",
             "risk": "MEDIUM",
             "detection_keywords": [
-              "TODO: keywords"
+              "шартли мажбурият",
+              "contingent liability",
+              "эҳтимолли жавобгарлик",
+              "possible obligation",
+              "суд иши",
+              "legal claim"
             ],
             "detection_rules": [
-              "TODO: rule 1",
-              "TODO: rule 2"
+              "Rule 1: Look for pending legal claims, guarantees given, or disputed tax assessments mentioned anywhere in management commentary or minutes that are not reflected as either a provision or a contingent liability disclosure in the notes.",
+              "Rule 2: For a possible obligation whose existence will be confirmed only by an uncertain future event outside the entity's control, confirm it is disclosed as a contingent liability rather than silently omitted.",
+              "Rule 3: For a present obligation that is not recognized because outflow is not probable, or the amount can't be reliably estimated, check that it is still disclosed as a contingent liability (unless the probability of outflow is remote).",
+              "Rule 4: Check that contingent liability disclosures include a brief description of its nature and, where practicable, an estimate of its financial effect, an indication of uncertainties around amount/timing, and the possibility of any reimbursement."
             ],
             "claude_prompt_template": "TODO: template",
-            "adjustment_hint": "TODO: hint",
-            "example": "TODO: example"
+            "adjustment_hint": "You will need to identify possible obligations that depend on uncertain future events, and present obligations that fail the probable-outflow or reliable-estimate recognition tests, and disclose each as a contingent liability (nature, estimated financial effect where practicable, and related uncertainties) unless the chance of any outflow is remote.",
+            "example": "[ILLUSTRATIVE] A company is a defendant in an ongoing lawsuit with a reasonably possible (but not probable) chance of an adverse outcome, and the financial statements make no mention of this at all -- omitting the contingent liability disclosure required even though no provision is recognized.",
+            "nas_treatment": "[NEED_MENTOR_INPUT]",
+            "mhms_treatment": "Unless the possibility of any outflow of resources is remote, an entity must disclose, for each class of contingent liability at the reporting date, a brief description of its nature and, where practicable: an estimate of its financial effect, an indication of the uncertainties relating to the amount or timing of any outflow, and the possibility of any reimbursement (§86). Items forming a class must be sufficiently similar in nature for this purpose (§87). Where a provision and a contingent liability arise from the same set of circumstances, the entity discloses the link between them (§88).",
+            "lex_uz_ref": "Lex.uz MHMS #35, §86-88 (37-son BHXS \"Baholangan majburiyatlar, shartli majburiyatlar va shartli aktivlar\")",
+            "ifrs_ref": "IAS 37.86 (Contingent liability disclosure requirements), IAS 37.87-88 (Classes and linkage to provisions)"
           },
           {
             "gap_id": "35.3",
-            "title": "TODO: gap title (discounting of long-term provisions not applied)",
+            "title": "Long-Term Provisions Not Discounted to Present Value",
             "risk": "LOW",
             "detection_keywords": [
-              "TODO: keywords"
+              "пулнинг вақт қиймати",
+              "дисконтлаш",
+              "discounting",
+              "present value",
+              "time value of money",
+              "дисконтлаш ставкаси"
             ],
             "detection_rules": [
-              "TODO: rule 1",
-              "TODO: rule 2"
+              "Rule 1: For provisions expected to be settled more than approximately a year in the future (e.g. long-term decommissioning, warranty, or legal provisions), check whether the recognized amount reflects the present value of expected settlement cash flows rather than the undiscounted nominal expected cost.",
+              "Rule 2: Where discounting was applied, check that the discount rate used is a pre-tax rate reflecting current market assessments of the time value of money and risks specific to the liability, not a general corporate cost-of-capital rate that also embeds unrelated risk adjustments.",
+              "Rule 3: Confirm the discount rate does not double-count risk that has already been reflected as an adjustment to the estimated future cash flows themselves.",
+              "Rule 4: Check that the unwinding of the discount (the increase in a provision's carrying amount as time passes) is recognized as a finance cost, not folded into the operating provision expense."
             ],
             "claude_prompt_template": "TODO: template",
-            "adjustment_hint": "TODO: hint",
-            "example": "TODO: example"
+            "adjustment_hint": "You will need to discount the expenditures expected to be required to settle any provision where the time value of money is material, using a pre-tax discount rate that reflects current market assessments of the time value of money and the risks specific to the liability, and recognize the periodic unwinding of that discount as a finance cost.",
+            "example": "[ILLUSTRATIVE] A company recognizes a decommissioning provision for a facility expected to be dismantled in 15 years at its full undiscounted future cost, rather than at the present value of that future cash outflow, materially overstating the liability today.",
+            "nas_treatment": "[NEED_MENTOR_INPUT]",
+            "mhms_treatment": "Where the effect of the time value of money is material, the amount of a provision must be the present value of the expenditures expected to be required to settle the obligation (§45). Because of the time value of money, provisions relating to cash outflows that arise soon after the reporting date are more onerous than those where cash outflows of the same amount arise later -- provisions are discounted, where the effect is material (§46). The discount rate(s) must be a pre-tax rate (or rates) that reflects current market assessments of the time value of money and the risks specific to the liability -- the discount rate(s) must not reflect risks for which future cash flow estimates have already been adjusted (§47).",
+            "lex_uz_ref": "Lex.uz MHMS #35, §45-47 (37-son BHXS \"Baholangan majburiyatlar, shartli majburiyatlar va shartli aktivlar\")",
+            "ifrs_ref": "IAS 37.45 (Present value measurement), IAS 37.46 (Materiality of discounting), IAS 37.47 (Discount rate)"
           }
         ]
       },
