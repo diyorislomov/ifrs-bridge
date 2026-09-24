@@ -1529,33 +1529,55 @@
         "key_gaps": [
           {
             "gap_id": "66.1",
-            "title": "TODO: gap title (restructuring provision recognition timing gap)",
+            "title": "Restructuring Provision Recognized Too Early or Includes Non-Qualifying Costs",
             "risk": "MEDIUM",
             "detection_keywords": [
-              "TODO: keywords"
+              "реструктуризация",
+              "restructuring provision",
+              "бевосита сарфлар",
+              "directly related costs",
+              "келгуси операцион зарарлар",
+              "future operating losses"
             ],
             "detection_rules": [
-              "TODO: rule 1",
-              "TODO: rule 2"
+              "Rule 1: Check whether a restructuring provision was recognized based only on a board/management decision made before period-end, with no implementation begun and no announcement of the plan's main features to those affected -- a decision alone is not sufficient to create an obligation.",
+              "Rule 2: Confirm the provision includes only direct costs of the restructuring (arising directly from it and not associated with ongoing activities), and excludes retraining or relocating continuing staff, marketing, and investment in new systems/distribution networks.",
+              "Rule 3: Check that no future operating losses up to the restructuring date were included in the provision, unless they relate to an onerous contract.",
+              "Rule 4: For a restructuring that includes selling part of the business, confirm no obligation for that sale was recognized until the entity has entered into a binding sale agreement."
             ],
             "claude_prompt_template": "TODO: template",
-            "adjustment_hint": "TODO: hint",
-            "example": "TODO: example"
+            "adjustment_hint": "You will need to confirm a restructuring provision is only recognized once a detailed formal plan exists and implementation has started or its main features were announced to those affected (not merely decided internally), and that the amount includes only direct restructuring costs -- not retraining, relocation, marketing, future systems investment, or anticipated future operating losses.",
+            "example": "[ILLUSTRATIVE] A company's board approves a restructuring plan to close a division shortly before year-end, and a provision covering severance, relocation of continuing staff, marketing for the transition, and two years of anticipated operating losses is recognized at year-end, even though nothing was announced to employees or other affected parties and no implementation steps had begun.",
+            "nas_treatment": "[NEED_MENTOR_INPUT]",
+            "mhms_treatment": "A provision for restructuring costs is recognized only when the general recognition criteria for provisions are met (§71). A management or board decision to restructure taken before the reporting period ends does not by itself create a constructive obligation at the reporting date unless the entity has, before that date, started to implement the restructuring plan or announced its main features to those affected in a way that creates a valid expectation that the restructuring will be carried out (§75). A restructuring provision includes only the direct expenditures arising from the restructuring, which are both necessarily entailed by it and not associated with the entity's ongoing activities (§80); it excludes retraining or relocating continuing staff, marketing, and investment in new systems and distribution networks (§81), and excludes future operating losses up to the date of restructuring unless they relate to an onerous contract (§82).",
+            "lex_uz_ref": "Lex.uz MHMS #66, §71, §75, §80-82 (37-son BHXS \"Baholangan majburiyatlar\" - Restrukturizatsiya bo'limi)",
+            "ifrs_ref": "IAS 37.71 (General recognition criteria apply), IAS 37.75 (Decision alone is insufficient), IAS 37.80-82 (Only direct costs, no future operating losses)"
           },
           {
             "gap_id": "66.2",
-            "title": "TODO: gap title (constructive obligation criteria not assessed)",
+            "title": "Constructive Obligation for Restructuring Not Properly Assessed",
             "risk": "LOW",
             "detection_keywords": [
-              "TODO: keywords"
+              "конструктив жавобгарлик",
+              "constructive obligation",
+              "батафсил расмий режа",
+              "detailed formal plan",
+              "асосли кутиш",
+              "valid expectation"
             ],
             "detection_rules": [
-              "TODO: rule 1",
-              "TODO: rule 2"
+              "Rule 1: Check whether a restructuring provision's constructive obligation was supported by a detailed formal plan identifying at minimum: the business/part of business affected, the principal locations affected, the location/function/approximate number of employees to be compensated for terminating their services, the expenditures to be undertaken, and when the plan will be implemented.",
+              "Rule 2: Confirm the entity had EITHER started implementing the plan (e.g. dismantling a plant, selling assets) OR announced its main features to those affected (customers, suppliers, employees or their representatives) in enough detail to raise a valid expectation -- a vague or generic announcement is not sufficient.",
+              "Rule 3: Check that the timeframe for implementation was set to begin as soon as possible and complete in a timeframe that makes significant changes to the plan unlikely -- an open-ended or long-delayed plan is less likely to have created a valid expectation.",
+              "Rule 4: For a restructuring that involves selling a business, confirm no obligation is recognized until a binding sale agreement exists, even if the decision has been publicly announced."
             ],
             "claude_prompt_template": "TODO: template",
-            "adjustment_hint": "TODO: hint",
-            "example": "TODO: example"
+            "adjustment_hint": "You will need to confirm a constructive obligation for restructuring exists only where the entity has a detailed formal plan (identifying the business affected, locations, employees, costs, and timeline) AND has either begun implementing it or announced its main features to those affected in enough detail to create a valid expectation.",
+            "example": "[ILLUSTRATIVE] A company internally approves a general intention to downsize operations but has not identified which locations, roles, or employees will be affected, nor announced anything to staff or other parties -- this lacks the detailed formal plan and the resulting valid expectation needed for a constructive obligation to exist.",
+            "nas_treatment": "[NEED_MENTOR_INPUT]",
+            "mhms_treatment": "A constructive obligation to restructure arises only when the entity has a detailed formal plan for the restructuring identifying at least: the business or part of a business concerned; the principal locations affected; the location, function, and approximate number of employees who will be compensated for terminating their services; the expenditures that will be undertaken; and when the plan will be implemented; AND has raised a valid expectation in those affected that it will carry out the restructuring by starting to implement the plan or announcing its main features to those affected (§72). For the announcement to be sufficient, implementation must start as soon as possible and be completed in a timeframe that makes significant changes to the plan unlikely (§74).",
+            "lex_uz_ref": "Lex.uz MHMS #66, §72, §74 (37-son BHXS \"Baholangan majburiyatlar\" - Restrukturizatsiya bo'limi)",
+            "ifrs_ref": "IAS 37.72 (Detailed formal plan and valid expectation), IAS 37.74 (Timing requirements for the announcement)"
           }
         ]
       },
@@ -1574,48 +1596,82 @@
         "key_gaps": [
           {
             "gap_id": "6.1",
-            "title": "TODO: gap title (opening IFRS balance sheet not prepared)",
+            "title": "Opening IFRS Statement of Financial Position Not Prepared",
             "risk": "HIGH",
             "detection_keywords": [
-              "TODO: keywords"
+              "кириш ҳисоботи",
+              "opening IFRS balance sheet",
+              "МҲХСга ўтиш санаси",
+              "date of transition",
+              "first-time adoption",
+              "МҲХС бўйича биринчи молиявий ҳисобот"
             ],
             "detection_rules": [
-              "TODO: rule 1",
-              "TODO: rule 2"
+              "Rule 1: Check whether an opening IFRS statement of financial position was prepared at the date of transition to IFRS (the start of the earliest comparative period presented), not just at the first full IFRS reporting date.",
+              "Rule 2: Confirm the opening IFRS balance sheet recognizes all assets and liabilities required by IFRS, derecognizes any previously recognized items that don't qualify under IFRS, reclassifies items consistent with IFRS categories, and measures everything in accordance with IFRS -- not simply carried forward at previous-GAAP figures.",
+              "Rule 3: Check that the same accounting policies are applied throughout the opening balance sheet and all periods presented in the first IFRS financial statements -- not a mix of policies that changed partway through the transition period.",
+              "Rule 4: Confirm the resulting adjustments between the previous GAAP and the IFRS opening balance sheet were recognized directly in retained earnings (or another equity category, if appropriate) at the date of transition, not run through profit or loss."
             ],
             "claude_prompt_template": "TODO: template",
-            "adjustment_hint": "TODO: hint",
-            "example": "TODO: example"
+            "adjustment_hint": "You will need to prepare an opening IFRS statement of financial position at the date of transition, recognizing/derecognizing/reclassifying/remeasuring items to comply with IFRS requirements, applying the same accounting policies used throughout the first IFRS financial statements, and recognizing the resulting adjustments directly in equity at the transition date.",
+            "example": "[ILLUSTRATIVE] A company preparing its first IFRS financial statements for the year ended 31 December 20X5, with one year of comparatives, never produces a balance sheet as of 1 January 20X4 (the transition date) under IFRS -- only the 31 December 20X4 and 20X5 balance sheets exist, missing the required starting point for IFRS accounting.",
+            "nas_treatment": "[NEED_MENTOR_INPUT]",
+            "mhms_treatment": "An entity must prepare and present an opening IFRS statement of financial position at the date of transition to IFRS -- this is the starting point for its accounting under IFRS (§6). An entity must use the same accounting policies in its opening IFRS statement of financial position and throughout all periods presented in its first IFRS financial statements; those accounting policies must comply with each IFRS effective at the end of its first IFRS reporting period, except in the limited cases set out in the mandatory exceptions and optional exemptions (§7).",
+            "lex_uz_ref": "Lex.uz MHMS #6, §6-7 (1-son MHXS \"Moliyaviy hisobotning xalqaro standartlarini birinchi marta qo'llash\")",
+            "ifrs_ref": "IFRS 1.6 (Opening IFRS statement of financial position), IFRS 1.7 (Consistent accounting policies)"
           },
           {
             "gap_id": "6.2",
-            "title": "TODO: gap title (equity/profit reconciliation to previous GAAP missing)",
-            "risk": "HIGH",
+            "title": "Equity and Comprehensive Income Reconciliation to Previous GAAP Missing",
+            "risk": "MEDIUM",
             "detection_keywords": [
-              "TODO: keywords"
+              "хусусий капитал солиштирмаси",
+              "equity reconciliation",
+              "previous GAAP",
+              "МҲХСга ўтиш бўйича тушунтириш",
+              "explanation of transition",
+              "reconciliation of total comprehensive income"
             ],
             "detection_rules": [
-              "TODO: rule 1",
-              "TODO: rule 2"
+              "Rule 1: Check whether the first IFRS financial statements include a reconciliation of equity reported under the previous accounting framework to equity under IFRS, at both the date of transition AND the end of the last period presented under the previous framework.",
+              "Rule 2: Check whether a reconciliation of total comprehensive income under IFRS to the previous framework's reported profit/loss (or total comprehensive income, if reported) is presented for the last period covered by the entity's most recent previous annual financial statements.",
+              "Rule 3: Confirm the reconciliations provide enough detail for users to understand the material adjustments to the balance sheet and income statement -- a single unexplained net adjustment figure is not sufficient.",
+              "Rule 4: If a cash flow statement was presented under the previous framework, check whether material adjustments to it are also explained.",
+              "Rule 5: Check that the entity explained, in narrative form, how the transition from previous GAAP to IFRS affected its reported financial position, performance, and cash flows -- not just the numeric reconciliations alone."
             ],
             "claude_prompt_template": "TODO: template",
-            "adjustment_hint": "TODO: hint",
-            "example": "TODO: example"
+            "adjustment_hint": "You will need to prepare reconciliations of equity from previous GAAP to IFRS at both the transition date and the end of the last previous-GAAP period, a reconciliation of total comprehensive income for the last previous-GAAP period, and a narrative explanation of how the transition affected reported financial position, performance, and cash flows.",
+            "example": "[ILLUSTRATIVE] A company's first IFRS financial statements simply present IFRS-basis figures with no reconciliation showing how equity or profit under the old national standards maps to the new IFRS figures, leaving users unable to understand what changed and why.",
+            "nas_treatment": "[NEED_MENTOR_INPUT]",
+            "mhms_treatment": "An entity must explain how the transition from its previous accounting framework to IFRS affected its reported financial position, financial performance, and cash flows (§23). Its first IFRS financial statements must include reconciliations of equity reported under the previous framework to equity under IFRS at both the date of transition to IFRS and the end of the last period presented in the entity's most recent annual financial statements under the previous framework, and a reconciliation of total comprehensive income under IFRS for the last period in the entity's most recent annual previous-GAAP financial statements (§24). These reconciliations must provide sufficient detail for users to understand the material adjustments; if a cash flow statement was presented under the previous framework, material adjustments to it must also be explained (§25).",
+            "lex_uz_ref": "Lex.uz MHMS #6, §23-25 (1-son MHXS \"Moliyaviy hisobotning xalqaro standartlarini birinchi marta qo'llash\")",
+            "ifrs_ref": "IFRS 1.23 (Explanation of transition), IFRS 1.24 (Required reconciliations), IFRS 1.25 (Sufficient detail)"
           },
           {
             "gap_id": "6.3",
-            "title": "TODO: gap title (mandatory exemption/exception elections not documented)",
+            "title": "Mandatory Estimate Consistency and Optional Exemption Elections Not Documented",
             "risk": "MEDIUM",
             "detection_keywords": [
-              "TODO: keywords"
+              "ҳисоб баҳолари",
+              "estimates at transition date",
+              "озод қилиш ҳолатлари",
+              "optional exemptions",
+              "mandatory exceptions",
+              "МҲХСга ўтиш санасидаги баҳолар"
             ],
             "detection_rules": [
-              "TODO: rule 1",
-              "TODO: rule 2"
+              "Rule 1: For each estimate made in the opening IFRS balance sheet (e.g. provisions, useful lives, impairment), check whether it is consistent with the equivalent estimate made under the previous framework at the same date (after adjusting for any accounting policy differences), rather than a fresh estimate made with hindsight.",
+              "Rule 2: Check whether any post-transition-date information that would have changed a previous-GAAP estimate was correctly excluded from the opening balance sheet (treated as a non-adjusting subsequent event) rather than being incorporated retrospectively, unless it provides objective evidence the original estimate was in error.",
+              "Rule 3: Where the entity elected to use any of the optional exemptions available under IFRS 1 (e.g. for business combinations, cumulative translation differences, fair value as deemed cost), check whether the specific exemptions used and their financial effect are documented and disclosed, rather than applied silently or applied by analogy to similar items not actually covered by the exemption.",
+              "Rule 4: Confirm no optional exemption was extended by analogy to items it doesn't explicitly cover -- each exemption applies only to the specific items and circumstances described for it."
             ],
             "claude_prompt_template": "TODO: template",
-            "adjustment_hint": "TODO: hint",
-            "example": "TODO: example"
+            "adjustment_hint": "You will need to ensure estimates in the opening IFRS balance sheet are consistent with the equivalent previous-GAAP estimates at the same date (adjusted only for accounting policy differences, not hindsight), and document which of the optional IFRS 1 exemptions (if any) were elected and their effect, without extending any exemption by analogy to items it doesn't cover.",
+            "example": "[ILLUSTRATIVE] A company preparing its opening IFRS balance sheet as of 1 January 20X4 revises a bad debt estimate using information that only became available in July 20X4, incorporating it retrospectively into the opening balance sheet instead of recognizing it in 20X4 profit or loss as a post-transition-date development, and never discloses which optional exemptions (if any) it used in transitioning.",
+            "nas_treatment": "[NEED_MENTOR_INPUT]",
+            "mhms_treatment": "An entity's estimates under IFRS at the date of transition must be consistent with estimates made for the same date under the previous framework (after adjustments to reflect any difference in accounting policies), unless there is objective evidence those estimates were in error. Information received after the transition date about estimates that would have required revision under the previous framework must be treated as a non-adjusting subsequent event, reflected in profit or loss (or other comprehensive income) of the period it is received, not in the opening IFRS balance sheet (§14-16). Separately, an entity may elect to use one or more of the optional exemptions set out in Appendices B-D, but must not apply these exemptions by analogy to other items (§18).",
+            "lex_uz_ref": "Lex.uz MHMS #6, §14-16, §18 (1-son MHXS \"Moliyaviy hisobotning xalqaro standartlarini birinchi marta qo'llash\")",
+            "ifrs_ref": "IFRS 1.14-16 (Estimates consistency at transition date), IFRS 1.18 (Optional exemptions, no analogy)"
           }
         ]
       },
