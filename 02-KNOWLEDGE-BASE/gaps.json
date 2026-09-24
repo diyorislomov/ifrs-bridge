@@ -69,18 +69,31 @@
         "key_gaps": [
           {
             "gap_id": "2.1",
-            "title": "TODO: gap title (accounting policy disclosure completeness)",
+            "title": "Inconsistent Accounting Policy Application Across Similar Transactions",
             "risk": "MEDIUM",
             "detection_keywords": [
-              "TODO: keywords"
+              "ҳисоб сиёсати",
+              "изчиллик",
+              "ўхшаш операциялар",
+              "accounting policy",
+              "consistency",
+              "consistently applied",
+              "similar transactions",
+              "хисоб сиёсатини танлаш"
             ],
             "detection_rules": [
-              "TODO: rule 1",
-              "TODO: rule 2"
+              "Rule 1: Check the accounting policy note for a single, consistently described method per class of similar transaction (e.g., one inventory costing method, one depreciation method per asset class) rather than undisclosed switching between methods.",
+              "Rule 2: Look for the same type of transaction (e.g., similar leases, similar inventory categories) treated differently in different notes or schedules within the same statement, with no disclosed reason for the distinction.",
+              "Rule 3: Where no MHMS/IFRS standard directly addresses a transaction, check whether management documented the judgment basis (reference to similar standards or Conceptual Framework definitions) rather than applying an undocumented, ad hoc treatment.",
+              "Rule 4: Compare the current period's policy wording against any prior-period disclosure available to spot an undisclosed policy change applied only prospectively, without the retrospective restatement MHMS/IFRS require (see gap 3.x for the restatement mechanics itself)."
             ],
             "claude_prompt_template": "TODO: template",
-            "adjustment_hint": "TODO: hint",
-            "example": "TODO: example"
+            "adjustment_hint": "You'll need to confirm a single accounting policy is consistently applied to each class of similar transactions across the statement; where policies differ for similar items, either align them to one policy or disclose the substantive difference in nature between the classes that justifies distinct treatment.",
+            "example": "[ILLUSTRATIVE] A company's notes show finished-goods inventory in one product line costed on a FIFO basis and finished-goods inventory in another, similar product line costed on a weighted-average basis, with no disclosed reason the two classes are treated as substantively different -- inconsistent application of an accounting policy to similar items.",
+            "nas_treatment": "[NEED_MENTOR_INPUT]",
+            "mhms_treatment": "Where a specific MHMS/IFRS standard applies to a transaction, the accounting policy for that item must follow that standard (§7). Where no standard specifically addresses a transaction, management must use judgment to develop a policy that produces relevant and reliable information, drawing first on the requirements of MHMS dealing with similar or related issues, then on the Conceptual Framework's definitions, recognition criteria, and measurement concepts (§10-11). Once selected, an entity must select and apply its accounting policies consistently for similar transactions, other events, and conditions, unless a specific standard requires or permits categorization into classes for which different policies may be appropriate (§13).",
+            "lex_uz_ref": "Lex.uz MHMS #2, §7, §10-11, §13 (8-son BHXS \"Hisob siyosati, hisob baholaridagi o'zgarishlar va xatolar\")",
+            "ifrs_ref": "IAS 8.7 (Selection and application), IAS 8.10-11 (Absence of a specific standard), IAS 8.13 (Consistency of accounting policies)"
           },
           {
             "gap_id": "2.2",
